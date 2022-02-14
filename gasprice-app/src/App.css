@@ -7,7 +7,7 @@
 body {
   background-image: linear-gradient(120deg, #2527ad 0%, #1aa0a5 100%);
   color: white;
-  font-family: "Poppins", sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   min-height: 100vh;
 }
 
@@ -32,8 +32,16 @@ body {
 
 .Login {
   color: black;
-  padding: 0.5rem;
-  font-size: 5px;
-  border: none;
-  background: white;
+  font-size: 8px;
+  margin: 1rem;
+}
+
+.Login-words {
+  margin-right: auto;
+  display: inline-block;
+  margin-right: 1rem;
+}
+.Login-input {
+  position: relative;
+  display: inline-block;
 }

@@ -8,9 +8,15 @@ const Login = () => {
     };
 
     return (
-        <div className = 'Login'>
-            <h1>Username</h1>
-            <input type = 'text' name = 'Password' />
+        <div className='Login'>
+            <div>
+                <h1 className = 'Login-words'>Username</h1>
+                <input className='Login-input' type='text'/>
+            </div>
+            <div>
+                <h1 className = 'Login-words'>Password</h1>
+                <input className='Login-input' type='text'/>
+            </div>
         </div>
     );
 };
