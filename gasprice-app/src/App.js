@@ -1,12 +1,21 @@
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
 //import components here
-import Login from './components/Login';
+import Login from "./components/Login";
 
 function App() {
+  //these are states to handle the invalid sign in
+  const [errorMessages, setErrorMessages] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   return (
-    <div className = "App">
-      <h1>This is our first react project</h1>
-      <Login />
+    <div className="App">
+      <Login
+        errorMessages={errorMessages}
+        setErrorMessages={setErrorMessages}
+        isSubmitted={isSubmitted}
+        setIsSubmitted={setIsSubmitted}
+      />
     </div>
   );
 }
