@@ -72,15 +72,10 @@ const Login = ({
     <div className="app">
       <div className="login-form">
         <div className="title">Sign In</div>
-        {isSubmxxsitted ? (
-          <div>User is successfully logged in!</div>
-        ) : (
-          renderForm
-        )}
+        {isSubmitted ? <div>User is successfully logged in!</div> : renderForm}
       </div>
     </div>
   );
-  x;
 };
 
 export default Login;
