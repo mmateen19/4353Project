@@ -29,21 +29,21 @@ const Login = ({
     );
 
   const handleSubmit = (event) => {
-    // Prevent page reload
+    //prevent page reload
     event.preventDefault();
     var { uname, pass } = document.forms[0];
-    // Find user login info
+    //find user login info
     const userData = database.find((user) => user.username === uname.value);
-    // Compare user info
+    //compare user info
     if (userData) {
       if (userData.password !== pass.value) {
-        // Invalid password
+        //invalid password
         setErrorMessages({ name: "pass", message: errors.pass });
       } else {
         setIsSubmitted(true);
       }
     } else {
-      // Username not found
+      //username not found
       setErrorMessages({ name: "uname", message: errors.uname });
     }
   };
@@ -72,23 +72,15 @@ const Login = ({
     <div className="app">
       <div className="login-form">
         <div className="title">Sign In</div>
-        {isSubmitted ? <div>User is successfully logged in!</div> : renderForm}
+        {isSubmxxsitted ? (
+          <div>User is successfully logged in!</div>
+        ) : (
+          renderForm
+        )}
       </div>
     </div>
   );
-
-  /*
-    <div className='Login'>
-            <div>
-                <h1 className = 'Login-words'>Username</h1>
-                <input className='Login-input' type='text'/>
-            </div>
-            <div>
-                <h1 className = 'Login-words'>Password</h1>
-                <input className='Login-input' type='text'/>
-            </div>
-        </div>
-        */
+  x;
 };
 
 export default Login;
