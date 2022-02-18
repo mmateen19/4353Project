@@ -7,6 +7,9 @@ const Login = ({
   setErrorMessages,
   isSubmitted,
   setIsSubmitted,
+  users,
+  setUsers,
+  setRegisterClick,
 }) => {
   const database = [
     {
@@ -33,8 +36,8 @@ const Login = ({
     //prevent page reload
     event.preventDefault();
     var { uname, pass } = document.forms[0];
-    //find user login info
-    const userData = database.find((user) => user.username === uname.value);
+    //change "users.find" to "database.find" to test with local input. still implementing
+    const userData = users.find((user) => user.username === uname.value);
     //compare user info
     if (userData) {
       if (userData.password !== pass.value) {
@@ -49,24 +52,59 @@ const Login = ({
     }
   };
 
+  //should take us to a register page?
+  const handleRegister = (event) => {
+    event.preventDefault();
+    setRegisterClick(true);
+    /* for register handling
+    setUsers([
+      ...users,
+      {
+        /*need to enter the username and password as an/
+        username: "",
+        password: "",
+      },
+    ]);
+    */
+  };
+
+  /* here so i can look at for reference
+  const submitTodoHandler = (e) => {
+    e.preventDefault();
+    setTodos([
+      ...todos,
+      { text: inputText, completed: false, id: Math.random() * 1000 },
+    ]);
+    setInputText("");
+  };
+  */
+
   return (
-    <div className="display-container">
-      <div className="title">Sign In</div>
-      <form>
-        <div className="input-container">
-          <label>Username </label>
-          <input type="text" name="uname" required />
-          {renderErrorMessage("uname")}
+    <div>
+      <div className="display-container">
+        <div className="title">Sign In</div>
+        <form>
+          <div className="input-container">
+            <label>Username </label>
+            <input type="text" name="uname" required />
+            {renderErrorMessage("uname")}
+          </div>
+          <div className="input-container">
+            <label>Password </label>
+            <input type="password" name="pass" required />
+            {renderErrorMessage("pass")}
+          </div>
+          <div onClick={handleSubmit} className="button-container">
+            <input type="submit" />
+          </div>
+        </form>
+      </div>
+      <div className="display-container">
+        <div>Haven't created an account yet?</div>
+        <div onClick={handleRegister} className="button-container">
+          <input type="submit" value="Register" />
         </div>
-        <div className="input-container">
-          <label>Password </label>
-          <input type="password" name="pass" required />
-          {renderErrorMessage("pass")}
-        </div>
-        <div onClick={handleSubmit} className="button-container">
-          <input type="submit" />
-        </div>
-      </form>
+      </div>
     </div>
   );
 };
