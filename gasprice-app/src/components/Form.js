@@ -1,7 +1,58 @@
 import React from "react";
 import "./Form.css";
 
-const Form = () => (
+
+
+
+const Form = ({
+    firstName, 
+    lastName,
+    addy1,
+    addy2,
+    city,
+    state,
+    zipCode,
+    companyName,
+    firstNameInput, lastNameInput, 
+    addy1Input, addy2Input,
+    cityInput, stateInput, zipCodeInput,
+    companyNameInput,
+    setFirstName, setLastName,
+    setAddy1, setAddy2, 
+    setCity, setState,setZipCode,
+    setCompanyName,
+    setGoToProfile,
+    setErrorMessages,
+  
+  }) => {
+        const errors={
+         f_name: "required",
+         l_name: "required",
+         address1: "required",
+         city_: "required",
+         state_: "required",
+         zip_: "required",
+  };
+  
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (firstNameInput=""){
+      setErrorMessages({name: "f_name", message:errors.f_name});
+    }else if (lastNameInput=""){
+      setErrorMessages({name: "l_name", message:errors.l_name});
+    } else if (addy1Input=""){
+      setErrorMessages({name: "address1", message:errors.address1});
+    }else if (cityInput=""){
+      setErrorMessages({name: "city_", message:errors.city_});
+    }else if (stateInput=""){
+      setErrorMessages({name: "state_", message:errors.state_});
+    }else if (zipCodeInput=""){
+      setErrorMessages({name: "zip_", message:errors.zip_});
+    }
+
+  };
+
+return(
   <div className="display-container">
     <h1>Form</h1>
 
@@ -30,8 +81,24 @@ const Form = () => (
 
       <label for="Zip">Zip Code: </label>
       <input name="Zip" type="text" className="small-input"></input>
+
+     
     </section>
+
+    <section className="Input-Sections">
+      <label for="CompanyName">Comapny Name: </label>
+      <input name="CompanyName" type="text" className="small-input"></input>
+
+    </section>
+
+    <button>onClick{handleSubmit}</button>
+      <input type="submit"/>
+
+
+
   </div>
 );
+
+};
 
 export default Form;
