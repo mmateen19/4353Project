@@ -50,7 +50,7 @@ const Login = ({
   };
 
   return (
-    <div>
+    <div className="display-container">
       <div className="title">Sign In</div>
       <form>
         <div className="input-container">
