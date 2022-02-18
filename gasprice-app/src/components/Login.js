@@ -53,6 +53,7 @@ const Login = ({
   //should take us to a register page
   const handleRegister = (event) => {
     event.preventDefault();
+    setErrorMessages({});
     setGoToRegister(true);
   };
 
