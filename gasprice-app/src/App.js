@@ -8,27 +8,37 @@ import Register from "./components/Register";
 function App() {
   //these are states to handle the invalid sign in
   const [errorMessages, setErrorMessages] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
   const [users, setUsers] = useState([]);
-  const [clickedRegistered, setRegisterClick] = useState(false);
+  const [goToRegistered, setGoToRegister] = useState(false);
+  const [usernameInput, setUsernameInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
 
   return (
     <div className="App">
-      {clickedRegistered ? (
-        <Register users={users} setUsers={setUsers} />
+      {goToRegistered ? (
+        <Register
+          users={users}
+          setUsers={setUsers}
+          usernameInput={usernameInput}
+          passwordInput={passwordInput}
+          setUsernameInput={setUsernameInput}
+          setPasswordInput={setPasswordInput}
+          errorMessages={errorMessages}
+          setErrorMessages={setErrorMessages}
+          setGoToRegister={setGoToRegister}
+        />
       ) : (
         <div>
-          {isSubmitted ? (
+          {isLogin ? (
             <Profile />
           ) : (
             <Login
               errorMessages={errorMessages}
               setErrorMessages={setErrorMessages}
-              isSubmitted={isSubmitted}
-              setIsSubmitted={setIsSubmitted}
+              setIsLogin={setIsLogin}
               users={users}
-              setUsers={setUsers}
-              setRegisterClick={setRegisterClick}
+              setGoToRegister={setGoToRegister}
             />
           )}
         </div>

@@ -5,11 +5,9 @@ import "./Login.css";
 const Login = ({
   errorMessages,
   setErrorMessages,
-  isSubmitted,
-  setIsSubmitted,
+  setIsLogin,
   users,
-  setUsers,
-  setRegisterClick,
+  setGoToRegister,
 }) => {
   const database = [
     {
@@ -32,7 +30,7 @@ const Login = ({
       <div className="error">{errorMessages.message}</div>
     );
 
-  const handleSubmit = (event) => {
+  const handleLogin = (event) => {
     //prevent page reload
     event.preventDefault();
     var { uname, pass } = document.forms[0];
@@ -44,7 +42,7 @@ const Login = ({
         //invalid password
         setErrorMessages({ name: "pass", message: errors.pass });
       } else {
-        setIsSubmitted(true);
+        setIsLogin(true);
       }
     } else {
       //username not found
@@ -52,22 +50,11 @@ const Login = ({
     }
   };
 
-  //should take us to a register page?
+  //should take us to a register page
   const handleRegister = (event) => {
     event.preventDefault();
-    setRegisterClick(true);
+    setGoToRegister(true);
   };
-
-  /* here so i can look at for reference
-  const submitTodoHandler = (e) => {
-    e.preventDefault();
-    setTodos([
-      ...todos,
-      { text: inputText, completed: false, id: Math.random() * 1000 },
-    ]);
-    setInputText("");
-  };
-  */
 
   return (
     <div>
@@ -84,7 +71,7 @@ const Login = ({
             <input type="password" name="pass" required />
             {renderErrorMessage("pass")}
           </div>
-          <div onClick={handleSubmit} className="button-container">
+          <div onClick={handleLogin} className="button-container">
             <input type="submit" />
           </div>
         </form>
