@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Profile.css";
+import CustNav from "./CustNav";
 
-const Profile = () => {
-  return (
+
+const Profile = () => (
     <div className="Profile">
-      <div className="display-container">
-        <div>Profile Home Page</div>
-      </div>
-    </div>
-  );
-};
 
+      <CustNav />
+
+    </div>
+);
 export default Profile;
