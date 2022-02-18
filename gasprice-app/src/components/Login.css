@@ -48,9 +48,6 @@ input[type="submit"]:hover {
   margin-bottom: 15px;
 }
 
-.container-space {
-}
-
 .list-container {
   display: flex;
 }

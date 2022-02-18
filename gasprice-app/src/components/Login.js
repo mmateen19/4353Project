@@ -56,16 +56,6 @@ const Login = ({
   const handleRegister = (event) => {
     event.preventDefault();
     setRegisterClick(true);
-    /* for register handling
-    setUsers([
-      ...users,
-      {
-        /*need to enter the username and password as an/
-        username: "",
-        password: "",
-      },
-    ]);
-    */
   };
 
   /* here so i can look at for reference

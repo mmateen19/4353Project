@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="App">
       {clickedRegistered ? (
-        <Register />
+        <Register users={users} setUsers={setUsers} />
       ) : (
         <div>
           {isSubmitted ? (
