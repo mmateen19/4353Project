@@ -13,6 +13,7 @@ function App() {
   const [goToRegistered, setGoToRegister] = useState(false);
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+  const [reEnterPasswordInput, setReEnterPasswordInput] = useState("");
 
   return (
     <div className="App">
@@ -27,6 +28,8 @@ function App() {
           errorMessages={errorMessages}
           setErrorMessages={setErrorMessages}
           setGoToRegister={setGoToRegister}
+          reEnterPasswordInput={reEnterPasswordInput}
+          setReEnterPasswordInput={setReEnterPasswordInput}
         />
       ) : (
         <div>

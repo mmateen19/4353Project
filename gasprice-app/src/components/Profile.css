@@ -1,5 +1,9 @@
 .Profile {
   color: black;
-  
+}
 
+.navbar {
+  position: fixed;
+  top: 1rem;
+  left: 500px;
 }

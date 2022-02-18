@@ -11,10 +11,13 @@ const Register = ({
   errorMessages,
   setErrorMessages,
   setGoToRegister,
+  reEnterPasswordInput,
+  setReEnterPasswordInput,
 }) => {
   const errors = {
-    uname: "invalid username",
-    pass: "invalid password",
+    uname: "Invalid username",
+    pass: "Invalid password",
+    reenterpass: "Passwords don't match",
   };
   //handles submitting the registered username and password
   const handleSubmit = (event) => {
@@ -24,12 +27,15 @@ const Register = ({
       setErrorMessages({ name: "uname", message: errors.uname });
     } else if (passwordInput == "") {
       setErrorMessages({ name: "pass", message: errors.pass });
+    } else if (passwordInput !== reEnterPasswordInput) {
+      setErrorMessages({ name: "reenterpass", message: errors.reenterpass });
     } else {
       setUsers([
         ...users,
         { username: usernameInput, password: passwordInput },
       ]);
       setPasswordInput("");
+      setReEnterPasswordInput("");
       setUsernameInput("");
       setGoToRegister(false);
       setErrorMessages({});
@@ -46,6 +52,12 @@ const Register = ({
     event.preventDefault();
     //console.log(event.target.value);
     setPasswordInput(event.target.value);
+  };
+
+  const inputReEnterPasswordHandler = (event) => {
+    event.preventDefault();
+    //console.log(event.target.value);
+    setReEnterPasswordInput(event.target.value);
   };
 
   //handles errors
@@ -75,11 +87,22 @@ const Register = ({
             <input
               value={passwordInput}
               onChange={inputPasswordHandler}
-              type="text"
+              type="password"
               name="pass"
               required
             />
             {renderErrorMessage("pass")}
+          </div>
+          <div className="input-container">
+            <label>Re-Enter Password </label>
+            <input
+              value={reEnterPasswordInput}
+              onChange={inputReEnterPasswordHandler}
+              type="password"
+              name="pass"
+              required
+            />
+            {renderErrorMessage("reenterpass")}
           </div>
           <div onClick={handleSubmit} className="button-container">
             <input type="submit" />
