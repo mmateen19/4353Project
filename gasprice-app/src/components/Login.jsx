@@ -1,14 +1,18 @@
 //this is where we will make components to add to the main app
-import React from "react";
+import React, {useState} from "react";
+import {Link} from "react-router-dom"
 import "./Login.css";
 
-const Login = ({
-  errorMessages,
-  setErrorMessages,
-  setIsLogin,
-  users,
-  setGoToRegister,
-}) => {
+const Login = () => {
+
+  const [errorMessages, setErrorMessages] = useState({});
+  const [isLogin, setIsLogin] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [goToRegistered, setGoToRegister] = useState(false);
+  const [usernameInput, setUsernameInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+  const [reEnterPasswordInput, setReEnterPasswordInput] = useState("");
+
   const database = [
     {
       username: "user1",
@@ -79,9 +83,9 @@ const Login = ({
       </div>
       <div className="display-container">
         <div>Haven't created an account yet?</div>
-        <div onClick={handleRegister} className="button-container">
-          <input type="submit" value="Register" />
-        </div>
+        
+        <div className = "button-container"><Link to ='/register'><input type = 'submit' value='Register'/></Link> </div>
+
       </div>
     </div>
   );

@@ -1,24 +1,26 @@
-import React from "react";
+import React, {useState} from "react";
+import {useHistory} from "react-router-dom";
 import "./Register.css";
+import {useNavigate} from 'react-router-dom';
+import {Link} from "react-router-dom"
 
-const Register = ({
-  users,
-  setUsers,
-  usernameInput,
-  passwordInput,
-  setUsernameInput,
-  setPasswordInput,
-  errorMessages,
-  setErrorMessages,
-  setGoToRegister,
-  reEnterPasswordInput,
-  setReEnterPasswordInput,
-}) => {
+const Register = () => {
+  const [errorMessages, setErrorMessages] = useState({});
+  const [isLogin, setIsLogin] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [goToRegistered, setGoToRegister] = useState(false);
+  const [usernameInput, setUsernameInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+  const [reEnterPasswordInput, setReEnterPasswordInput] = useState("");
+  
+  const navigate = useNavigate();
+
   const errors = {
     uname: "Invalid username",
     pass: "Invalid password",
     reenterpass: "Passwords don't match",
   };
+
   //handles submitting the registered username and password
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -37,8 +39,8 @@ const Register = ({
       setPasswordInput("");
       setReEnterPasswordInput("");
       setUsernameInput("");
-      setGoToRegister(false);
       setErrorMessages({});
+      navigate('/Login');
     }
   };
 
@@ -104,9 +106,7 @@ const Register = ({
             />
             {renderErrorMessage("reenterpass")}
           </div>
-          <div onClick={handleSubmit} className="button-container">
-            <input type="submit" />
-          </div>
+          <div className = "button-container"><input onClick = {handleSubmit} type = 'submit' value='Create Account'/> </div>
         </form>
       </div>
     </div>
