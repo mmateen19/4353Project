@@ -1,14 +1,9 @@
 import React, {useState} from "react";
-import {useHistory} from "react-router-dom";
-import "./Register.css";
 import {useNavigate} from 'react-router-dom';
-import {Link} from "react-router-dom"
 
 const Register = () => {
   const [errorMessages, setErrorMessages] = useState({});
-  const [isLogin, setIsLogin] = useState(false);
   const [users, setUsers] = useState([]);
-  const [goToRegistered, setGoToRegister] = useState(false);
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [reEnterPasswordInput, setReEnterPasswordInput] = useState("");
@@ -40,7 +35,7 @@ const Register = () => {
       setReEnterPasswordInput("");
       setUsernameInput("");
       setErrorMessages({});
-      navigate('/Login');
+      navigate('/login');
     }
   };
 
@@ -69,7 +64,7 @@ const Register = () => {
     );
 
   return (
-    <div>
+    <div className = "App">
       <div className="display-container">
         <div className="title">Register</div>
         <form>

@@ -2,19 +2,11 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom"
 import "./Login.css";
-
-
 import {useNavigate} from 'react-router-dom';
 
 const Login = () => {
 
   const [errorMessages, setErrorMessages] = useState({});
-  const [isLogin, setIsLogin] = useState(false);
-  const [users, setUsers] = useState([]);
-  const [goToRegistered, setGoToRegister] = useState(false);
-  const [usernameInput, setUsernameInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
-  const [reEnterPasswordInput, setReEnterPasswordInput] = useState("");
 
   const database = [
     {
@@ -42,20 +34,20 @@ const Login = () => {
     );
 
   const navigate = useNavigate();
+
   const handleLogin = (event) => {
     //prevent page reload
     event.preventDefault();
     var { uname, pass } = document.forms[0];
     //change "users.find" to "database.find" to test with local input. still implementing
-    const userData = users.find((user) => user.username === uname.value);
+    const userData = database.find((user) => user.username === uname.value);
     //compare user info
     if (userData) {
       if (userData.password !== pass.value) {
         //invalid password
         setErrorMessages({ name: "pass", message: errors.pass });
       } else {
-        setIsLogin(true);
-        navigate("/Profile")
+        navigate("/home"); //send to homepage
       }
     } else {
       //username not found
@@ -63,15 +55,8 @@ const Login = () => {
     }
   };
 
-  //should take us to a register page
-  const handleRegister = (event) => {
-    event.preventDefault();
-    setErrorMessages({});
-    setGoToRegister(true);
-  };
-
   return (
-    <div>
+    <div className = "App">
       <div className="display-container">
         <div className="title">Sign In</div>
         <form>
@@ -85,14 +70,12 @@ const Login = () => {
             <input type="password" name="pass" required />
             {renderErrorMessage("pass")}
           </div>
-          <div className = "button-container"><input onClick = {handleLogin} type = 'submit' value='Create Account'/> </div>
+          <div className = "button-container"><input onClick = {handleLogin} type = 'submit' value='Login'/> </div>
         </form>
       </div>
       <div className="display-container">
         <div>Haven't created an account yet?</div>
-        
         <div className = "button-container"><Link to ='/register'><input type = 'submit' value='Register'/></Link> </div>
-
       </div>
     </div>
   );

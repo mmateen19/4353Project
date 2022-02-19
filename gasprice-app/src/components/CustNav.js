@@ -1,28 +1,42 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./CustNav.css";
 
-const CustNav = () => (
-  <div>
-    <nav>
-      <ul>
-        <li>
-          <a href="#">Home</a>
-        </li>
-        <li>
-          <a href="#">Form</a>
-        </li>
-        <li>
-          <a href="#">Pricing</a>
-        </li>
-        <li>
-          <a href="#">History</a>
-        </li>
-        <li>
-          <a href="#">Settings</a>
-        </li>
-      </ul>
-    </nav>
-  </div>
-);
+const CustNav = () => {
+  const navigate = useNavigate();
+  const homeClick = (event) => {
+    navigate("/home");
+  };
+  const formClick = (event) => {
+    navigate("/home/accountinfo");
+  };
+  const pricingClick = (event) => {
+    navigate("/home/pricing");
+  };
+  const historyClick = (event) => {
+    navigate("/home/history");
+  };
+
+  return (
+    <div>
+      <nav>
+        <ul>
+          <li>
+            <a onClick={homeClick}>Home</a>
+          </li>
+          <li>
+            <a onClick={formClick}>Account Info</a>
+          </li>
+          <li>
+            <a onClick={pricingClick}>Pricing</a>
+          </li>
+          <li>
+            <a onClick={historyClick}>History</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  );
+};
 
 export default CustNav;

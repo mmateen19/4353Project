@@ -37,3 +37,10 @@ body {
 .App-link {
   color: #61dafb;
 }
+
+.navbar {
+  position: fixed;
+  top: 1rem;
+  margin: auto;
+  padding: auto;
+}
