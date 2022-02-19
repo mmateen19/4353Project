@@ -13,6 +13,7 @@ import {
 
 import Login from './components/Login';
 import Register from './components/Register';
+import Profile from './components/Profile';
 
 
 const rootElement = document.getElementById('root');
@@ -25,7 +26,7 @@ ReactDOM.render (
 
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
-
+            <Route path="home" element={<Profile/>} />
         </Routes>
 
     </BrowserRouter>, 

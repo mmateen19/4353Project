@@ -3,6 +3,9 @@ import React, {useState} from "react";
 import {Link} from "react-router-dom"
 import "./Login.css";
 
+
+import {useNavigate} from 'react-router-dom';
+
 const Login = () => {
 
   const [errorMessages, setErrorMessages] = useState({});
@@ -22,6 +25,10 @@ const Login = () => {
       username: "user2",
       password: "pass2",
     },
+    {
+      username: "a",
+      password: "a",
+    }
   ];
 
   const errors = {
@@ -34,6 +41,7 @@ const Login = () => {
       <div className="error">{errorMessages.message}</div>
     );
 
+  const navigate = useNavigate();
   const handleLogin = (event) => {
     //prevent page reload
     event.preventDefault();
@@ -47,6 +55,7 @@ const Login = () => {
         setErrorMessages({ name: "pass", message: errors.pass });
       } else {
         setIsLogin(true);
+        navigate("/Profile")
       }
     } else {
       //username not found
@@ -76,9 +85,7 @@ const Login = () => {
             <input type="password" name="pass" required />
             {renderErrorMessage("pass")}
           </div>
-          <div onClick={handleLogin} className="button-container">
-            <input type="submit" />
-          </div>
+          <div className = "button-container"><input onClick = {handleLogin} type = 'submit' value='Create Account'/> </div>
         </form>
       </div>
       <div className="display-container">
