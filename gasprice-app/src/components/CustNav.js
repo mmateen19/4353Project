@@ -17,6 +17,10 @@ const CustNav = () => {
     navigate("/home/history");
   };
 
+  const LogoutClick = (event) => {
+    navigate("/");
+  };
+
   return (
     <div>
       <nav>
@@ -32,6 +36,9 @@ const CustNav = () => {
           </li>
           <li>
             <a onClick={historyClick}>History</a>
+          </li>
+          <li>
+            <a onClick={LogoutClick}>Logout</a>
           </li>
         </ul>
       </nav>
