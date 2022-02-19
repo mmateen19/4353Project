@@ -4,31 +4,16 @@
   margin: 1rem;
 }
 
-.Input-Sections {
+.form-sections {
   display: flex;
-  margin-bottom: 60px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.Left-Box {
-  margin-right: 125px;
-}
-
-.small-input {
-  margin-right: 60px;
-}
-
-h1 {
-  margin-bottom: 40px;
-}
-
-.Login-words {
-  margin-right: auto;
-  display: inline-block;
-  margin-right: 1rem;
-}
-.Login-input {
-  position: relative;
-  display: inline-block;
+.input-sections {
+  align-items: center;
+  margin: 1rem;
 }
 
 input[type="text"],
@@ -82,11 +67,4 @@ input[type="submit"]:hover {
 .title {
   font-size: 25px;
   margin-bottom: 20px;
-}
-
-.input-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin: 10px;
 }
