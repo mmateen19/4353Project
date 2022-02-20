@@ -12,8 +12,17 @@
   
 }
 
+.Left-Box {
+
+  margin-left: 10px;
+  justify-content: left;
+
+}
+
+
 .input-sections {
   
+  display: flex;
   align-items: center;
   margin: 1rem;
   padding: 10px;

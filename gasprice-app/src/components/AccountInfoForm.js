@@ -42,21 +42,21 @@ const AccountInfoForm = ({
         <h1>Account Information</h1>
         <div className="form-sections">
           <section className="input-sections">
-            <label for="FullName">Full Name: </label>
+            <label className = "Left-Box" for="FullName">Full Name: </label>
             <input name="FullName" type="text"></input>
 
             <label for="CompanyName">Company Name: </label>
             <input name="CompanyName" type="text"></input>
           </section>
           <section className="input-sections">
-            <label for="Addy1">Address 1: </label>
+            <label className = "Left-Box"for="Addy1">Address 1: </label>
             <input name="Addy1" type="text"></input>
 
             <label for="Addy2">Address 2: </label>
             <input name="Addy2" type="text"></input>
           </section>
           <section className="input-sections">
-            <label for="City">City: </label>
+            <label className = "Left-Box"for="City">City: </label>
             <input name="City" type="text"></input>
 
             <label for="Zip">Zip Code: </label>
