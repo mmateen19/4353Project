@@ -9,15 +9,16 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding:30px;
   
 }
 
 .input-sections {
   
-  align-items: center;
+  display: contents;
   margin: 1rem;
-  padding: 10px;
-  margin-right: auto;
+  padding: 20px;
+  margin-top:10px;
 }
 
 input[type="text"],
