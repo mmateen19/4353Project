@@ -4,6 +4,12 @@
   margin: 1rem;
 }
 
+.Box{
+
+  margin: 3.3px;
+
+}
+
 .form-sections {
   display: flex;
   align-items: center;

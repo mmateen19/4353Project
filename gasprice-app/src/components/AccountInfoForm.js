@@ -40,37 +40,39 @@ const AccountInfoForm = ({
     return (
       <div className="display-container">
         <h1>Account Information</h1>
+        <form>
         <div className="form-sections">
           <section className="input-sections">
-            <label className = "Left-Box" for="FullName">Full Name: </label>
-            <input name="FullName" type="text"></input>
+            <label className = "Box" for="FullName">Full Name: </label>
+            <input className = "Box" name="FullName" type="text"></input>
 
-            <label for="CompanyName">Company Name: </label>
-            <input name="CompanyName" type="text"></input>
+            <label className = "Box" for="CompanyName">Company Name: </label>
+            <input className = "Box" name="CompanyName" type="text"></input>
           </section>
           <section className="input-sections">
-            <label className = "Left-Box"for="Addy1">Address 1: </label>
-            <input name="Addy1" type="text"></input>
+            <label className = "Box" for="Addy1">Address 1: </label>
+            <input className = "Box" name="Addy1" type="text"></input>
 
-            <label for="Addy2">Address 2: </label>
-            <input name="Addy2" type="text"></input>
+            <label className = "Box" for="Addy2">Address 2: </label>
+            <input className = "Box" name="Addy2" type="text"></input>
           </section>
           <section className="input-sections">
-            <label className = "Left-Box"for="City">City: </label>
-            <input name="City" type="text"></input>
+            <label className = "Box" className = "Left-Box"for="City">City: </label>
+            <input className = "Box"name="City" type="text"></input>
 
-            <label for="Zip">Zip Code: </label>
-            <input name="Zip" type="text"></input>
+            <label className = "Box" for="Zip">Zip Code: </label>
+            <input className = "Box" name="Zip" type="text"></input>
 
           </section>
           <section>
-            <label for="State">State: </label>
+            <label className = "Box" for="State">State: </label>
             <States className = "input-selections" />
           </section>
         </div>
-        <button></button>
         <input type="submit" onSubmit={handleSubmit} />
+      </form>
       </div>
+      
     );
   };
 
