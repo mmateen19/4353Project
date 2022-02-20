@@ -23,8 +23,10 @@ const FuelQuoteForm = () => {
           </div>
           <div className="input-container">
             <label>
-              Delivery Address: *Fake Address here from DB account info*
+              Delivery Address: 
             </label>
+            <p>4800 Calhoun Rd, Houston, TX 77004</p>
+            {/* <input type="text" name="address" /> */}
           </div>
           <div className="input-container">
             <label>Delivery Date</label>
