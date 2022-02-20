@@ -6,3 +6,15 @@
     border-radius: 10px;
     margin-bottom: 15px;
   }
+
+  .title{
+      font-size: 10px;
+  }
+
+table{
+    padding:20px;
+}
+
+td, th {
+    padding: 10px;
+}
