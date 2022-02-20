@@ -1,10 +1,10 @@
 import React from "react";
 import CustNav from "./CustNav";
 import "./AccountInfoForm.css";
+import States from "./resources/states"
 
 const AccountInfoForm = ({
-  firstNameInput,
-  lastNameInput,
+  fullNameInput,
   addy1Input,
   cityInput,
   stateInput,
@@ -13,7 +13,6 @@ const AccountInfoForm = ({
 }) => {
   const errors = {
     f_name: "required",
-    l_name: "required",
     address1: "required",
     city_: "required",
     state_: "required",
@@ -22,10 +21,8 @@ const AccountInfoForm = ({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if ((firstNameInput = "")) {
+    if ((fullNameInput = "")) {
       setErrorMessages({ name: "f_name", message: errors.f_name });
-    } else if ((lastNameInput = "")) {
-      setErrorMessages({ name: "l_name", message: errors.l_name });
     } else if ((addy1Input = "")) {
       setErrorMessages({ name: "address1", message: errors.address1 });
     } else if ((cityInput = "")) {
@@ -65,8 +62,10 @@ const AccountInfoForm = ({
             <label for="Zip">Zip Code: </label>
             <input name="Zip" type="text"></input>
 
+          </section>
+          <section>
             <label for="State">State: </label>
-            <select name="State"></select>
+            <States className = "input-selections" />
           </section>
         </div>
         <button></button>
