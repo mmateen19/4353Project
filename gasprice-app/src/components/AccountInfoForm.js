@@ -82,7 +82,9 @@ const AccountInfoForm = ({
               <States className="input-selections" />
             </section>
           </div>
-          <input type="submit" onSubmit={handleSubmit} />
+          <div className="button-container">
+            <input onClick={handleSubmit} type="submit" value="Submit" />
+          </div>
         </form>
       </div>
     );
