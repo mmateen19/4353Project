@@ -6,7 +6,7 @@ html {
 }
 
 nav {
-  max-width: 960px;
+  max-width: 800px;
   /*mask-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #ffffff 25%, #ffffff 75%, rgba(255, 255, 255, 0) 100%);
   */
   margin: 0 auto;
@@ -34,10 +34,10 @@ nav ul li {
 }
 
 nav ul li a {
-  padding: 18px;
+  padding: 12px;
   font-family: "Open Sans";
   color: rgba(0, 35, 122, 0.5);
-  font-size: 18px;
+  font-size: 14px;
   text-decoration: none;
   display: block;
 }
