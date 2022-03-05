@@ -2,7 +2,7 @@ import React from "react";
 import CustNav from "./CustNav";
 import "./Home.css"
 
-const Home = () => {
+const Home = (data, setData) => {
     const render = () =>{
         return(
             <div className = "display-container">

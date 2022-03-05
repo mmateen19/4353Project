@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import {useNavigate} from 'react-router-dom';
 
-const Register = () => {
+const Register = (data, setData) => {
+
   const [errorMessages, setErrorMessages] = useState({});
   const [users, setUsers] = useState([]);
   const [usernameInput, setUsernameInput] = useState("");
@@ -20,9 +21,9 @@ const Register = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     //throws error if they try to submit empty string
-    if (usernameInput == "") {
+    if (usernameInput === "") {
       setErrorMessages({ name: "uname", message: errors.uname });
-    } else if (passwordInput == "") {
+    } else if (passwordInput === "") {
       setErrorMessages({ name: "pass", message: errors.pass });
     } else if (passwordInput !== reEnterPasswordInput) {
       setErrorMessages({ name: "reenterpass", message: errors.reenterpass });
