@@ -1,19 +1,12 @@
 import React from "react";
 import "./App.css";
 import { useNavigate } from "react-router-dom";
-//import components here
-
-//import { Outlet, Link } from "react-router-dom";
-import Login from "./components/Login";
-//import Profile from "./components/Profile";
-//import Register from "./components/Register";
-//import FuelQuoteForm from "./components/FuelQuoteForm";
 
 function App({ data, setData }) {
-  //these are states to handle the invalid sign in
+  //this is just to handle the default route "/". By default out app opens to login so we send route to login
   const navigate = useNavigate();
   navigate("/login");
-  return <Login data={data} setData={setData} />;
+  return <div></div>;
 }
 
 export default App;
