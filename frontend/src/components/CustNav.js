@@ -18,7 +18,7 @@ const CustNav = () => {
   };
 
   const LogoutClick = (event) => {
-    navigate("/");
+    navigate("/login");
   };
 
   return (
