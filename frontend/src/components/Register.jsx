@@ -1,10 +1,10 @@
 import React, {useState} from "react";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+const axios = require('axios')
 
 const Register = (data, setData) => {
 
   const [errorMessages, setErrorMessages] = useState({});
-  const [users, setUsers] = useState([]);
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [reEnterPasswordInput, setReEnterPasswordInput] = useState("");
@@ -28,10 +28,19 @@ const Register = (data, setData) => {
     } else if (passwordInput !== reEnterPasswordInput) {
       setErrorMessages({ name: "reenterpass", message: errors.reenterpass });
     } else {
-      setUsers([
-        ...users,
-        { username: usernameInput, password: passwordInput },
-      ]);
+      //this is the request to post to the backend
+      const options = {
+        method: "POST",
+        url: "/usersData",
+        params: {username: usernameInput, password: passwordInput}
+      };
+
+      axios.request(options).then((response) => {
+        console.log(response.data);
+      }, (error) => {
+        console.log(error);
+      });
+      
       setPasswordInput("");
       setReEnterPasswordInput("");
       setUsernameInput("");
