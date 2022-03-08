@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { useNavigate } from 'react-router-dom';
 const axios = require('axios')
 
-const Register = (data, setData) => {
+const Register = () => {
 
   const [errorMessages, setErrorMessages] = useState({});
   const [usernameInput, setUsernameInput] = useState("");
@@ -31,12 +31,12 @@ const Register = (data, setData) => {
       //this is the request to post to the backend
       const options = {
         method: "POST",
-        url: "/usersData",
+        url: "/api/users",
         params: {username: usernameInput, password: passwordInput}
       };
 
       axios.request(options).then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
       }, (error) => {
         console.log(error);
       });

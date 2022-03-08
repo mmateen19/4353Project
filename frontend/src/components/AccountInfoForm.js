@@ -4,7 +4,7 @@ import CustNav from "./CustNav";
 import "./AccountInfoForm.css";
 import States from "./resources/states";
 
-const AccountInfoForm = ({ data, setData }) => {
+const AccountInfoForm = () => {
   const [nameInput, setNameInput] = useState("");
   const [companyInput, setCompanyInput] = useState("");
   const [address1Input, setAddress1Input] = useState("");
