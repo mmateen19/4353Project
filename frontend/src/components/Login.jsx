@@ -9,7 +9,7 @@ const Login = (data, setData) => {
 
   const [errorMessages, setErrorMessages] = useState({});
 
-  let database = {};
+  let database = [];
   //this is eh. I should really be sending the input down to the backend and searching there
   //instead of getting the whole database into the frontend
   //while change after I get this working
