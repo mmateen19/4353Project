@@ -1,0 +1,7 @@
+const PricingModule =  () => {
+
+    return (
+        null
+    );
+
+}
