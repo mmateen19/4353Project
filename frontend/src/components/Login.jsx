@@ -2,26 +2,24 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom"
 import "./Login.css";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+const axios = require("axios");
 
 const Login = (data, setData) => {
 
   const [errorMessages, setErrorMessages] = useState({});
 
-  const database = [
-    {
-      username: "user1",
-      password: "pass1",
-    },
-    {
-      username: "user2",
-      password: "pass2",
-    },
-    {
-      username: "a",
-      password: "a",
-    }
-  ];
+  let database = [];
+  //this is eh. I should really be sending the input down to the backend and searching there
+  //instead of getting the whole database into the frontend
+  //while change after I get this working
+  axios.get('/usersData', {}).then((response) => {
+    //console.log(response.data);
+    database = response.data;
+  }, (error) => {
+    console.log(error);
+  });
+
 
   const errors = {
     uname: "invalid username",
@@ -38,7 +36,7 @@ const Login = (data, setData) => {
   const handleLogin = (event) => {
     //prevent page reload
     event.preventDefault();
-    var { uname, pass } = document.forms[0];
+    const { uname, pass } = document.forms[0];
     //change "users.find" to "database.find" to test with local input. still implementing
     const userData = database.find((user) => user.username === uname.value);
     //compare user info
