@@ -2,17 +2,12 @@ import React, { useState } from "react";
 import "./FuelQuoteForm.css";
 import CustNav from "./CustNav";
 
-//display the delivery address (non-editable) pulled from client information
-//delivery date, calendar drop down selecter
-//suggested price per gallon, numeric non-editable (we will do pricing calculation later)
-//display total amount due (calculated by price per gallon * gallons)
-
 const FuelQuoteForm = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [numGallons, setNumGallons] = useState(0);
   const [date, setDate] = useState("");
   const [isSubmit, setSubmit] = useState(false);
-  const pricePerGall = 3.5;
+  const pricePerGall = 3.5; //will use pricing module later
 
   const renderErrorMessage = (name) =>
     name === errorMessages.name && (
@@ -71,7 +66,7 @@ const FuelQuoteForm = () => {
 
   //create render of for quote and button that can send us back to quote form display
   const renderQuote = () => {
-    //we can get a quote from the pricing module,
+    //we can get a quote from the pricing module, (will get request from backend and PricingModule later)
     const total = pricePerGall * numGallons;
 
     let formatDate = new Date(date);
