@@ -35,9 +35,17 @@ app.post("/api/users", (req, res) => {
   const data = {
     username: req.query.username,
     password: req.query.password,
+    history: [], //an array of json objects
+    fullName: "",
+    company: "",
+    address1: "",
+    address2: "",
+    city: "",
+    zipcode: "",
+    state: "",
   };
   res.json((database = [...database, data]));
 });
 
 //hardcoding backend currently.
-let database = [{ username: "admin", password: "default" }];
+let database = [];
