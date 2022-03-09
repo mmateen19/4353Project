@@ -5,21 +5,9 @@ import "./Login.css";
 import { useNavigate } from 'react-router-dom';
 const axios = require("axios");
 
-const Login = (data, setData) => {
+const Login = () => {
 
   const [errorMessages, setErrorMessages] = useState({});
-
-  let database = [];
-  //this is eh. I should really be sending the input down to the backend and searching there
-  //instead of getting the whole database into the frontend
-  //while change after I get this working
-  axios.get('/usersData', {}).then((response) => {
-    //console.log(response.data);
-    database = response.data;
-  }, (error) => {
-    console.log(error);
-  });
-
 
   const errors = {
     uname: "invalid username",
@@ -37,20 +25,29 @@ const Login = (data, setData) => {
     //prevent page reload
     event.preventDefault();
     const { uname, pass } = document.forms[0];
-    //change "users.find" to "database.find" to test with local input. still implementing
-    const userData = database.find((user) => user.username === uname.value);
-    //compare user info
-    if (userData) {
-      if (userData.password !== pass.value) {
+
+    //this is the the request to the API for the password after passing the username down. 
+    const options = {
+      method: "GET",
+      url: "/api/users/authentication",
+      params: {username: uname.value}
+    };
+
+    axios.request(options).then((response) => {
+      if (response.data === "Not Found") {
+        //username not found
+        setErrorMessages({ name: "uname", message: errors.uname });
+      }
+      else if (response.data !== pass.value) {
         //invalid password
         setErrorMessages({ name: "pass", message: errors.pass });
-      } else {
+      }
+      else {
         navigate("/home"); //send to homepage
       }
-    } else {
-      //username not found
-      setErrorMessages({ name: "uname", message: errors.uname });
-    }
+    }, (error) => {
+      console.log(error);
+    });
   };
 
   return (
