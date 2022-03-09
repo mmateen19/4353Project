@@ -29,7 +29,7 @@ const Login = (data, setData) => {
     //this is the the request to the API for the password after passing the username down. 
     const options = {
       method: "GET",
-      url: "/api/users/authorization",
+      url: "/api/users/authentication",
       params: {username: uname.value}
     };
 

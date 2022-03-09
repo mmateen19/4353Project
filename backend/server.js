@@ -15,7 +15,7 @@ app.get("/api/users", (req, res) => {
 });
 
 //this is the get request called by login. it should take in the username and send back the password
-app.get("/api/users/authorization", (req, res) => {
+app.get("/api/users/authentication", (req, res) => {
   console.log(req.query);
   const userData = database.find(
     (user) => user.username === req.query.username
