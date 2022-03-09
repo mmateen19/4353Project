@@ -25,38 +25,13 @@ const Routing = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={<App data={backendData} setData={setBackendData} />}
-        />
-        <Route
-          path="login"
-          element={<Login data={backendData} setData={setBackendData} />}
-        />
-        <Route
-          path="register"
-          element={<Register data={backendData} setData={setBackendData} />}
-        />
-        <Route
-          path="home"
-          element={<Home data={backendData} setData={setBackendData} />}
-        />
-        <Route
-          path="home/accountinfo"
-          element={
-            <AccountInfoForm data={backendData} setData={setBackendData} />
-          }
-        />
-        <Route
-          path="home/pricing"
-          element={
-            <FuelQuoteForm data={backendData} setData={setBackendData} />
-          }
-        />
-        <Route
-          path="home/history"
-          element={<History data={backendData} setData={setBackendData} />}
-        />
+        <Route path="/" element={<App />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="home" element={<Home />} />
+        <Route path="home/accountinfo" element={<AccountInfoForm />} />
+        <Route path="home/pricing" element={<FuelQuoteForm />} />
+        <Route path="home/history" element={<History />} />
       </Routes>
     </BrowserRouter>
   );

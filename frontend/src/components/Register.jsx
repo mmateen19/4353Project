@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { useNavigate } from 'react-router-dom';
 const axios = require('axios')
 
-const Register = (data, setData) => {
+const Register = () => {
 
   const [errorMessages, setErrorMessages] = useState({});
   const [usernameInput, setUsernameInput] = useState("");

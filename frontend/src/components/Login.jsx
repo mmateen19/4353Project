@@ -5,7 +5,7 @@ import "./Login.css";
 import { useNavigate } from 'react-router-dom';
 const axios = require("axios");
 
-const Login = (data, setData) => {
+const Login = () => {
 
   const [errorMessages, setErrorMessages] = useState({});
 
