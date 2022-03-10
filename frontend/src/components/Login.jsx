@@ -43,7 +43,14 @@ const Login = () => {
         setErrorMessages({ name: "pass", message: errors.pass });
       }
       else {
-        navigate("/home"); //send to homepage
+        //need to get from the db if this user has logged in before
+        const firstTime = false;
+        if(firstTime){
+          navigate("/home/accountinfo");
+        }
+        else {
+          navigate("/home"); //send to homepage
+        }
       }
     }, (error) => {
       console.log(error);
