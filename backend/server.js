@@ -3,7 +3,7 @@ const app = express();
 const port = 4000;
 const cors = require("cors");
 
-// const login = require("./routes/Login")
+const Login = require("./routes/Login")
 
 
 //FakeDB
@@ -53,38 +53,40 @@ app.get("/api/users", (req, res) => {
 });
 
 //this is the get request called by login. it should take in the username and send back the password
-app.post("/api/users/authentication", (req, res) => {
-  console.log(req.body);
-  const userData = database.find(
-    (user) => user.username === req.body.username
-  );
-  let pass;
-  if (userData) {
-    // console.log(userData)
-    if (userData.password === req.body.password){
-      req.session.user = userData
-      //console.log(req.session.user)
-      pass = userData.password;
+// app.post("/api/users/authentication", (req, res) => {
+//   console.log(req.body);
+//   const userData = database.find(
+//     (user) => user.username === req.body.username
+//   );
+//   let pass;
+//   if (userData) {
+//     // console.log(userData)
+//     if (userData.password === req.body.password){
+//       req.session.user = userData
+//       //console.log(req.session.user)
+//       pass = userData.password;
 
-      //Auth
-      const id = userData.id
+//       //Auth
+//       const id = userData.id
       
-      const token = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET);
+//       const token = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET);
 
-      userData.token = token; 
+//       userData.token = token; 
 
-      res.json({auth: true, token: token, userData: userData})
-    }
-    else {
-      res.json({auth: false, message: "Not Found Pass!"})
-    }
-  } else {
-    res.json({auth: false, message: "Not Found User!"})
-  }
+//       res.json({auth: true, token: token, userData: userData})
+//     }
+//     else {
+//       res.json({auth: false, message: "Not Found Pass!"})
+//     }
+//   } else {
+//     res.json({auth: false, message: "Not Found User!"})
+//   }
   
-});
+// });
 
 
+
+app.post("/api/users/authentication", Login.logUserIn);
 
 
 
@@ -125,27 +127,30 @@ app.get("/api/AuthUser", authenticateToken, (req, res) => {
 
 
 //testing post to the api now
-app.post("/api/users", (req, res) => {
-  console.log(req.body);
-  let data = {
-    username: req.body.username,
-    password: req.body.password,
-    history: [], //an array of json objects
-    fullName: "",
-    company: "",
-    address1: "",
-    address2: "",
-    city: "",
-    zipcode: "",
-    state: "",
-    id: database.length + 1,
-    token: "",
-  };
+// app.post("/api/users", (req, res) => {
+//   console.log(req.body);
+//   let data = {
+//     username: req.body.username,
+//     password: req.body.password,
+//     history: [], //an array of json objects
+//     fullName: "",
+//     company: "",
+//     address1: "",
+//     address2: "",
+//     city: "",
+//     zipcode: "",
+//     state: "",
+//     id: database.length + 1,
+//     token: "",
+//   };
 
-  database.push(data)
-  //console.log(database)
-  res.json(database);
-});
+//   database.push(data)
+//   //console.log(database)
+//   res.json(database);
+// });
+
+
+app.post("/api/users", Login.registerUser)
 
 //hardcoding backend currently.
 
