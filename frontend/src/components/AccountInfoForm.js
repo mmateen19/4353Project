@@ -200,7 +200,7 @@ const AccountInfoForm = () => {
               {renderErrorMessage("address2")}
             </section>
             <section className="input-sections">
-              <label className="Box" className="Left-Box" for="City">
+              <label className="Left-Box" for="City">
                 City:{" "}
               </label>
               <input

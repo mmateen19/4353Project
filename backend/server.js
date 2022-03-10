@@ -68,9 +68,11 @@ app.post("/api/users/authentication", (req, res) => {
 
       //Auth
       const id = userData.id
+      
       const token = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: 300,
       });
+      userData.token = token;
 
       res.json({auth: true, token: token, userData: userData})
     }
@@ -86,28 +88,37 @@ app.post("/api/users/authentication", (req, res) => {
 
 
 
+
+
+
 //Function to authenticate token
-function authenticateToken(req, res, nex) 
+function authenticateToken(req, res, next) 
 {
-  const authHeader = req.headers['x-access-token']
-  const token = authHeader && authHeader.split(' ')[1]
+  const token = req.headers['x-access-token']
+
 
   if (token == null) return res.sendStatus(401)
 
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decode) => {
     if (err) 
     {
       res.json({auth: false, message: "Failed to authenticate"});
     }
     else 
     {
-      req.user = user
-      next()
+      req.userId = decode.id;
+      next();
 
     }
   });       
 
 }
+
+
+
+app.get("/api/AuthUser", authenticateToken, (req, res) => {
+  res.sendStatus(200);
+})
 
 
 //testing post to the api now
@@ -125,6 +136,7 @@ app.post("/api/users", (req, res) => {
     zipcode: "",
     state: "",
     id: database.length + 1,
+    token: "",
   };
 
   database.push(data)
