@@ -5,42 +5,68 @@ import "./Login.css";
 import { useNavigate } from 'react-router-dom';
 const axios = require("axios");
 
+
 const Login = () => {
 
+  //States
   const [errorMessages, setErrorMessages] = useState({});
 
+  
+  //Variables
+  const navigate = useNavigate();
+ 
+ 
+  //Error Messages
   const errors = {
     uname: "invalid username",
     pass: "invalid password",
   };
 
+
+  //Function to render error message
   const renderErrorMessage = (name) =>
     name === errorMessages.name && (
       <div className="error">{errorMessages.message}</div>
     );
 
-  const navigate = useNavigate();
 
+  //Function to handle the login event
   const handleLogin = (event) => {
     //prevent page reload
     event.preventDefault();
     const { uname, pass } = document.forms[0];
 
+  
+
+    //axios.request(options).
+    
+    // console.log( uname.value + " sdgsfg " + pass.value);
+
+    // axios.get('/api/users/authentication', {
+      
+    //   username: uname.value,
+    //   password: pass.value,
+
+    // })
+
     //this is the the request to the API for the password after passing the username down. 
     const options = {
-      method: "GET",
+      method: "POST",
       url: "/api/users/authentication",
-      params: {username: uname.value}
+      data: {username: uname.value, password:pass.value}
     };
 
     axios.request(options).then((response) => {
-      if (response.data === "Not Found") {
-        //username not found
-        setErrorMessages({ name: "uname", message: errors.uname });
-      }
-      else if (response.data !== pass.value) {
-        //invalid password
-        setErrorMessages({ name: "pass", message: errors.pass });
+      console.log(response.data)
+      if (!response.data.auth){
+        if (response.data.message === "Not Found User!") {
+          //username not found
+          setErrorMessages({ name: "uname", message: errors.uname });
+        }
+        else if (response.data.message == "Not Found Pass!") {
+          //invalid password
+          setErrorMessages({ name: "pass", message: errors.pass });
+        }
       }
       else {
         //need to get from the db if this user has logged in before
@@ -57,6 +83,8 @@ const Login = () => {
     });
   };
 
+
+  //HTML
   return (
     <div className = "App">
       <div className="display-container">
