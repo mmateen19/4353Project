@@ -2,21 +2,18 @@ const express = require("express");
 const app = express();
 const port = 4000;
 const cors = require("cors");
+require("dotenv").config();
 
-const Login = require("./routes/Login")
 
-
-//FakeDB
-
-const {database} = require('./database/database')
-
-//Auth
 let bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken')
 const session = require("express-session");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
 
-require("dotenv").config();
+const Login = require("./routes/Login")
+const {database} = require('./database/database')
 
 
 app.use(cors({
@@ -36,21 +33,88 @@ app.use(
     }
   ))
 )
-app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.json());
 
 app.listen(port, () => console.log("Server started on port 4000"));
 
+
 app.get("/api", (req, res) => res.json("This is to test the API"));
+app.get("/api/users", (req, res) => {res.json(database);});
+
+
+app.post("/api/users", Login.registerUser)
+app.post("/api/users/authentication", Login.logUserIn);
+
+app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
+  console.log(req.userId);
+  res.sendStatus(200);
+})
 
 
 
 
 
-app.get("/api/users", (req, res) => {
-  res.json(database);
-});
+
+
+
+
+//Old Code:
+
+
+
+
+
+
+//Function to authenticate token
+// function authenticateToken(req, res, next) 
+// {
+//   const token = req.headers['x-access-token']
+
+
+//   if (token == null) return res.sendStatus(401)
+
+//   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decode) => {
+//     if (err) 
+//     {
+//       res.json({auth: false, message: "Failed to authenticate"});
+//     }
+//     else 
+//     {
+//       req.userId = decode.id;
+//       next();
+
+//     }
+//   });       
+
+// }
+
+
+
+//testing post to the api now
+// app.post("/api/users", (req, res) => {
+//   console.log(req.body);
+//   let data = {
+//     username: req.body.username,
+//     password: req.body.password,
+//     history: [], //an array of json objects
+//     fullName: "",
+//     company: "",
+//     address1: "",
+//     address2: "",
+//     city: "",
+//     zipcode: "",
+//     state: "",
+//     id: database.length + 1,
+//     token: "",
+//   };
+
+//   database.push(data)
+//   //console.log(database)
+//   res.json(database);
+
+
+
+
 
 //this is the get request called by login. it should take in the username and send back the password
 // app.post("/api/users/authentication", (req, res) => {
@@ -83,74 +147,3 @@ app.get("/api/users", (req, res) => {
 //   }
   
 // });
-
-
-
-app.post("/api/users/authentication", Login.logUserIn);
-
-
-
-
-
-//Function to authenticate token
-function authenticateToken(req, res, next) 
-{
-  const token = req.headers['x-access-token']
-
-
-  if (token == null) return res.sendStatus(401)
-
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decode) => {
-    if (err) 
-    {
-      res.json({auth: false, message: "Failed to authenticate"});
-    }
-    else 
-    {
-      req.userId = decode.id;
-      next();
-
-    }
-  });       
-
-}
-
-
-
-app.get("/api/AuthUser", authenticateToken, (req, res) => {
-
-
-  console.log(req.userId);
-
-  res.sendStatus(200);
-})
-
-
-//testing post to the api now
-// app.post("/api/users", (req, res) => {
-//   console.log(req.body);
-//   let data = {
-//     username: req.body.username,
-//     password: req.body.password,
-//     history: [], //an array of json objects
-//     fullName: "",
-//     company: "",
-//     address1: "",
-//     address2: "",
-//     city: "",
-//     zipcode: "",
-//     state: "",
-//     id: database.length + 1,
-//     token: "",
-//   };
-
-//   database.push(data)
-//   //console.log(database)
-//   res.json(database);
-// });
-
-
-app.post("/api/users", Login.registerUser)
-
-//hardcoding backend currently.
-

@@ -65,27 +65,27 @@ const logUserIn = (req, res, nex) =>
 }
 
 
-// const checkAuth = (res, req, nex) =>
-// {
-//   const authHeader = req.headers['x-access-token'];
-//   const token = authHeader && authHeader.split(' ')[1];
+function authenticateToken(req, res, next) 
+{
+  const token = req.headers['x-access-token']
 
-//   if (token == null) return res.sendStatus(401);
 
-//   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-//     if (err) 
-//     {
-//       res.json({auth: false, message: "Failed to authenticate"});
-//     }
-//     else 
-//     {
-//       req.userId = decoded.id;
-//       next();
+  if (token == null) return res.sendStatus(401)
 
-//     }
-//   });       
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decode) => {
+    if (err) 
+    {
+      res.json({auth: false, message: "Failed to authenticate"});
+    }
+    else 
+    {
+      req.userId = decode.id;
+      next();
 
-// }
+    }
+  });       
+
+}
 
 
 
@@ -93,5 +93,5 @@ module.exports =
 {
      registerUser,
      logUserIn,
-//     checkAuth,
+     authenticateToken,
 }
