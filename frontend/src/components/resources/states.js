@@ -1,10 +1,16 @@
 
-const States = () => {
+const States = ({setStateInput}) => {
+
+    const stateInputHandler = (event) => {
+        event.preventDefault();
+        setStateInput(event.target.value);
+      };
 
 return (
 <div class = "containers">
 
-<select>
+<select onChange = {stateInputHandler}>
+    <option disabled selected value>--</option>
     <option value="AL">AL</option>
     <option value="AK">AK</option>
     <option value="AR">AR</option>
