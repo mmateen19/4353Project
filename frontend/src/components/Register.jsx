@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { useNavigate } from 'react-router-dom';
-const axios = require('axios')
+import Axios from "axios"
 
 const Register = () => {
 
@@ -29,13 +29,18 @@ const Register = () => {
       setErrorMessages({ name: "reenterpass", message: errors.reenterpass });
     } else {
       //this is the request to post to the backend
-      const options = {
-        method: "POST",
-        url: "/api/users",
-        params: {username: usernameInput, password: passwordInput}
-      };
+      // const options = {
+      //   method: "POST",
+      //   url: "/api/users",
+      //   params: {username: usernameInput, password: passwordInput}
+      // };
 
-      axios.request(options).then((response) => {
+      Axios.post('api/users', {
+
+        username: usernameInput, 
+        password: passwordInput,
+
+      }).then((response) => {
         //console.log(response.data);
       }, (error) => {
         console.log(error);
