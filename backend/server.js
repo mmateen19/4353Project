@@ -20,7 +20,7 @@ require("dotenv").config();
 
 
 app.use(cors({
-  origin: ["http://localhost:4000"],
+  origin: ["http://localhost:3000"],
   methods: ["GET", "POST"],
   credentials: true,
 }));
@@ -69,10 +69,9 @@ app.post("/api/users/authentication", (req, res) => {
       //Auth
       const id = userData.id
       
-      const token = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: 300,
-      });
-      userData.token = token;
+      const token = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET);
+
+      userData.token = token; 
 
       res.json({auth: true, token: token, userData: userData})
     }
@@ -117,13 +116,17 @@ function authenticateToken(req, res, next)
 
 
 app.get("/api/AuthUser", authenticateToken, (req, res) => {
+
+
+  console.log(req.userId);
+
   res.sendStatus(200);
 })
 
 
 //testing post to the api now
 app.post("/api/users", (req, res) => {
-  //console.log(req.body);
+  console.log(req.body);
   let data = {
     username: req.body.username,
     password: req.body.password,
