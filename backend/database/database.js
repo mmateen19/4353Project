@@ -10,4 +10,5 @@ exports.database = [{
     zipcode: "",
     state: "",
     id: 1,
+    token: "",
   }];

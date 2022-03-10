@@ -69,6 +69,9 @@ const Login = () => {
         }
       }
       else {
+
+        localStorage.setItem("token", response.data.token )
+
         //need to get from the db if this user has logged in before
         const firstTime = false;
         if(firstTime){
