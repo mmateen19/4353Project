@@ -1,0 +1,19 @@
+GET http://localhost:4000/api/users
+
+###
+
+POST http://localhost:4000/api/users?username=a&password=a
+
+
+
+###
+
+GET http://localhost:4000/api/users/authentication
+
+
+###
+
+GET http://localhost:4000/api/AuthUser
+Content-Type: application/json
+x-access-token: svsdvsdv
+

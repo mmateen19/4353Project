@@ -1,7 +1,6 @@
 .Form {
   color: black;
   font-size: 8px;
-  margin: 1rem;
   text-align: center;
   font-family: sans-serif;
   display: flex;
@@ -35,6 +34,7 @@
   margin: 1rem;
   padding: 20px;
   margin-top: 10px;
+  font-size: large;
 }
 
 input[type="text"],
@@ -75,6 +75,7 @@ input[type="submit"]:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
   margin-bottom: 15px;
+  font-size: large;
 }
 
 .list-container {

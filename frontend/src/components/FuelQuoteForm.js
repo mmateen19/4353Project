@@ -94,7 +94,7 @@ const FuelQuoteForm = () => {
             <p> Projected Delivery Date: {formatDate}</p>
           </div>
           <div onClick={handleOk} className="button-container">
-            <input type="submit" value="Ok" />
+            <input type="submit" value="OK" />
           </div>
         </form>
       </div>

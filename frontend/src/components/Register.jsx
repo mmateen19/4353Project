@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { useNavigate } from 'react-router-dom';
-const axios = require('axios')
+const axios = require("axios");
 
 const Register = () => {
 
@@ -32,9 +32,16 @@ const Register = () => {
       const options = {
         method: "POST",
         url: "/api/users",
-        params: {username: usernameInput, password: passwordInput}
+        data: {username: usernameInput, password: passwordInput}
       };
 
+      // Axios.post('api/users', {
+
+      //   username: usernameInput, 
+      //   password: passwordInput,
+
+      // })
+      
       axios.request(options).then((response) => {
         //console.log(response.data);
       }, (error) => {
