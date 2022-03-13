@@ -77,6 +77,8 @@ const saveQuote = (req, res, next) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    return res.json(result).status(200);
+
 }
 
 
@@ -86,7 +88,8 @@ const getQuote = async (req, res) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-}
+    return res.json(result).status(200);
+  }
 
 const getHistory = (req, res, next) => {
     const errors = validationResult(req);
@@ -94,6 +97,7 @@ const getHistory = (req, res, next) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
+    return res.json(result).status(200);
 
 }
 
