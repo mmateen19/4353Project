@@ -12,7 +12,10 @@ describe("task api", () =>{
      *  log in 
      * 
      * 
-     * although we have this test set up, we need to wait until the database is set up in order to utilize it. 
+     * although we have this test set up, 
+     * it won't be function properly until the database it set up
+     * if we run the tests now, they will display inaccurate results 
+     * so instead we are choosing to wait until we can run them properly
      * 
      * reference code below
      */
@@ -26,12 +29,12 @@ describe("task api", () =>{
                 username: 'a',
                 password: 'a',
                 fullName: "a",
-                company: "aaa",
-                address1: "aaa",
-                address2: "aaa",
-                city: "aaa",
-                zipcode: "aaa",
-                state: "TX",
+                company: "a",
+                address1: "a",
+                address2: "a",
+                city: "a",
+                zipcode: "a",
+                state: "a",
             };
             chai
                 .request('http://localhost:4000') // right now, we can't use server so we're using the address instead
@@ -78,7 +81,8 @@ describe("task api", () =>{
                     .post("/quote/user")
                     .send(quote)
                     .end((err, res)=> {
-                        expect(res.status).to.be.eq(200);  
+                        expect(res.status).to.be.eq(200); 
+                       // expect(res.userId).to.be.above(0); 
                         done();                    
                     });
             });
@@ -252,11 +256,26 @@ describe("task api", () =>{
 //           password: "a",
 //         };
 //         chai
-//           .request("http://localhost:4000/api/users")
-//           .post("/users")
+//           .request("http://localhost:4000")
+//           .post("/api/users")
 //           .send(user)
 //           .end((err, res) => {
-//             //res.body.authentication.should.be.eq(true);
+                //expect(res.status).to.be.eq(200)
+//             //expect(res.body).authentication.should.be.eq(true);
 //             done();
 //           });
+//          it("it should authenticate login", (done) => {
+    //         const user = {
+    //           username: "aaaa",
+    //           password: "aaaa",
+    //         };
+    //         chai
+    //           .request("http://localhost:4000")
+    //           .post("/api/users")
+    //           .send(user)
+    //           .end((err, res) => {
+                    //expect(res.status).to.be.eq(200)
+    //             //expect(res.body).authentication.should.be.eq(false);
+    //             done();
+    //           });    
 //       });

@@ -27,7 +27,7 @@ const validate = (method) =>{
                 .isEmpty()
                 .isNumeric()
                 .custom((val, { req }) => { return req.body.gallons >= 0 })
-                .withMessage('Bad Request')   
+                .withMessage('Bad Request')
             ]
         }
 
@@ -80,12 +80,18 @@ const saveQuote = (req, res, next) => {
 }
 
 const getQuote = async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-      return res.status(200).json({errors:errors.array()});
-   }
+    
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  if (!req.body.userId || !req.body.location || !req.body.gallons) {
+    return res.sendStatus(400);
+  } 
+  return res.status(200).json({errors:errors.array()});
+
+};
 
 
 const getHistory = (req, res, next) => {
