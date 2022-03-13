@@ -4,43 +4,14 @@ const port = 4000;
 const cors = require("cors");
 require("dotenv").config();
 
-//<<<<<<< main
 let bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
-//=======
-
-
-
-//let bodyParser = require('body-parser')
-//const jwt = require('jsonwebtoken')
-//>>>>>>> maryum
 const session = require("express-session");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-app.use((err, req, res, next) => {
-  if (err instanceof SyntaxError && "body" in err) {
-    console.error(err);
-    return res.sendStatus(400); // Bad request
-  }
-  next();
-});
-
 
 const Login = require("./routes/Login");
 const { database } = require("./database/database.js");
-
-
-// const Login = require("./routes/Login")
-// const {database} = require('./database/database')
-const quote = require("./routes/FuelQuote");
-
-
-app.use(cors({
-  origin: ["http://localhost:3000"],
-  methods: ["GET", "POST"],
-  credentials: true,
-}));
-
 
 app.use(
   cors({
@@ -61,42 +32,21 @@ app.use(
 
 app.listen(port, () => console.log("Server started on port 4000"));
 
-//<<<<<<< main
 app.get("/api", (req, res) => res.json("This is to test the API"));
 app.get("/api/users", (req, res) => {
   res.json(database);
   a;
 });
 
-//app.post("/api/users", Login.registerUser);
-//=======
-// displaying database at /api/users and at /quote
-// app.get("/api", (req, res) => res.json("This is to test the API"));
-// app.get("/api/users", (req, res) => {res.json(database);});
-
-app.get("/quote", (req, res) => res.json("this is to test the quote page"));
-app.get("/quote/user", (req, res) => {res.json(database);});
-app.get("/quote/user/save", (req, res) => {res.json(database);});
-app.get("/quote/user/history", (req, res) => {res.json(database);});
-
-
-
-//log in - authenticating
-app.post("/api/users", Login.registerUser)
-//>>>>>>> maryum
+app.post("/api/users", Login.registerUser);
 app.post("/api/users/authentication", Login.logUserIn);
-
 
 app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
   console.log(req.userId);
   res.sendStatus(200);
+});
 
-
-//quote
-app.post("/quote/user", quote.validate('getQuote'), quote.getQuote);
-app.post("/quote/user/save", quote.validate('saveQuote'), quote.saveQuote);
-app.post("/quote/user/history", quote.getHistory);
-
+//Old Code:
 
 //Function to authenticate token
 // function authenticateToken(req, res, next)
