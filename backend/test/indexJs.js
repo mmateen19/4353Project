@@ -9,19 +9,46 @@ chai.use(chaiHttp);
 
 
 describe("task api", () =>{
+
+    describe("POST /profile", ()=>{
+        it("it should update profile", (done)=>{
+            const user = {
+                username: 'a',
+                password: 'a',
+                fullName: "a",
+                company: "aaa",
+                address1: "aaa",
+                address2: "aaa",
+                city: "aaa",
+                zipcode: "aaa",
+                state: "TX",
+            };
+            chai
+                .request('http://localhost:4000') // right now, we can't use server so we're using the address instead
+                .post("/api/users")
+                .send(user)
+                .end((err, res)=>{
+                    expect(res.status).to.be.eq(200);
+                    done();
+                });
+        });
+    });
+
+    /**
+     * registration testing 
+     */
     describe("POST /register", () =>{
-        it("should register", (done)=>{
+        it("it should register", (done)=>{
             const user = {
                 username:"a",
                 password: "a",
             };
             chai
-                .request('http://localhost:4000')
+                .request('http://localhost:4000') // right now, we can't use server so we're using the address instead
                 .post("/api/users")
                 .send(user)
                 .end((err, res)=>{
                     expect(res.status).to.be.eq(200);
-                    //expect(res.body.authentication).to.be.eq(true);
                     done();
                 });
         });

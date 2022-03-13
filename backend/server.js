@@ -55,18 +55,10 @@ app.post("/api/users", Login.registerUser)
 app.post("/api/users/authentication", Login.logUserIn);
 
 
-app.get("/api/AuthUser", Login.authenticateToken, (err, req, res) => {
-  if (err instanceof SyntaxError && "body" in err) {
-    console.error(err);
-    //res.send({ authentication: false });
-    return res.sendStatus(400); // Bad request
-
-  }else{
+app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
   console.log(req.userId);
   res.sendStatus(200);
-  res.send({ authentication: true });
 
-  }
 })
 
 
