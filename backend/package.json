@@ -62,14 +62,21 @@
     "vary": "^1.1.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "node server",
-    "dev": "nodemon server"
+    "dev": "nodemon server",
+    "type": "module"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.6",
+    "mocha":"^9.2.2",
+    "nyc":"15.1.0",
+    "should":"^13.2.3"
+    
   }
 }

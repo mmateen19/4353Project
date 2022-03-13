@@ -13,6 +13,13 @@ exports.database = [
     zipcode: "",
     state: "",
     firstTime: false,
+    date:"", 
+    time:"", 
+    userId:1, 
+    location:"a", 
+    gallons:1,
+    quote:1, 
+    total:1, 
   },
   {
     id: 2,
@@ -28,5 +35,13 @@ exports.database = [
     zipcode: "",
     state: "",
     firstTime: false,
+    date:"", 
+    time:"", 
+    userId:1, 
+    location:"a", 
+    gallons:1,
+    quote:1, 
+    total:1, 
   },
 ];
+
