@@ -10,10 +10,14 @@ chai.use(chaiHttp);
 
 describe("task api", () =>{
     /**
-     * quote
+     *  log in 
+     * 
+     * 
+     * although we have this test set up, we need to wait until the database is set up in order to utilize it. 
+     * 
+     * reference code below
      */
-    describe("POST quote")
-
+    //---------------------------------------------------------------------------------------------------------------
     /**
      * updating profile
      */
@@ -60,6 +64,56 @@ describe("task api", () =>{
                 });
         });
     });
+
+    /**
+     * QUOTE
+     */
+
+    // get quote
+         describe("POST quote", ()=>{
+            it("it should get quote", (done)=>{
+                const quote = {
+                    location:"x",
+                    gallons: 1,
+                    userId: 1,
+                };
+                chai
+                    .request('http://localhost:4000') //
+                    .post("/quote/user")
+                    .send(quote)
+                    .end((err, res)=> {
+                        expect(res.status).to.be.eq(200);   
+                        //expect(res.total).to.be.eq(1);  
+                        //expect(res.quote).to.be.eq(1);   
+                        this.timeout(15000);
+                        setTimeout(done, 15000);
+                        done();                    
+                    });
+
+            });
+
+            it("should fail to get quote", (done)=>{
+                const quote ={
+                    gallons: 2, 
+                    userId: 2,
+                };
+                chai   
+                    .request('http://localhost:4000')
+                    .post("/quote/user")
+                    .send(quote)
+                    .end((err, res)=>{
+                        expect(res.status).to.be.eq(400);
+                        done();
+                    });
+
+
+            });
+        });
+
+
+
+
+
 });
 
 
