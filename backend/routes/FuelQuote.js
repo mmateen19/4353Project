@@ -72,19 +72,14 @@ const validate = (method) =>{
 };
 
 const saveQuote = (req, res, next) => {
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    return res.status(200).json({errors:errors.array()});
-
-    
+    return res.status(200).json({errors:errors.array()});    
 }
 
-
 const getQuote = async (req, res) => {
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -92,13 +87,18 @@ const getQuote = async (req, res) => {
       return res.status(200).json({errors:errors.array()});
    }
 
+
 const getHistory = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    return res.status(200).json({errors:errors.array()});
-
+    const userId = req.body.userId;
+    if(!userId){
+      return res.sendStatus(400);
+    } else{
+      return res.status(200).json({errors:errors.array()});
+    }
 }
 
 
