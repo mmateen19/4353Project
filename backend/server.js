@@ -23,6 +23,7 @@ app.use((err, req, res, next) => {
 
 const Login = require("./routes/Login")
 const {database} = require('./database/database')
+const quote = require("./routes/FuelQuote");
 
 
 app.use(cors({
@@ -62,6 +63,14 @@ app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
 })
 
 
+//quotes 
+app.get("/quote", (req, res) => res.json("this is the quote page"));
+app.get("/quote", (req, res) => {res.json(FuelQuote);});
+app.post("/quote", quote.validate('getQuote'), quote.getQuote);
+app.post("/save-quote", quote.validate('saveQuote'), quote.saveQuote);
+app.post("/fuel-history", quote.getHistory);
+
+
 
 
 
@@ -70,11 +79,6 @@ app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
 
 
 //Old Code:
-
-
-
-
-
 
 //Function to authenticate token
 // function authenticateToken(req, res, next) 
