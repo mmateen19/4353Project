@@ -6,12 +6,22 @@ require("dotenv").config();
 
 let bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
+
 const session = require("express-session");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && "body" in err) {
+    console.error(err);
+    return res.sendStatus(400); // Bad request
+  }
+  next();
+});
 
 const Login = require("./routes/Login");
 const { database } = require("./database/database.js");
+const quote = require("./routes/FuelQuote");
+
 
 app.use(
   cors({
@@ -38,6 +48,11 @@ app.get("/api/users", (req, res) => {
   a;
 });
 
+app.get("/quote", (req, res) => res.json("this is to test the quote page"));
+app.get("/quote/user", (req, res) => {res.json(database);});
+app.get("/quote/user/save", (req, res) => {res.json(database);});
+app.get("/quote/user/history", (req, res) => {res.json(database);});
+
 app.post("/api/users", Login.registerUser);
 app.post("/api/users/authentication", Login.logUserIn);
 
@@ -45,6 +60,11 @@ app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
   console.log(req.userId);
   res.sendStatus(200);
 });
+
+app.post("/quote/user", quote.validate('getQuote'), quote.getQuote);
+app.post("/quote/user/save", quote.validate('saveQuote'), quote.saveQuote);
+app.post("/quote/user/history", quote.getHistory);
+
 
 
 
