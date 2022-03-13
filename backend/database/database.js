@@ -11,4 +11,17 @@ exports.database = [{
     state: "",
     id: 1,
     token: "",
+
+        // adding fuel quote information here for the time being 
+
+
+    date:"", 
+    time:"", 
+    userId:"", 
+    location:"", 
+    gallons:1,
+    quote:1, 
+    total:1, 
+
+
   }];
