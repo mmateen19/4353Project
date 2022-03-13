@@ -4,16 +4,11 @@ const port = 4000;
 const cors = require("cors");
 require("dotenv").config();
 
-//<<<<<<< main
-let bodyParser = require("body-parser");
-const jwt = require("jsonwebtoken");
-//=======
 
 
 
-//let bodyParser = require('body-parser')
-//const jwt = require('jsonwebtoken')
-//>>>>>>> maryum
+let bodyParser = require('body-parser')
+const jwt = require('jsonwebtoken')
 const session = require("express-session");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -26,12 +21,8 @@ app.use((err, req, res, next) => {
 });
 
 
-const Login = require("./routes/Login");
-const { database } = require("./database/database.js");
-
-
-// const Login = require("./routes/Login")
-// const {database} = require('./database/database')
+const Login = require("./routes/Login")
+const {database} = require('./database/database')
 const quote = require("./routes/FuelQuote");
 
 
@@ -41,38 +32,24 @@ app.use(cors({
   credentials: true,
 }));
 
-
 app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
-    credentials: true,
-  })
-);
+  session((
+    {
+      key: "userId",
+      secret: process.env.ACCESS_TOKEN_SECRET,
+      resave:false,
+      saveUninitialized: false,
 
-app.use(
-  session({
-    key: "userId",
-    secret: process.env.ACCESS_TOKEN_SECRET,
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+    }
+  ))
+)
+
 
 app.listen(port, () => console.log("Server started on port 4000"));
 
-//<<<<<<< main
-app.get("/api", (req, res) => res.json("This is to test the API"));
-app.get("/api/users", (req, res) => {
-  res.json(database);
-  a;
-});
-
-//app.post("/api/users", Login.registerUser);
-//=======
 // displaying database at /api/users and at /quote
-// app.get("/api", (req, res) => res.json("This is to test the API"));
-// app.get("/api/users", (req, res) => {res.json(database);});
+app.get("/api", (req, res) => res.json("This is to test the API"));
+app.get("/api/users", (req, res) => {res.json(database);});
 
 app.get("/quote", (req, res) => res.json("this is to test the quote page"));
 app.get("/quote/user", (req, res) => {res.json(database);});
@@ -83,13 +60,14 @@ app.get("/quote/user/history", (req, res) => {res.json(database);});
 
 //log in - authenticating
 app.post("/api/users", Login.registerUser)
-//>>>>>>> maryum
 app.post("/api/users/authentication", Login.logUserIn);
 
 
 app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
   console.log(req.userId);
   res.sendStatus(200);
+
+})
 
 
 //quote
@@ -98,27 +76,38 @@ app.post("/quote/user/save", quote.validate('saveQuote'), quote.saveQuote);
 app.post("/quote/user/history", quote.getHistory);
 
 
+
+
+
+
+
+
+//Old Code:
+
 //Function to authenticate token
-// function authenticateToken(req, res, next)
+// function authenticateToken(req, res, next) 
 // {
 //   const token = req.headers['x-access-token']
+
 
 //   if (token == null) return res.sendStatus(401)
 
 //   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decode) => {
-//     if (err)
+//     if (err) 
 //     {
 //       res.json({auth: false, message: "Failed to authenticate"});
 //     }
-//     else
+//     else 
 //     {
 //       req.userId = decode.id;
 //       next();
 
 //     }
-//   });
+//   });       
 
 // }
+
+
 
 //testing post to the api now
 // app.post("/api/users", (req, res) => {
@@ -142,6 +131,10 @@ app.post("/quote/user/history", quote.getHistory);
 //   //console.log(database)
 //   res.json(database);
 
+
+
+
+
 //this is the get request called by login. it should take in the username and send back the password
 // app.post("/api/users/authentication", (req, res) => {
 //   console.log(req.body);
@@ -158,10 +151,10 @@ app.post("/quote/user/history", quote.getHistory);
 
 //       //Auth
 //       const id = userData.id
-
+      
 //       const token = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET);
 
-//       userData.token = token;
+//       userData.token = token; 
 
 //       res.json({auth: true, token: token, userData: userData})
 //     }
@@ -171,5 +164,5 @@ app.post("/quote/user/history", quote.getHistory);
 //   } else {
 //     res.json({auth: false, message: "Not Found User!"})
 //   }
-
+  
 // });
