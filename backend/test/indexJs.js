@@ -73,7 +73,7 @@ describe("task api", () =>{
          describe("POST quote", ()=>{
             it("it should get quote", (done)=>{
                 const quote = {
-                    location:"x",
+                    location:"a",
                     gallons: 1,
                     userId: 1,
                 };
@@ -82,11 +82,7 @@ describe("task api", () =>{
                     .post("/quote/user")
                     .send(quote)
                     .end((err, res)=> {
-                        expect(res.status).to.be.eq(200);   
-                        //expect(res.total).to.be.eq(1);  
-                        //expect(res.quote).to.be.eq(1);   
-                        this.timeout(15000);
-                        setTimeout(done, 15000);
+                        expect(res.status).to.be.eq(200);  
                         done();                    
                     });
 
