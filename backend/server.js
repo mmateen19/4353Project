@@ -47,9 +47,13 @@ app.use(
 
 app.listen(port, () => console.log("Server started on port 4000"));
 
-// displaying database at /api/users
+// displaying database at /api/users and at /quote
 app.get("/api", (req, res) => res.json("This is to test the API"));
 app.get("/api/users", (req, res) => {res.json(database);});
+
+app.get("/quote", (req, res) => res.json("this is to test the quote page"));
+app.get("/quote/user", (req, res) => {res.json(database);});
+
 
 //log in - authenticating
 app.post("/api/users", Login.registerUser)
@@ -63,14 +67,8 @@ app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
 })
 
 
-//quotes 
-app.get("/quote", (req, res) => res.json("this is the quote page"));
-app.get("/quote", (req, res) => {res.json(FuelQuote);});
-app.post("/quote", quote.validate('getQuote'), quote.getQuote);
-app.post("/save-quote", quote.validate('saveQuote'), quote.saveQuote);
-app.post("/fuel-history", quote.getHistory);
-
-
+//quote
+app.post("/quote/user", quote.validate('getQuote'), quote.getQuote);
 
 
 
