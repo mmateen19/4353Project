@@ -5,11 +5,20 @@ const cors = require("cors");
 require("dotenv").config();
 
 
+
+
 let bodyParser = require('body-parser')
 const jwt = require('jsonwebtoken')
 const session = require("express-session");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && "body" in err) {
+    console.error(err);
+    return res.sendStatus(400); // Bad request
+  }
+  next();
+});
 
 
 const Login = require("./routes/Login")
@@ -37,17 +46,27 @@ app.use(
 
 app.listen(port, () => console.log("Server started on port 4000"));
 
-
+// displaying database at /api/users
 app.get("/api", (req, res) => res.json("This is to test the API"));
 app.get("/api/users", (req, res) => {res.json(database);});
 
-
+//log in - authenticating
 app.post("/api/users", Login.registerUser)
 app.post("/api/users/authentication", Login.logUserIn);
 
-app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
+
+app.get("/api/AuthUser", Login.authenticateToken, (err, req, res) => {
+  if (err instanceof SyntaxError && "body" in err) {
+    console.error(err);
+    //res.send({ authentication: false });
+    return res.sendStatus(400); // Bad request
+
+  }else{
   console.log(req.userId);
   res.sendStatus(200);
+  res.send({ authentication: true });
+
+  }
 })
 
 
