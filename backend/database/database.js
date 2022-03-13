@@ -1,9 +1,6 @@
-exports.database = [
-  {
-    id: 1,
-    token: "",
-    username: "a",
-    password: "a",
+exports.database = [{
+    username: 'a',
+    password: 'a',
     history: [], //an array of json objects
     fullName: "",
     company: "",
@@ -30,3 +27,4 @@ exports.database = [
     firstTime: false,
   },
 ];
+

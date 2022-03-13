@@ -46,27 +46,31 @@ app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
   res.sendStatus(200);
 });
 
+
+
+
 //Old Code:
 
 //Function to authenticate token
-// function authenticateToken(req, res, next)
+// function authenticateToken(req, res, next) 
 // {
 //   const token = req.headers['x-access-token']
+
 
 //   if (token == null) return res.sendStatus(401)
 
 //   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decode) => {
-//     if (err)
+//     if (err) 
 //     {
 //       res.json({auth: false, message: "Failed to authenticate"});
 //     }
-//     else
+//     else 
 //     {
 //       req.userId = decode.id;
 //       next();
 
 //     }
-//   });
+//   });       
 
 // }
 
@@ -108,10 +112,10 @@ app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
 
 //       //Auth
 //       const id = userData.id
-
+      
 //       const token = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET);
 
-//       userData.token = token;
+//       userData.token = token; 
 
 //       res.json({auth: true, token: token, userData: userData})
 //     }
@@ -121,5 +125,5 @@ app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
 //   } else {
 //     res.json({auth: false, message: "Not Found User!"})
 //   }
-
+  
 // });
