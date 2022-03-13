@@ -9,8 +9,15 @@ chai.use(chaiHttp);
 
 
 describe("task api", () =>{
+    /**
+     * quote
+     */
+    describe("POST quote")
 
-    describe("POST /profile", ()=>{
+    /**
+     * updating profile
+     */
+    describe("POST /user/api", ()=>{
         it("it should update profile", (done)=>{
             const user = {
                 username: 'a',
@@ -37,7 +44,7 @@ describe("task api", () =>{
     /**
      * registration testing 
      */
-    describe("POST /register", () =>{
+    describe("POST /api/users", () =>{
         it("it should register", (done)=>{
             const user = {
                 username:"a",
