@@ -73,7 +73,7 @@ app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
 //quote
 app.post("/quote/user", quote.validate('getQuote'), quote.getQuote);
 app.post("/quote/user/save", quote.validate('saveQuote'), quote.saveQuote);
-//app.post("/quote/user/history", quote.getHistory);
+app.post("/quote/user/history", quote.getHistory);
 
 
 

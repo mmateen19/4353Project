@@ -7,7 +7,6 @@ var expect = chai.expect;
 //assertion tools
 chai.use(chaiHttp);
 
-
 describe("task api", () =>{
     /**
      *  log in 
@@ -44,7 +43,6 @@ describe("task api", () =>{
                 });
         });
     });
-
     /**
      * registration testing 
      */
@@ -64,11 +62,9 @@ describe("task api", () =>{
                 });
         });
     });
-
     /**
      * QUOTE
      */
-
     // get quote
          describe("POST /quote", ()=>{
             it("it should get quote", (done)=>{
@@ -85,9 +81,7 @@ describe("task api", () =>{
                         expect(res.status).to.be.eq(200);  
                         done();                    
                     });
-
             });
-
             it("should fail to get quote", (done)=>{
                 const quote ={
                     gallons: 2, 
@@ -101,8 +95,6 @@ describe("task api", () =>{
                         expect(res.status).to.be.eq(400);
                         done();
                     });
-
-
             });
             it("should fail to get quote", (done)=>{
                 const quote ={
@@ -117,10 +109,7 @@ describe("task api", () =>{
                         expect(res.status).to.be.eq(400);
                         done();
                     });
-
-
             });
-
             it("should fail to get quote", (done)=>{
                 const quote ={
                     gallons: 2, 
@@ -141,7 +130,6 @@ describe("task api", () =>{
         /**
          * save quote history
          */
-
         describe("POST /quote/user/save", ()=>{
             it("it should save quote history",(done)=>{
                 const user = {
@@ -150,7 +138,6 @@ describe("task api", () =>{
                     "userId": 1,
                     "quote": 1
                   };
-
                 chai
                     .request('http://localhost:4000')
                     .post("/quote/user/save")
@@ -161,14 +148,12 @@ describe("task api", () =>{
                     })
 
             });
-
             it("it should not save", (done)=>{
                 const user = {
                     "location": "a",
                     "gallons": 1,
                     "userId": 1,
                   };
-
                 chai
                     .request('http://localhost:4000')
                     .post("/quote/user/save")
@@ -183,9 +168,7 @@ describe("task api", () =>{
                     "location": "a",
                     "gallons": 1,
                     "quote": 1
-
                   };
-
                 chai
                     .request('http://localhost:4000')
                     .post("/quote/user/save")
@@ -200,9 +183,7 @@ describe("task api", () =>{
                     "gallons": 1,
                     "quote": 1,
                     "userId":1, 
-
                   };
-
                 chai
                     .request('http://localhost:4000')
                     .post("/quote/user/save")
@@ -214,12 +195,44 @@ describe("task api", () =>{
             })
             
         });
+        /**
+         * get history
+         */
+        describe("POST /quote/user/history", ()=>{
+            it("it should get history", (done)=>{
+                const user = {
+                    "userId":1, 
+                  };
+            chai
+                .request('http://localhost:4000')
+                .post("/quote/user/history")
+                .send(user)
+                .end((err, res) => {
+                    expect(res.status).to.be.eq(200);
+                    done();
+                });
+            });
+
+            it("it should not get history", (done)=>{
+                const user = {};
+                chai
+                    .request('http://localhost:4000')
+                    .post("/quote/user/history")
+                    .send(user)
+                    .end((err, res)=>{
+                        expect(res.status).to.be.eq(400);
+                        done();
+                    })
+
+                
+            })
 
 
 
-
-
+        });
 });
+
+
 
 
 
@@ -247,6 +260,3 @@ describe("task api", () =>{
 //             done();
 //           });
 //       });
-
-
-// });
