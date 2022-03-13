@@ -14,7 +14,7 @@ exports.database = [{
     date:"", 
     time:"", 
     userId:1, 
-    location:"", 
+    location:"a", 
     gallons:1,
     quote:1, 
     total:1, 

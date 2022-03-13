@@ -55,7 +55,7 @@ describe("task api", () =>{
                 password: "a",
             };
             chai
-                .request('http://localhost:4000') // right now, we can't use server so we're using the address instead
+                .request('http://localhost:4000') 
                 .post("/api/users")
                 .send(user)
                 .end((err, res)=>{
@@ -70,7 +70,7 @@ describe("task api", () =>{
      */
 
     // get quote
-         describe("POST quote", ()=>{
+         describe("POST /quote", ()=>{
             it("it should get quote", (done)=>{
                 const quote = {
                     location:"a",
@@ -104,6 +104,115 @@ describe("task api", () =>{
 
 
             });
+            it("should fail to get quote", (done)=>{
+                const quote ={
+                    location: "aaa", 
+                    userId: 2,
+                };
+                chai   
+                    .request('http://localhost:4000')
+                    .post("/quote/user")
+                    .send(quote)
+                    .end((err, res)=>{
+                        expect(res.status).to.be.eq(400);
+                        done();
+                    });
+
+
+            });
+
+            it("should fail to get quote", (done)=>{
+                const quote ={
+                    gallons: 2, 
+                    location: "aaa",
+                };
+                chai   
+                    .request('http://localhost:4000')
+                    .post("/quote/user")
+                    .send(quote)
+                    .end((err, res)=>{
+                        expect(res.status).to.be.eq(400);
+                        done();
+                    });
+            });
+
+        });
+
+        /**
+         * save quote history
+         */
+
+        describe("POST /quote/user/save", ()=>{
+            it("it should save quote history",(done)=>{
+                const user = {
+                    "location": "a",
+                    "gallons": 1,
+                    "userId": 1,
+                    "quote": 1
+                  };
+
+                chai
+                    .request('http://localhost:4000')
+                    .post("/quote/user/save")
+                    .send(user)
+                    .end((err, res)=>{
+                        expect(res.status).to.be.eq(200);
+                        done();
+                    })
+
+            });
+
+            it("it should not save", (done)=>{
+                const user = {
+                    "location": "a",
+                    "gallons": 1,
+                    "userId": 1,
+                  };
+
+                chai
+                    .request('http://localhost:4000')
+                    .post("/quote/user/save")
+                    .send(user)
+                    .end((err, res)=>{
+                        expect(res.status).to.be.eq(400);
+                        done();
+                    })
+            })
+            it("it should not save", (done)=>{
+                const user = {
+                    "location": "a",
+                    "gallons": 1,
+                    "quote": 1
+
+                  };
+
+                chai
+                    .request('http://localhost:4000')
+                    .post("/quote/user/save")
+                    .send(user)
+                    .end((err, res)=>{
+                        expect(res.status).to.be.eq(400);
+                        done();
+                    })
+            })
+            it("it should not save", (done)=>{
+                const user = {
+                    "gallons": 1,
+                    "quote": 1,
+                    "userId":1, 
+
+                  };
+
+                chai
+                    .request('http://localhost:4000')
+                    .post("/quote/user/save")
+                    .send(user)
+                    .end((err, res)=>{
+                        expect(res.status).to.be.eq(400);
+                        done();
+                    })
+            })
+            
         });
 
 
@@ -138,25 +247,6 @@ describe("task api", () =>{
 //             done();
 //           });
 //       });
-//         /**
-//          * 
-//          * next it statement
-//          */
-//          describe("POST /register", () => {
-//             it("It should not register", (done) => {
-//               const user = {
-//                 username: "a",
-//                 password: "a",
-//               };
-//               chai
-//           .request("http://localhost:4000/api/users")
-//                 .post("/api/users")
-//                 .send(user)
-//                 .end((err, res) => {
-//                   res.should.have.status(400);
-//                   done();
-//                 });
-//             });
-//           });
-//     });
+
+
 // });
