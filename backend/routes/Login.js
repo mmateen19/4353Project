@@ -1,5 +1,5 @@
 const { body, check, validationResult } = require("express-validator");
-const { database } = require("../database/database");
+let { database } = require("../database/database");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 
@@ -25,7 +25,7 @@ const registerUser = (req, res, next) => {
 
   database.push(data);
   //console.log(database)
-  res.json(database);
+  //res.json(database);
 };
 
 const logUserIn = (req, res, nex) => {
@@ -41,9 +41,7 @@ const logUserIn = (req, res, nex) => {
 
       //Auth
       const id = userData.id;
-
       const token = jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET);
-
       userData.token = token;
 
       res.json({ auth: true, token: token, userData: userData });

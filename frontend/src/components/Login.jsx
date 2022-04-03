@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const axios = require("axios");
 
 
-const Login = () => {
+const Login = ({userData, setUserData}) => {
 
   //States
   const [errorMessages, setErrorMessages] = useState({});
@@ -57,13 +57,13 @@ const Login = () => {
     };
 
     axios.request(options).then((response) => {
-      console.log(response.data)
+      //console.log(response.data)
       if (!response.data.auth){
         if (response.data.message === "Not Found User!") {
           //username not found
           setErrorMessages({ name: "uname", message: errors.uname });
         }
-        else if (response.data.message == "Not Found Pass!") {
+        else if (response.data.message === "Not Found Pass!") {
           //invalid password
           setErrorMessages({ name: "pass", message: errors.pass });
         }
@@ -73,8 +73,9 @@ const Login = () => {
         localStorage.setItem("token", response.data.token )
 
         //need to get from the db if this user has logged in before
-        const firstTime = false;
-        if(firstTime){
+        setUserData(response.data.userData);
+        if (userData.firstTime) {
+          //console.log("navigated correctly");
           navigate("/home/accountinfo");
         }
         else {

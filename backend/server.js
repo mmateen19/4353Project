@@ -11,8 +11,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
 const Login = require("./routes/Login");
-const { database } = require("./database/database.js");
-
+const ClientManage = require("./routes/ClientManagment");
+let { database } = require("./database/database.js");
+so;
 app.use(
   cors({
     origin: ["http://localhost:3000"],
@@ -35,11 +36,12 @@ app.listen(port, () => console.log("Server started on port 4000"));
 app.get("/api", (req, res) => res.json("This is to test the API"));
 app.get("/api/users", (req, res) => {
   res.json(database);
-  a;
 });
 
 app.post("/api/users", Login.registerUser);
 app.post("/api/users/authentication", Login.logUserIn);
+
+app.post("/api/users/accountInfo", ClientManage.editInfo);
 
 app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
   console.log(req.userId);
