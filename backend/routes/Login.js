@@ -2,6 +2,9 @@ const { body, check, validationResult } = require("express-validator");
 const {database} = require("../database/database")
 const jwt = require('jsonwebtoken')
 const dotenv = require("dotenv");
+const client = require('../database/database')
+const bcrypt = require("bcrypt")
+
 
 dotenv.config();
 
@@ -9,24 +12,49 @@ dotenv.config();
 const registerUser = (req, res, next) => 
 {
     console.log(req.body);
-    let data = {
-        username: req.body.username,
-        password: req.body.password,
-        history: [], //an array of json objects
-        fullName: "",
-        company: "",
-        address1: "",
-        address2: "",
-        city: "",
-        zipcode: "",
-        state: "",
-        id: database.length + 1,
-        token: "",
-      };
+
+    username = req.body.username;
+    password = req.body.password
+
+
+    bcrypt.hash(password, parseInt(process.env.SALTROUNDS), (err, hash) => {
+
+      if (err) {
+        console.log(err);
+      }
+      
+      client.query('INSERT INTO users(username, password) VALUES ($1, $2)',
+       [username, hash], (err, res2) => {
+        if (err){
+          console.log(err.stack)
+        }
+        else {
+          res.json(res2.rows)
+        }
+       })
+    })
     
-      database.push(data)
-      //console.log(database)
-      res.json(database);
+
+
+
+    // let data = {
+    //     username: req.body.username,
+    //     password: req.body.password,
+    //     history: [], //an array of json objects
+    //     fullName: "",
+    //     company: "",
+    //     address1: "",
+    //     address2: "",
+    //     city: "",
+    //     zipcode: "",
+    //     state: "",
+    //     id: database.length + 1,
+    //     token: "",
+    //   };
+    
+    //   database.push(data)
+    //   //console.log(database)
+    //   res.json(database);
 
 }
 
@@ -34,33 +62,71 @@ const registerUser = (req, res, next) =>
 const logUserIn = (req, res, nex) => 
 {
 
-//     console.log(req.body);
-  const userData = database.find(
-    (user) => user.username === req.body.username
-  );
-  let pass;
-  if (userData) {
-    // console.log(userData)
-    if (userData.password === req.body.password){
-      req.session.user = userData
-      //console.log(req.session.user)
-      pass = userData.password;
 
-      //Auth
-      const id = userData.id
+  const username = req.body.username;
+  const password = req.body.password;
+
+
+  client.query("SELECT * FROM users WHERE username = $1",
+    [username], (err, res2) => {
+
+      if (err) {
+        res.json({auth: false, message: "Could not Query DB"})
+      }
+
+      else if (res2.rowCount > 0) {
+        bcrypt.compare(password, res2.rows[0].password, (error, response) => {
+          if (response){
+            req.session.user = response
       
-      const token = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET);
+            //Auth
+            const id = response.id
+            
+            const token = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET);
+      
+            res.json({auth: true, token: token, userData: response})
+          }
+          else {
+            res.json({auth: false, message: "Not Found Pass!"})
+          }
+        })
+      }
+      else {
+        res.json({auth: false, message: "Not Found User!"})
+      }
 
-      userData.token = token; 
 
-      res.json({auth: true, token: token, userData: userData})
-    }
-    else {
-      res.json({auth: false, message: "Not Found Pass!"})
-    }
-  } else {
-    res.json({auth: false, message: "Not Found User!"})
-  }
+    })
+
+
+
+//     console.log(req.body);
+  // const userData = database.find(
+  //   (user) => user.username === req.body.username
+  // );
+  // let pass;
+  // if (userData) {
+  //   // console.log(userData)
+  //   if (userData.password === req.body.password){
+  //     req.session.user = userData
+  //     //console.log(req.session.user)
+  //     pass = userData.password;
+
+  //     //Auth
+  //     const id = userData.id
+      
+  //     const token = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET);
+
+  //     userData.token = token; 
+
+  //     res.json({auth: true, token: token, userData: userData})
+  //   }
+  //   else {
+  //     res.json({auth: false, message: "Not Found Pass!"})
+  //   }
+  // } else {
+  //   res.json({auth: false, message: "Not Found User!"})
+  // }
 
 }
 
