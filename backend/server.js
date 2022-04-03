@@ -13,7 +13,7 @@ app.use(express.json());
 const Login = require("./routes/Login");
 const ClientManage = require("./routes/ClientManagment");
 let { database } = require("./database/database.js");
-so;
+
 app.use(
   cors({
     origin: ["http://localhost:3000"],

@@ -22,18 +22,10 @@ const Routing = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route
-          path="login"
-          element={<Login userData={userData} setUserData={setUserData} />}
-        />
+        <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="home" element={<Home />} />
-        <Route
-          path="home/accountinfo"
-          element={
-            <AccountInfoForm userData={userData} setUserData={setUserData} />
-          }
-        />
+        <Route path="home/accountinfo" element={<AccountInfoForm />} />
         <Route path="home/pricing" element={<FuelQuoteForm />} />
         <Route path="home/history" element={<History />} />
       </Routes>
