@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import "./App.css";
 import Login from "./components/Login";
@@ -12,11 +12,15 @@ import History from "./components/History";
 
 const Routing = () => {
   //this is where we access the api
-  const [userData, setUserData] = useState({});
+  const [backendData, setBackendData] = useState([{}]);
 
-  // useEffect(() => {
-  //   setUserData({});
-  // }, []);
+  useEffect(() => {
+    fetch("/api")
+      .then((response) => response.json())
+      .then((data) => {
+        setBackendData(data);
+      });
+  }, []);
 
   return (
     <BrowserRouter>
