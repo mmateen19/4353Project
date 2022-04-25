@@ -14,7 +14,8 @@ const registerUser = (req, res, next) =>
     console.log(req.body);
 
     username = req.body.username;
-    password = req.body.password
+    password = req.body.password;
+    firstTime = "FALSE";
 
 
     bcrypt.hash(password, parseInt(process.env.SALTROUNDS), (err, hash) => {
@@ -23,8 +24,8 @@ const registerUser = (req, res, next) =>
         console.log(err);
       }
       
-      client.query('INSERT INTO users(username, password) VALUES ($1, $2)',
-       [username, hash], (err, res2) => {
+      client.query('INSERT INTO users(username, password, firsttime) VALUES ($1, $2, $3)',
+       [username, hash, firstTime], (err, res2) => {
         if (err){
           console.log(err.stack)
         }
