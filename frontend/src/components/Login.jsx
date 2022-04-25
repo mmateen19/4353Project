@@ -73,7 +73,7 @@ const Login = () => {
         localStorage.setItem("token", response.data.token )
 
         //need to get from the db if this user has logged in before
-        const firstTime = false;
+        const firstTime = response.data.userData.firstTime;
         if(firstTime){
           navigate("/home/accountinfo");
         }
