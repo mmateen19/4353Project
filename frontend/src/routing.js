@@ -11,17 +11,6 @@ import FuelQuoteForm from "./components/FuelQuoteForm";
 import History from "./components/History";
 
 const Routing = () => {
-  //this is where we access the api
-  const [backendData, setBackendData] = useState([{}]);
-
-  useEffect(() => {
-    fetch("/api")
-      .then((response) => response.json())
-      .then((data) => {
-        setBackendData(data);
-      });
-  }, []);
-
   return (
     <BrowserRouter>
       <Routes>
