@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./FuelQuoteForm.css";
-import CustNav from "./CustNav";
+import CustNav from "../NavBar/CustNav";
 
 const FuelQuoteForm = () => {
   const [errorMessages, setErrorMessages] = useState({});

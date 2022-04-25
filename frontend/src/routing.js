@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import "./App.css";
-import Login from "./components/Login";
+import Login from "./components/Login/Login";
 import Register from "./components/Register";
-import Home from "./components/Home";
-import AccountInfoForm from "./components/AccountInfoForm";
-import FuelQuoteForm from "./components/FuelQuoteForm";
-import History from "./components/History";
+import Home from "./components/Home/Home";
+import AccountInfoForm from "./components/AccountInfo/AccountInfoForm";
+import FuelQuoteForm from "./components/FuelQuote/FuelQuoteForm";
+import History from "./components/FuelQuote/History";
 
 const Routing = () => {
   //this is where we access the api

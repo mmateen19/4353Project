@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import CustNav from "./CustNav";
+import CustNav from "../NavBar/CustNav";
 import "./AccountInfoForm.css";
-import States from "./resources/states";
+import States from "../resources/states";
 
 const AccountInfoForm = () => {
   const [nameInput, setNameInput] = useState("");
