@@ -1,5 +1,5 @@
 import React from "react";
-import CustNav from "./CustNav";
+import CustNav from "../NavBar/CustNav";
 import "./History.css"
 
 
