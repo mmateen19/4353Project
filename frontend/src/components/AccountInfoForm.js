@@ -14,7 +14,8 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
   const [zipCodeInput, setZipCodeInput] = useState("");
   const [errorMessages, setErrorMessages] = useState({});
   //get request to backend to see if its the users first time logging in
-  const firstTime = userLogin.firstTime;
+  const firstTime = userLogin.firsttime;
+  console.log(userLogin);
 
   const navigate = useNavigate();
 
@@ -36,8 +37,9 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
       setErrorMessages({ name: "state_", message: errors.required });
     } else if (invalidLengths()) {
     } else {
-      //post data right here
+      //POST DATA TO BACKEND RIGHT HERE
       //also set firstTime flag to be false now bc they have successfully registered
+
       setNameInput("");
       setCompanyInput("");
       setAddress1Input("");
@@ -111,6 +113,7 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
     setErrorMessages({});
     if (!firstTime) {
       //get request to API for the user info
+
       //set each state to display whatever is already inputted
       setNameInput("Matthew Philip");
       setCompanyInput("USAA");

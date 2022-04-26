@@ -35,25 +35,25 @@ const Login = ({ userLogin, setUserLogin}) => {
     //this is the the request to the API for the password after passing the username down. 
     const options = {
       method: "POST",
-      url: "/api/users/authentication",
+      url: "/api/user/authentication",
       data: {username: uname.value, password:pass.value}
     };
 
     axios.request(options).then((response) => {
-      console.log(response.data)
+      //console.log(response.data)
       if (!response.data.auth){
         if (response.data.message === "Not Found User!") {
           //username not found
           setErrorMessages({ name: "uname", message: errors.uname });
         }
-        else if (response.data.message == "Not Found Pass!") {
+        else if (response.data.message === "Not Found Pass!") {
           //invalid password
           setErrorMessages({ name: "pass", message: errors.pass });
         }
       }
       else {
-        localStorage.setItem("token", response.data.token )
-        const firstTime = response.data.userData.firstTime;
+        localStorage.setItem("token", response.data.token)
+        const firstTime = response.data.userData.firsttime;
         setUserLogin(response.data.userData);
         if(firstTime){
           navigate("/home/accountinfo");
