@@ -2,16 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CustNav from "../NavBar/CustNav";
 import "./AccountInfoForm.css";
-<<<<<<< HEAD:frontend/src/components/AccountInfoForm.js
-import States from "./resources/states";
-const axios = require("axios");
-
-const AccountInfoForm = ({ userData, setUserData }) => {
-=======
 import States from "../resources/states";
 
 const AccountInfoForm = ({ userLogin, setUserLogin }) => {
->>>>>>> main:frontend/src/components/AccountInfo/AccountInfoForm.js
   const [nameInput, setNameInput] = useState("");
   const [companyInput, setCompanyInput] = useState("");
   const [address1Input, setAddress1Input] = useState("");
@@ -21,11 +14,8 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
   const [zipCodeInput, setZipCodeInput] = useState("");
   const [errorMessages, setErrorMessages] = useState({});
   //get request to backend to see if its the users first time logging in
-<<<<<<< HEAD:frontend/src/components/AccountInfoForm.js
-=======
   const firstTime = userLogin.firsttime;
   console.log(userLogin);
->>>>>>> main:frontend/src/components/AccountInfo/AccountInfoForm.js
 
   const navigate = useNavigate();
 
@@ -47,40 +37,9 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
       setErrorMessages({ name: "state_", message: errors.required });
     } else if (invalidLengths()) {
     } else {
-<<<<<<< HEAD:frontend/src/components/AccountInfoForm.js
-      //also set firstTime flag to be false now bc they have successfully registered
-
-      const tempData = userData;
-      tempData.fullName = nameInput;
-      tempData.company = companyInput;
-      tempData.address1 = address1Input;
-      tempData.address2 = address2Input;
-      tempData.city = cityInput;
-      tempData.state = stateInput;
-      tempData.zipcode = zipCodeInput;
-      tempData.firstTime = false;
-
-      const options = {
-        method: "POST",
-        url: "/api/users/accountInfo",
-        data: { userData: userData },
-      };
-
-      axios.request(options).then(
-        (response) => {
-          //console.log(response.data);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-
-      setUserData(tempData);
-=======
       //POST DATA TO BACKEND RIGHT HERE
       //also set firstTime flag to be false now bc they have successfully registered
 
->>>>>>> main:frontend/src/components/AccountInfo/AccountInfoForm.js
       setNameInput("");
       setCompanyInput("");
       setAddress1Input("");
@@ -149,20 +108,6 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
     tooLong: "Over character limit",
     tooShort: "Invalid Zip Code",
   };
-<<<<<<< HEAD:frontend/src/components/AccountInfoForm.js
-
-  const setStates = () => {
-    setErrorMessages({});
-    if (!userData.firstTime) {
-      //set each state to display whatever is already inputted
-      setNameInput(userData.fullName);
-      setCompanyInput(userData.company);
-      setAddress1Input(userData.address1);
-      setAddress2Input(userData.address2);
-      setCityInput(userData.city);
-      //setStateInput("TX"); //not doing this because we need them to re enter state input regardless
-      setZipCodeInput(userData.zipcode);
-=======
 
   const setStates = () => {
     setErrorMessages({});
@@ -177,7 +122,6 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
       setCityInput("Cypress");
       //setStateInput("TX"); //not doing this because we need them to re enter state input regardless
       setZipCodeInput("77433");
->>>>>>> main:frontend/src/components/AccountInfo/AccountInfoForm.js
       //so when the form first loads in, it will just default display what is already in the backend
       //but the form will work exactly the same
     } else {
@@ -194,11 +138,7 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
   const renderForm = () => {
     return (
       <div className="display-container">
-<<<<<<< HEAD:frontend/src/components/AccountInfoForm.js
-        {userData.firstTime ? (
-=======
         {firstTime ? (
->>>>>>> main:frontend/src/components/AccountInfo/AccountInfoForm.js
           <section>
             <h2>Complete Registration</h2>
             <h1>Account Information</h1>

@@ -19,14 +19,9 @@ app.use((err, req, res, next) => {
 });
 
 const Login = require("./routes/Login");
-<<<<<<< HEAD
-const ClientManage = require("./routes/ClientManagment");
-let { database } = require("./database/database.js");
-=======
 const { database } = require("./database/database.js");
 const quote = require("./routes/FuelQuote");
 const accountInfo = require("./routes/ClientManagment.js");
->>>>>>> main
 
 app.use(
   cors({
