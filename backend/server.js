@@ -61,7 +61,7 @@ app.post("/api/user/quote/save", quote.validate("saveQuote"), quote.saveQuote);
 app.get("/api/user/quote/history", quote.getHistory);
 
 app.post("/api/user/accountInfo", accountInfo.updateInfo);
-app.get("/api/user/accountInfo", accountInfo.retrieveInfo);
+app.post("/api/user/accountInfo", accountInfo.retrieveInfo);
 
 //Old Code:
 
