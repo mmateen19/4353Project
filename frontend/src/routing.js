@@ -33,8 +33,18 @@ const Routing = () => {
             />
           }
         />
-        <Route path="home/pricing" element={<FuelQuoteForm />} />
-        <Route path="home/history" element={<History />} />
+        <Route
+          path="home/pricing"
+          element={
+            <FuelQuoteForm userLogin={userLogin} setUserLogin={setUserLogin} />
+          }
+        />
+        <Route
+          path="home/history"
+          element={
+            <History userLogin={userLogin} setUserLogin={setUserLogin} />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

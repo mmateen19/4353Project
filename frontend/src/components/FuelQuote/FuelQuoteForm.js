@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./FuelQuoteForm.css";
 import CustNav from "../NavBar/CustNav";
+const axios = require("axios");
 
-const FuelQuoteForm = () => {
+const FuelQuoteForm = ({ userLogin, setUserLogin }) => {
   const [errorMessages, setErrorMessages] = useState({});
   const [numGallons, setNumGallons] = useState(0);
   const [date, setDate] = useState("");
   const [isSubmit, setSubmit] = useState(false);
   const navigate = useNavigate();
+
+  //TODO: GET Estimate Price Per Gal & Total from Pricing module
+  const pricePerGall = 3.5;
+  const totalPrice = pricePerGall * numGallons;
 
   const renderErrorMessage = (name) =>
     name === errorMessages.name && (
@@ -54,21 +59,38 @@ const FuelQuoteForm = () => {
       //render the quote,
       setErrorMessages({});
       setSubmit(true);
-      //and then store the quote as history in the backend
     }
   };
 
   const handleSubmitQuote = (event) => {
     event.preventDefault();
+    //TODO: POST the quote as history in the backend, need to send down:
+    const options = {
+      method: "POST",
+      url: "/api/user/quote/save",
+      data: {
+        id: userLogin.id,
+        date: date,
+        numGallons: numGallons,
+        ppg: pricePerGall,
+        totalPrice: totalPrice,
+      },
+    };
+
+    axios.request(options).then(
+      (response) => {
+        //console.log(response.data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
     setErrorMessages({});
     setNumGallons(0);
     setDate("");
     setSubmit(false);
-    //TODO: POST the quote as history in the backend, need to send down:
-    //the date requested
-    //the num gallons requested
-    //the estimated PPG
-    //the total price
+
     navigate("/home/history");
   };
 
@@ -81,10 +103,6 @@ const FuelQuoteForm = () => {
   };
 
   const renderQuote = () => {
-    //TODO: GET Estimate Price Per Gal & Total from Pricing module
-    const pricePerGall = 3.5;
-    const total = pricePerGall * numGallons;
-
     let formatDate = new Date(date);
     const dd = String(formatDate.getDate()).padStart(2, "0");
     const mm = String(formatDate.getMonth() + 1).padStart(2, "0"); //January is 0
@@ -103,7 +121,7 @@ const FuelQuoteForm = () => {
             <label>
               Estimated Price per Gallon: ${pricePerGall.toFixed(2)}
             </label>
-            <label>Total Price: ${total.toFixed(2)}</label>
+            <label>Total Price: ${totalPrice.toFixed(2)}</label>
           </div>
           <div onClick={handleCancel} className="button-container">
             <input type="submit" value="Cancel" />
