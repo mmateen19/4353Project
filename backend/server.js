@@ -6,13 +6,27 @@ require("dotenv").config();
 
 let bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
+
 const session = require("express-session");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && "body" in err) {
+    console.error(err);
+    return res.sendStatus(400); // Bad request
+  }
+  next();
+});
 
 const Login = require("./routes/Login");
+<<<<<<< HEAD
 const ClientManage = require("./routes/ClientManagment");
 let { database } = require("./database/database.js");
+=======
+const { database } = require("./database/database.js");
+const quote = require("./routes/FuelQuote");
+const accountInfo = require("./routes/ClientManagment.js");
+>>>>>>> main
 
 app.use(
   cors({
@@ -38,8 +52,8 @@ app.get("/api/users", (req, res) => {
   res.json(database);
 });
 
-app.post("/api/users", Login.registerUser);
-app.post("/api/users/authentication", Login.logUserIn);
+app.post("/api/user", Login.registerUser);
+app.post("/api/user/authentication", Login.logUserIn);
 
 app.post("/api/users/accountInfo", ClientManage.editInfo);
 
@@ -47,6 +61,13 @@ app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
   console.log(req.userId);
   res.sendStatus(200);
 });
+
+app.post("/api/user/quote/get", quote.validate("getQuote"), quote.getQuote); //i dont understand what this is here for?
+app.post("/api/user/quote/save", quote.validate("saveQuote"), quote.saveQuote);
+app.get("/api/user/quote/history", quote.getHistory);
+
+app.post("/api/user/accountInfo", accountInfo.updateInfo);
+app.post("/api/user/accountInfo", accountInfo.retrieveInfo);
 
 //Old Code:
 

@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import CustNav from "./CustNav";
+import CustNav from "../NavBar/CustNav";
 import "./AccountInfoForm.css";
+<<<<<<< HEAD:frontend/src/components/AccountInfoForm.js
 import States from "./resources/states";
 const axios = require("axios");
 
 const AccountInfoForm = ({ userData, setUserData }) => {
+=======
+import States from "../resources/states";
+
+const AccountInfoForm = ({ userLogin, setUserLogin }) => {
+>>>>>>> main:frontend/src/components/AccountInfo/AccountInfoForm.js
   const [nameInput, setNameInput] = useState("");
   const [companyInput, setCompanyInput] = useState("");
   const [address1Input, setAddress1Input] = useState("");
@@ -15,6 +21,11 @@ const AccountInfoForm = ({ userData, setUserData }) => {
   const [zipCodeInput, setZipCodeInput] = useState("");
   const [errorMessages, setErrorMessages] = useState({});
   //get request to backend to see if its the users first time logging in
+<<<<<<< HEAD:frontend/src/components/AccountInfoForm.js
+=======
+  const firstTime = userLogin.firsttime;
+  console.log(userLogin);
+>>>>>>> main:frontend/src/components/AccountInfo/AccountInfoForm.js
 
   const navigate = useNavigate();
 
@@ -36,6 +47,7 @@ const AccountInfoForm = ({ userData, setUserData }) => {
       setErrorMessages({ name: "state_", message: errors.required });
     } else if (invalidLengths()) {
     } else {
+<<<<<<< HEAD:frontend/src/components/AccountInfoForm.js
       //also set firstTime flag to be false now bc they have successfully registered
 
       const tempData = userData;
@@ -64,6 +76,11 @@ const AccountInfoForm = ({ userData, setUserData }) => {
       );
 
       setUserData(tempData);
+=======
+      //POST DATA TO BACKEND RIGHT HERE
+      //also set firstTime flag to be false now bc they have successfully registered
+
+>>>>>>> main:frontend/src/components/AccountInfo/AccountInfoForm.js
       setNameInput("");
       setCompanyInput("");
       setAddress1Input("");
@@ -132,6 +149,7 @@ const AccountInfoForm = ({ userData, setUserData }) => {
     tooLong: "Over character limit",
     tooShort: "Invalid Zip Code",
   };
+<<<<<<< HEAD:frontend/src/components/AccountInfoForm.js
 
   const setStates = () => {
     setErrorMessages({});
@@ -144,6 +162,22 @@ const AccountInfoForm = ({ userData, setUserData }) => {
       setCityInput(userData.city);
       //setStateInput("TX"); //not doing this because we need them to re enter state input regardless
       setZipCodeInput(userData.zipcode);
+=======
+
+  const setStates = () => {
+    setErrorMessages({});
+    if (!firstTime) {
+      //get request to API for the user info
+
+      //set each state to display whatever is already inputted
+      setNameInput("Matthew Philip");
+      setCompanyInput("USAA");
+      setAddress1Input("14826 Whispy Green Ct");
+      setAddress2Input("");
+      setCityInput("Cypress");
+      //setStateInput("TX"); //not doing this because we need them to re enter state input regardless
+      setZipCodeInput("77433");
+>>>>>>> main:frontend/src/components/AccountInfo/AccountInfoForm.js
       //so when the form first loads in, it will just default display what is already in the backend
       //but the form will work exactly the same
     } else {
@@ -160,7 +194,11 @@ const AccountInfoForm = ({ userData, setUserData }) => {
   const renderForm = () => {
     return (
       <div className="display-container">
+<<<<<<< HEAD:frontend/src/components/AccountInfoForm.js
         {userData.firstTime ? (
+=======
+        {firstTime ? (
+>>>>>>> main:frontend/src/components/AccountInfo/AccountInfoForm.js
           <section>
             <h2>Complete Registration</h2>
             <h1>Account Information</h1>
