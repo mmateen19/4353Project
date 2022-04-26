@@ -8,8 +8,7 @@ const bcrypt = require("bcrypt");
 dotenv.config();
 
 const registerUser = (req, res, next) => {
-  console.log(req.body);
-
+  //console.log(req.body);
   username = req.body.username;
   password = req.body.password;
   firstTime = "TRUE";
@@ -22,11 +21,11 @@ const registerUser = (req, res, next) => {
     client.query(
       "INSERT INTO users(username, password, firsttime) VALUES ($1, $2, $3)",
       [username, hash, firstTime],
-      (err, res2) => {
+      (err, dbres) => {
         if (err) {
           console.log(err.stack);
         } else {
-          res.json(res2.rows);
+          res.json(dbres.rows);
         }
       }
     );
@@ -40,18 +39,18 @@ const logUserIn = (req, res, nex) => {
   client.query(
     "SELECT * FROM users WHERE username = $1",
     [username],
-    (err, res2) => {
+    (err, dbres) => {
       if (err) {
         res.json({ auth: false, message: "Could not Query DB" });
-      } else if (res2.rowCount > 0) {
-        bcrypt.compare(password, res2.rows[0].password, (error, response) => {
+      } else if (dbres.rowCount > 0) {
+        bcrypt.compare(password, dbres.rows[0].password, (error, response) => {
           if (response) {
             req.session.user = response;
-            //console.log(res2.rows[0]);
+            //console.log(dbres.rows[0]);
             //Auth
             const id = response.id;
             const token = jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET);
-            res.json({ auth: true, token: token, userData: res2.rows[0] });
+            res.json({ auth: true, token: token, userData: dbres.rows[0] });
           } else {
             res.json({ auth: false, message: "Not Found Pass!" });
           }

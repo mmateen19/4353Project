@@ -43,10 +43,6 @@ app.use(
 app.listen(port, () => console.log("Server started on port 4000"));
 
 app.get("/api", (req, res) => res.json("This is to test the API"));
-app.get("/api/users", (req, res) => {
-  res.json(database);
-  a;
-});
 
 app.post("/api/user", Login.registerUser);
 app.post("/api/user/authentication", Login.logUserIn);
@@ -60,8 +56,8 @@ app.post("/api/user/quote/get", quote.validate("getQuote"), quote.getQuote); //i
 app.post("/api/user/quote/save", quote.validate("saveQuote"), quote.saveQuote);
 app.get("/api/user/quote/history", quote.getHistory);
 
-app.post("/api/user/accountInfo", accountInfo.updateInfo);
-app.post("/api/user/accountInfo", accountInfo.retrieveInfo);
+app.post("/api/user/accountInfo/edit", accountInfo.updateInfo);
+app.post("/api/user/accountInfo/get", accountInfo.retrieveInfo);
 
 //Old Code:
 
