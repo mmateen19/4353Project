@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./FuelQuoteForm.css";
 import CustNav from "../NavBar/CustNav";
 
@@ -7,7 +8,7 @@ const FuelQuoteForm = () => {
   const [numGallons, setNumGallons] = useState(0);
   const [date, setDate] = useState("");
   const [isSubmit, setSubmit] = useState(false);
-  const pricePerGall = 3.5; //will use pricing module later
+  const navigate = useNavigate();
 
   const renderErrorMessage = (name) =>
     name === errorMessages.name && (
@@ -39,7 +40,7 @@ const FuelQuoteForm = () => {
     );
   };
 
-  const handleSubmit = (event) => {
+  const handleGetQuote = (event) => {
     event.preventDefault();
     //if gallons is not a valid integer
     if (!validGallons(numGallons)) {
@@ -57,16 +58,31 @@ const FuelQuoteForm = () => {
     }
   };
 
-  const handleOk = (event) => {
+  const handleSubmitQuote = (event) => {
     event.preventDefault();
+    setErrorMessages({});
+    setNumGallons(0);
+    setDate("");
+    setSubmit(false);
+    //TODO: POST the quote as history in the backend, need to send down:
+    //the date requested
+    //the num gallons requested
+    //the estimated PPG
+    //the total price
+    navigate("/home/history");
+  };
+
+  const handleCancel = (event) => {
+    event.preventDefault();
+    setErrorMessages({});
     setNumGallons(0);
     setDate("");
     setSubmit(false);
   };
 
-  //create render of for quote and button that can send us back to quote form display
   const renderQuote = () => {
-    //we can get a quote from the pricing module, (will get request from backend and PricingModule later)
+    //TODO: GET Estimate Price Per Gal & Total from Pricing module
+    const pricePerGall = 3.5;
     const total = pricePerGall * numGallons;
 
     let formatDate = new Date(date);
@@ -74,8 +90,6 @@ const FuelQuoteForm = () => {
     const mm = String(formatDate.getMonth() + 1).padStart(2, "0"); //January is 0
     const yyyy = formatDate.getFullYear();
     formatDate = mm + "/" + dd + "/" + yyyy;
-
-    //will prob post the quote to history in backend right here, but need authenticate first
 
     //render
     return (
@@ -86,15 +100,16 @@ const FuelQuoteForm = () => {
             <label># of Gallons requested: {numGallons}</label>
           </div>
           <div className="input-container">
-            <label>Estimated Price: ${total.toFixed(2)}</label>
+            <label>
+              Estimated Price per Gallon: ${pricePerGall.toFixed(2)}
+            </label>
+            <label>Total Price: ${total.toFixed(2)}</label>
           </div>
-          <div className="input-container">
-            <label>Delivery Address:</label>
-            <p>4800 Calhoun Rd, Houston, TX 77004</p>
-            <p> Projected Delivery Date: {formatDate}</p>
+          <div onClick={handleCancel} className="button-container">
+            <input type="submit" value="Cancel" />
           </div>
-          <div onClick={handleOk} className="button-container">
-            <input type="submit" value="OK" />
+          <div onClick={handleSubmitQuote} className="button-container">
+            <input type="submit" value="Submit Quote" />
           </div>
         </form>
       </div>
@@ -113,17 +128,12 @@ const FuelQuoteForm = () => {
             {renderErrorMessage("gallons")}
           </div>
           <div className="input-container">
-            <label>Delivery Address:</label>
-            <p>4800 Calhoun Rd, Houston, TX 77004</p>
-            <p>Estimate Price per Gallon: ${pricePerGall.toFixed(2)}</p>
-          </div>
-          <div className="input-container">
             <label>Delivery Date</label>
             <input type="date" name="date" onChange={handleDate} />
             {renderErrorMessage("date")}
           </div>
-          <div onClick={handleSubmit} className="button-container">
-            <input type="submit" />
+          <div onClick={handleGetQuote} className="button-container">
+            <input type="submit" value="Get Quote" />
           </div>
         </form>
       </div>

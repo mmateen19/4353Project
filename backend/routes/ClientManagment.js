@@ -19,6 +19,8 @@ const updateInfo = (req, res) => {
   state = req.body.state;
   firstTime = "FALSE";
 
+  //need to do another insert to the user table to update firsttime?
+
   //TODO with ahmed. does it need username and auth to go with it?
   client.query("INSERT INTO clientinfo() VALUES ()", [], (err, dbres) => {
     if (err) {
