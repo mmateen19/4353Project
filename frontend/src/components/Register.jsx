@@ -31,17 +31,10 @@ const Register = () => {
       //this is the request to post to the backend
       const options = {
         method: "POST",
-        url: "/api/users",
+        url: "/api/user",
         data: {username: usernameInput, password: passwordInput}
       };
 
-      // Axios.post('api/users', {
-
-      //   username: usernameInput, 
-      //   password: passwordInput,
-
-      // })
-      
       axios.request(options).then((response) => {
         //console.log(response.data);
       }, (error) => {

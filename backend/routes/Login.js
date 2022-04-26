@@ -12,6 +12,7 @@ const registerUser = (req, res, next) => {
 
   username = req.body.username;
   password = req.body.password;
+  firstTime = "TRUE";
 
   bcrypt.hash(password, parseInt(process.env.SALTROUNDS), (err, hash) => {
     if (err) {
@@ -19,8 +20,8 @@ const registerUser = (req, res, next) => {
     }
 
     client.query(
-      "INSERT INTO users(username, password) VALUES ($1, $2)",
-      [username, hash],
+      "INSERT INTO users(username, password, firsttime) VALUES ($1, $2, $3)",
+      [username, hash, firstTime],
       (err, res2) => {
         if (err) {
           console.log(err.stack);
@@ -46,10 +47,11 @@ const logUserIn = (req, res, nex) => {
         bcrypt.compare(password, res2.rows[0].password, (error, response) => {
           if (response) {
             req.session.user = response;
+            //console.log(res2.rows[0]);
             //Auth
             const id = response.id;
             const token = jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET);
-            res.json({ auth: true, token: token, userData: response });
+            res.json({ auth: true, token: token, userData: res2.rows[0] });
           } else {
             res.json({ auth: false, message: "Not Found Pass!" });
           }
