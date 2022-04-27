@@ -10,6 +10,7 @@ dotenv.config();
 //TODO, this method needs to post the info from the frontend to the DB
 const updateInfo = (req, res) => {
   console.log(req.body);
+  id = req.body.id;
   fullName = req.body.fullName;
   company = req.body.company;
   address1 = req.body.address1;

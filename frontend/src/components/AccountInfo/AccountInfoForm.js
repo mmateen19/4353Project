@@ -43,6 +43,7 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
         method: "POST",
         url: "/api/user/accountInfo/edit",
         data: {
+          id: userLogin.id,
           fullName: nameInput,
           company: companyInput,
           address1: address1Input,

@@ -12,6 +12,13 @@ const registerUser = (req, res, next) => {
   username = req.body.username;
   password = req.body.password;
   firstTime = "TRUE";
+  // fullName = "";
+  // company = "";
+  // address1 = "";
+  // address2 = "";
+  // city = "";
+  // zipcode = "";
+  // state = "";
 
   bcrypt.hash(password, parseInt(process.env.SALTROUNDS), (err, hash) => {
     if (err) {
@@ -23,9 +30,10 @@ const registerUser = (req, res, next) => {
       [username, hash, firstTime],
       (err, dbres) => {
         if (err) {
-          console.log(err.stack);
+          res.json({reg: false, resp:err.stack});
         } else {
-          res.json(dbres.rows);
+          console.log(dbres.rows)
+          res.json({res: true, dbres: dbres.rows});
         }
       }
     );
