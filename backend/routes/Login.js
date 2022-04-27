@@ -24,9 +24,9 @@ const registerUser = (req, res, next) => {
       [username, hash, firstTime],
       (err, res2) => {
         if (err) {
-          console.log(err.stack);
+          res.json({reg: false});
         } else {
-          res.json(res2.rows);
+          res.json({reg: true, dbres: res2.rows});
         }
       }
     );

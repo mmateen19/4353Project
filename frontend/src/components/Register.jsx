@@ -36,6 +36,7 @@ const Register = () => {
         data: {username: usernameInput, password: passwordInput}
       };
 
+      let resp = {}
       axios.request(options).then((response) => {
         //console.log(response.data);
         resp = response
