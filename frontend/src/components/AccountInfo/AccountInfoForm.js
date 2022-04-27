@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import CustNav from "./CustNav";
+import CustNav from "../NavBar/CustNav";
 import "./AccountInfoForm.css";
-import States from "./resources/states";
+import States from "../resources/states";
+const axios = require("axios");
 
 const AccountInfoForm = ({ userLogin, setUserLogin }) => {
   const [nameInput, setNameInput] = useState("");
@@ -13,7 +14,7 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
   const [stateInput, setStateInput] = useState("");
   const [zipCodeInput, setZipCodeInput] = useState("");
   const [errorMessages, setErrorMessages] = useState({});
-  //get request to backend to see if its the users first time logging in
+
   const firstTime = userLogin.firsttime;
   console.log(userLogin);
 
@@ -38,7 +39,29 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
     } else if (invalidLengths()) {
     } else {
       //POST DATA TO BACKEND RIGHT HERE
-      //also set firstTime flag to be false now bc they have successfully registered
+      const options = {
+        method: "POST",
+        url: "/api/user/accountInfo/edit",
+        data: {
+          id: userLogin.id,
+          fullName: nameInput,
+          company: companyInput,
+          address1: address1Input,
+          address2: address2Input,
+          city: cityInput,
+          zipcode: zipCodeInput,
+          state: stateInput,
+        },
+      };
+
+      axios.request(options).then(
+        (response) => {
+          //console.log(response.data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
 
       setNameInput("");
       setCompanyInput("");
@@ -113,17 +136,31 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
     setErrorMessages({});
     if (!firstTime) {
       //get request to API for the user info
+      const options = {
+        method: "POST",
+        url: "/api/user/accountInfo/get",
+        data: {
+          username: userLogin.username,
+        },
+      };
 
-      //set each state to display whatever is already inputted
-      setNameInput("Matthew Philip");
-      setCompanyInput("USAA");
-      setAddress1Input("14826 Whispy Green Ct");
-      setAddress2Input("");
-      setCityInput("Cypress");
-      //setStateInput("TX"); //not doing this because we need them to re enter state input regardless
-      setZipCodeInput("77433");
+      axios.request(options).then(
+        (response) => {
+          console.log(response.data);
+          //set each state to display whatever is already inputted
+          setNameInput(response.data.info.fullName);
+          setCompanyInput(response.data.info.company);
+          setAddress1Input(response.data.info.address1);
+          setAddress2Input(response.data.info.address2);
+          setCityInput(response.data.info.city);
+          setZipCodeInput(response.data.info.zipcode);
+          //setStateInput("TX"); //not doing this because we need them to re enter state input regardless
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
       //so when the form first loads in, it will just default display what is already in the backend
-      //but the form will work exactly the same
     } else {
       setNameInput("");
       setCompanyInput("");
@@ -242,10 +279,10 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
     );
   };
 
-  //this checks if its the first time we have ever logged in to know how to render the page
+  //this checks if its the first time we have ever logged in to know how to render the page. it renders every time an input happens
   useEffect(() => {
     setStates();
-  }, []);
+  }, [userLogin]);
 
   return (
     <div className="Form">

@@ -15,13 +15,16 @@ const Register = () => {
     uname: "Invalid username",
     pass: "Invalid password",
     reenterpass: "Passwords don't match",
-    duplicate: "Username Already in Use"
+    unameexists: "Username already exists!",
   };
 
   //handles submitting the registered username and password
   const handleSubmit = (event) => {
     event.preventDefault();
     //throws error if they try to submit empty string
+    console.log(usernameInput);
+    console.log(passwordInput);
+    console.log(reEnterPasswordInput);
     if (usernameInput === "") {
       setErrorMessages({ name: "uname", message: errors.uname });
     } else if (passwordInput === "") {
@@ -36,27 +39,22 @@ const Register = () => {
         data: {username: usernameInput, password: passwordInput}
       };
 
-      let resp = {}
+        
       axios.request(options).then((response) => {
-        //console.log(response.data);
-        resp = response
+        console.log(response.data);
+        if (response.data.reg === false) { //means username already exists
+          setErrorMessages({ name: "unameexists", message: errors.unameexists });
+        }
+        else {
+          setPasswordInput("");
+          setReEnterPasswordInput("");
+          setUsernameInput("");
+          setErrorMessages({});
+          navigate('/login');
+        }
       }, (error) => {
         console.log(error);
       });
-
-      if (!resp.data.reg) 
-      {
-        setErrorMessages({ name: "duplicate", message: errors.duplicate });
-      }
-      else 
-      {
-      
-        setPasswordInput("");
-        setReEnterPasswordInput("");
-        setUsernameInput("");
-        setErrorMessages({});
-        navigate('/login');
-      }
     }
   };
 
@@ -99,6 +97,7 @@ const Register = () => {
               required
             />
             {renderErrorMessage("uname")}
+            {renderErrorMessage("unameexists")}
           </div>
           <div className="input-container">
             <label>Password </label>

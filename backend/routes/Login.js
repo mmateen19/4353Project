@@ -8,11 +8,17 @@ const bcrypt = require("bcrypt");
 dotenv.config();
 
 const registerUser = (req, res, next) => {
-  console.log(req.body);
-
+  //console.log(req.body);
   username = req.body.username;
   password = req.body.password;
   firstTime = "TRUE";
+  fullName = "";
+  company = "";
+  address1 = "";
+  address2 = "";
+  city = "";
+  zipcode = "";
+  state = "";
 
   bcrypt.hash(password, parseInt(process.env.SALTROUNDS), (err, hash) => {
     if (err) {
@@ -22,11 +28,24 @@ const registerUser = (req, res, next) => {
     client.query(
       "INSERT INTO users(username, password, firsttime) VALUES ($1, $2, $3)",
       [username, hash, firstTime],
-      (err, res2) => {
+      (err, dbres) => {
         if (err) {
-          res.json({reg: false});
+          res.json({ reg: false });
         } else {
-          res.json({reg: true, dbres: res2.rows});
+          //console.log(dbres.rows)
+
+          client.query(
+            "INSERT INTO clientinfo(id, username, auth, fullname, company, address1, address2, city, zipcode, state) VALUES ((SELECT id FROM USERS WHERE username =$1), $2, $3, $4, $5, $6, $7, $8, $9, $10) ",
+            [username, username, "", "", "", "", "", "", "", ""],
+            (err, dbres) => {
+              if (err) {
+                res.json({ reg: false });
+              } else {
+                console.log(dbres.rows);
+                res.json({ reg: true, res: dbres.rows });
+              }
+            }
+          );
         }
       }
     );
@@ -40,20 +59,18 @@ const logUserIn = (req, res, nex) => {
   client.query(
     "SELECT * FROM users WHERE username = $1",
     [username],
-    (err, res2) => {
+    (err, dbres) => {
       if (err) {
         res.json({ auth: false, message: "Could not Query DB" });
-      } else if (res2.rowCount > 0) {
-        bcrypt.compare(password, res2.rows[0].password, (error, response) => {
+      } else if (dbres.rowCount > 0) {
+        bcrypt.compare(password, dbres.rows[0].password, (error, response) => {
           if (response) {
             req.session.user = response;
-            //console.log(res2.rows[0]);
+            //console.log(dbres.rows[0]);
             //Auth
             const id = response.id;
-
             const token = jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET);
-
-            res.json({ auth: true, token: token, userData: res2.rows[0] });
+            res.json({ auth: true, token: token, userData: dbres.rows[0] });
           } else {
             res.json({ auth: false, message: "Not Found Pass!" });
           }
@@ -67,7 +84,6 @@ const logUserIn = (req, res, nex) => {
 
 function authenticateToken(req, res, next) {
   const token = req.headers["x-access-token"];
-
   if (token == null) return res.sendStatus(401);
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decode) => {
