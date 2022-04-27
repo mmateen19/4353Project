@@ -1,7 +1,8 @@
-const PricingModule =  () => {
+const dotenv = require("dotenv");
+dotenv.config();
 
-    return (
-        null
-    );
+const calculate = () => {};
 
-}
+module.exports = {
+  calculate,
+};

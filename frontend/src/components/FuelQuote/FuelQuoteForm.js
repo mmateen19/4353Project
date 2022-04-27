@@ -56,6 +56,8 @@ const FuelQuoteForm = ({ userLogin, setUserLogin }) => {
       setErrorMessages({ name: "date", message: errors.date });
     } else {
       //both inputs are valid
+      //axios post, send down id and numGallons
+
       //render the quote,
       setErrorMessages({});
       setSubmit(true);
