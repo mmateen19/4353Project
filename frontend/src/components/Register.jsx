@@ -36,6 +36,7 @@ const Register = () => {
         data: {username: usernameInput, password: passwordInput}
       };
 
+        
       axios.request(options).then((response) => {
         //console.log(response.data);
         if (response.data.reg === false) { //means username already exists

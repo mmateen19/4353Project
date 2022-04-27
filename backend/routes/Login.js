@@ -30,9 +30,10 @@ const registerUser = (req, res, next) => {
       [username, hash, firstTime],
       (err, dbres) => {
         if (err) {
-          console.log(err.stack);
+          res.json({reg: false, resp:err.stack});
         } else {
-          res.json(dbres.rows);
+          console.log(dbres.rows)
+          res.json({res: true, dbres: dbres.rows});
         }
       }
     );
