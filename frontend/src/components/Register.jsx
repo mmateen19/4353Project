@@ -15,6 +15,7 @@ const Register = () => {
     uname: "Invalid username",
     pass: "Invalid password",
     reenterpass: "Passwords don't match",
+    unameexists: "Username already exists!",
   };
 
   //handles submitting the registered username and password
@@ -37,15 +38,19 @@ const Register = () => {
 
       axios.request(options).then((response) => {
         //console.log(response.data);
+        if (response.data.reg === false) { //means username already exists
+          setErrorMessages({ name: "unameexists", message: errors.unameexists });
+        }
+        else {
+          setPasswordInput("");
+          setReEnterPasswordInput("");
+          setUsernameInput("");
+          setErrorMessages({});
+          navigate('/login');
+        }
       }, (error) => {
         console.log(error);
       });
-      
-      setPasswordInput("");
-      setReEnterPasswordInput("");
-      setUsernameInput("");
-      setErrorMessages({});
-      navigate('/login');
     }
   };
 

@@ -12,6 +12,13 @@ const registerUser = (req, res, next) => {
   username = req.body.username;
   password = req.body.password;
   firstTime = "TRUE";
+  // fullName = "";
+  // company = "";
+  // address1 = "";
+  // address2 = "";
+  // city = "";
+  // zipcode = "";
+  // state = "";
 
   bcrypt.hash(password, parseInt(process.env.SALTROUNDS), (err, hash) => {
     if (err) {
