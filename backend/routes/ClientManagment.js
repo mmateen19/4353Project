@@ -23,8 +23,8 @@ const updateInfo = (req, res) => {
   //need to do another insert to the user table to update firsttime?
 
   client.query(
-    "UPDATE users SET (firsttime) = ($1) WHERE id = $2",
-    [firsTime, id],
+    "UPDATE users SET firsttime = $1 WHERE id = $2",
+    [firstTime, id],
     (err, dbres) => {
       if (err) {
         console.log(err.stack);
