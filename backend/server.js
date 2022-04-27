@@ -21,7 +21,7 @@ app.use((err, req, res, next) => {
 const Login = require("./routes/Login");
 const { database } = require("./database/database.js");
 const quote = require("./routes/FuelQuote");
-
+const accountInfo = require("./routes/ClientManagment.js");
 
 app.use(
   cors({
@@ -43,107 +43,18 @@ app.use(
 app.listen(port, () => console.log("Server started on port 4000"));
 
 app.get("/api", (req, res) => res.json("This is to test the API"));
-app.get("/api/users", (req, res) => {
-  res.json(database);
-  a;
-});
 
-app.get("/quote", (req, res) => res.json("this is to test the quote page"));
-app.get("/quote/user", (req, res) => {res.json(database);});
-app.get("/quote/user/save", (req, res) => {res.json(database);});
-app.get("/quote/user/history", (req, res) => {res.json(database);});
-
-app.post("/api/users", Login.registerUser);
-app.post("/api/users/authentication", Login.logUserIn);
+app.post("/api/user", Login.registerUser);
+app.post("/api/user/authentication", Login.logUserIn);
 
 app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
   console.log(req.userId);
   res.sendStatus(200);
 });
 
-app.post("/quote/user", quote.validate('getQuote'), quote.getQuote);
-app.post("/quote/user/save", quote.validate('saveQuote'), quote.saveQuote);
-app.post("/quote/user/history", quote.getHistory);
+//app.post("/api/user/quote/get", quote.validate("getQuote"), quote.getQuote); //i dont understand what this is here for?
+app.post("/api/user/quote/save", quote.saveQuote);
+app.get("/api/user/quote/history", quote.getHistory);
 
-
-
-
-
-//Old Code:
-
-//Function to authenticate token
-// function authenticateToken(req, res, next) 
-// {
-//   const token = req.headers['x-access-token']
-
-
-//   if (token == null) return res.sendStatus(401)
-
-//   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decode) => {
-//     if (err) 
-//     {
-//       res.json({auth: false, message: "Failed to authenticate"});
-//     }
-//     else 
-//     {
-//       req.userId = decode.id;
-//       next();
-
-//     }
-//   });       
-
-// }
-
-//testing post to the api now
-// app.post("/api/users", (req, res) => {
-//   console.log(req.body);
-//   let data = {
-//     username: req.body.username,
-//     password: req.body.password,
-//     history: [], //an array of json objects
-//     fullName: "",
-//     company: "",
-//     address1: "",
-//     address2: "",
-//     city: "",
-//     zipcode: "",
-//     state: "",
-//     id: database.length + 1,
-//     token: "",
-//   };
-
-//   database.push(data)
-//   //console.log(database)
-//   res.json(database);
-
-//this is the get request called by login. it should take in the username and send back the password
-// app.post("/api/users/authentication", (req, res) => {
-//   console.log(req.body);
-//   const userData = database.find(
-//     (user) => user.username === req.body.username
-//   );
-//   let pass;
-//   if (userData) {
-//     // console.log(userData)
-//     if (userData.password === req.body.password){
-//       req.session.user = userData
-//       //console.log(req.session.user)
-//       pass = userData.password;
-
-//       //Auth
-//       const id = userData.id
-      
-//       const token = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET);
-
-//       userData.token = token; 
-
-//       res.json({auth: true, token: token, userData: userData})
-//     }
-//     else {
-//       res.json({auth: false, message: "Not Found Pass!"})
-//     }
-//   } else {
-//     res.json({auth: false, message: "Not Found User!"})
-//   }
-  
-// });
+app.post("/api/user/accountInfo/edit", accountInfo.updateInfo);
+app.post("/api/user/accountInfo/get", accountInfo.retrieveInfo);

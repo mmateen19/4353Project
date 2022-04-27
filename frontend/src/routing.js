@@ -12,26 +12,39 @@ import History from "./components/FuelQuote/History";
 
 const Routing = () => {
   //this is where we access the api
-  const [backendData, setBackendData] = useState([{}]);
-
-  useEffect(() => {
-    fetch("/api")
-      .then((response) => response.json())
-      .then((data) => {
-        setBackendData(data);
-      });
-  }, []);
+  const [userLogin, setUserLogin] = useState({});
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="login" element={<Login />} />
+        <Route
+          path="login"
+          element={<Login userLogin={userLogin} setUserLogin={setUserLogin} />}
+        />
         <Route path="register" element={<Register />} />
         <Route path="home" element={<Home />} />
-        <Route path="home/accountinfo" element={<AccountInfoForm />} />
-        <Route path="home/pricing" element={<FuelQuoteForm />} />
-        <Route path="home/history" element={<History />} />
+        <Route
+          path="home/accountinfo"
+          element={
+            <AccountInfoForm
+              userLogin={userLogin}
+              setUserLogin={setUserLogin}
+            />
+          }
+        />
+        <Route
+          path="home/pricing"
+          element={
+            <FuelQuoteForm userLogin={userLogin} setUserLogin={setUserLogin} />
+          }
+        />
+        <Route
+          path="home/history"
+          element={
+            <History userLogin={userLogin} setUserLogin={setUserLogin} />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
