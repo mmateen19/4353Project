@@ -94,6 +94,7 @@ const Register = () => {
               required
             />
             {renderErrorMessage("uname")}
+            {renderErrorMessage("unameexists")}
           </div>
           <div className="input-container">
             <label>Password </label>
