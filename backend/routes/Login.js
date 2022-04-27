@@ -27,10 +27,10 @@ const registerUser = (req, res, next) =>
       client.query('INSERT INTO users(username, password, firsttime) VALUES ($1, $2, $3)',
        [username, hash, firstTime], (err, res2) => {
         if (err){
-          console.log(err.stack)
+          res.json({reg: false})
         }
         else {
-          res.json(res2.rows)
+          res.json({reg: true, rows:res2.rows})
         }
        })
     })

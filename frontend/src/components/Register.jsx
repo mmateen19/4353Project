@@ -15,6 +15,7 @@ const Register = () => {
     uname: "Invalid username",
     pass: "Invalid password",
     reenterpass: "Passwords don't match",
+    duplicate: "Username Already in Use"
   };
 
   //handles submitting the registered username and password
@@ -42,17 +43,27 @@ const Register = () => {
 
       // })
       
+      let resp = {};
       axios.request(options).then((response) => {
         //console.log(response.data);
+        resp = response
       }, (error) => {
         console.log(error);
       });
+
+      if (!resp.data.reg) 
+      {
+        setErrorMessages({ name: "duplicate", message: errors.duplicate });
+      }
+      else 
+      {
       
-      setPasswordInput("");
-      setReEnterPasswordInput("");
-      setUsernameInput("");
-      setErrorMessages({});
-      navigate('/login');
+        setPasswordInput("");
+        setReEnterPasswordInput("");
+        setUsernameInput("");
+        setErrorMessages({});
+        navigate('/login');
+      }
     }
   };
 
