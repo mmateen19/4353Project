@@ -51,7 +51,6 @@ const saveQuote = (req, res, next) => {
   ppg = req.body.ppg;
   totalPrice = req.body.totalPrice;
 
-  //TODO with ahmed. need id to insert for that user?
   client.query(
     "INSERT INTO fuelquotes(id, gallons, quote, price, date) VALUES ($1, $2, $3, $4, $5)",
     [id, numGallons, totalPrice, ppg, date],

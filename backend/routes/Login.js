@@ -30,33 +30,24 @@ const registerUser = (req, res, next) => {
       [username, hash, firstTime],
       (err, dbres) => {
         if (err) {
-          res.json({reg: false});
-        } 
-        else
-        {
+          res.json({ reg: false });
+        } else {
           //console.log(dbres.rows)
-          
-
           client.query(
             "INSERT INTO clientinfo(id, username, auth, fullname, company, address1, address2, city, zipcode, state) VALUES ((SELECT id FROM USERS WHERE username =$1), $2, $3, $4, $5, $6, $7, $8, $9, $10) ",
-            [username, username, "", "", "", "", "", "", "", "" ],
+            [username, username, "", "", "", "", "", "", "", ""],
             (err, dbres) => {
               if (err) {
-                res.json({reg: false});
+                res.json({ reg: false });
               } else {
-                console.log(dbres.rows)
-                res.json({reg: true, res: dbres.rows});
+                console.log(dbres.rows);
+                res.json({ reg: true, res: dbres.rows });
               }
             }
-          )
+          );
         }
       }
     );
-
-
-
-
-
   });
 };
 

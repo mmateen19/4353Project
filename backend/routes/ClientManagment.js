@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 
 dotenv.config();
 
-//TODO, this method needs to post the info from the frontend to the DB
+//this method needs to post the info from the frontend to the DB
 const updateInfo = (req, res) => {
   console.log(req.body);
   id = req.body.id;
@@ -34,7 +34,6 @@ const updateInfo = (req, res) => {
     }
   );
 
-  //TODO with ahmed. does it need username and auth to go with it?
   client.query(
     "UPDATE clientinfo SET (fullname, company, address1, address2, city, zipcode, state) = ($1, $2, $3, $4, $5, $6, $7) WHERE id = $8",
     [fullName, company, address1, address2, city, zipcode, state, id],
