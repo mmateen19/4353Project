@@ -140,7 +140,7 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
         method: "POST",
         url: "/api/user/accountInfo/get",
         data: {
-          username: userLogin.username,
+          id: userLogin.id,
         },
       };
 

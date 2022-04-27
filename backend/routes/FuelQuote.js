@@ -52,13 +52,17 @@ const saveQuote = (req, res, next) => {
   totalPrice = req.body.totalPrice;
 
   //TODO with ahmed. need id to insert for that user?
-  client.query("INSERT INTO FuelQuotes() VALUES ()", [], (err, dbres) => {
-    if (err) {
-      console.log(err.stack);
-    } else {
-      res.json(dbres.rows);
+  client.query(
+    "INSERT INTO fuelquotes(id, gallons, quote, price, date) VALUES ($1, $2, $3, $4, $5)",
+    [id, numGallons, totalPrice, ppg, date],
+    (err, dbres) => {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        res.json(dbres.rows);
+      }
     }
-  });
+  );
 };
 
 const getQuote = async (req, res) => {

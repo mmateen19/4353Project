@@ -22,33 +22,45 @@ const updateInfo = (req, res) => {
 
   //need to do another insert to the user table to update firsttime?
 
-  //TODO with ahmed. does it need username and auth to go with it?
-  client.query("INSERT INTO clientinfo() VALUES ()", [], (err, dbres) => {
-    if (err) {
-      console.log(err.stack);
-    } else {
-      res.json(dbres.rows);
+  client.query(
+    "UPDATE users SET (firsttime) = ($1) WHERE id = $2",
+    [firsTime, id],
+    (err, dbres) => {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        //res.json(dbres.rows);
+      }
     }
-  });
+  );
+
+  //TODO with ahmed. does it need username and auth to go with it?
+  client.query(
+    "UPDATE clientinfo SET (fullname, company, address1, address2, city, zipcode, state) = ($1, $2, $3, $4, $5, $6, $7) WHERE id = $8",
+    [fullName, company, address1, address2, city, zipcode, state, id],
+    (err, dbres) => {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        res.json(dbres.rows);
+      }
+    }
+  );
 };
 
 //this method needs to query the info from the DB and send to the frontend
 const retrieveInfo = (req, res) => {
-  username = req.body.username;
+  id = req.body.id;
 
-  client.query(
-    "SELECT * FROM clientinfo WHERE username = $1",
-    [username],
-    (err, dbres) => {
-      if (err) {
-        res.json({ auth: false, message: "Could not Query DB" });
-      } else if (dbres.rowCount > 0) {
-        res.json({ auth: true, info: dbres.rows[0] });
-      } else {
-        res.json({ auth: false, message: "Not Found User!" });
-      }
+  client.query("SELECT * FROM clientinfo WHERE id = $1", [id], (err, dbres) => {
+    if (err) {
+      res.json({ auth: false, message: "Could not Query DB" });
+    } else if (dbres.rowCount > 0) {
+      res.json({ auth: true, info: dbres.rows[0] });
+    } else {
+      res.json({ auth: false, message: "Not Found User!" });
     }
-  );
+  });
 };
 
 module.exports = {
