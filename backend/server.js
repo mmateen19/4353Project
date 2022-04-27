@@ -56,7 +56,6 @@ app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
 //app.post("/api/user/quote/get", quote.validate("getQuote"), quote.getQuote); //i dont understand what this is here for?
 app.post("/api/user/quote/save", quote.saveQuote);
 app.get("/api/user/quote/history", quote.getHistory);
-
 app.post("/api/user/quote/pricingmodule", PricingModule.calculate);
 
 app.post("/api/user/accountInfo/edit", accountInfo.updateInfo);

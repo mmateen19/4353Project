@@ -12,8 +12,8 @@ const FuelQuoteForm = ({ userLogin, setUserLogin }) => {
   const navigate = useNavigate();
 
   //TODO: GET Estimate Price Per Gal & Total from Pricing module
-  const pricePerGall = 3.5;
-  const totalPrice = pricePerGall * numGallons;
+  let pricePerGall = 1.5;
+  let totalPrice = pricePerGall * numGallons;
 
   const renderErrorMessage = (name) =>
     name === errorMessages.name && (
@@ -56,8 +56,28 @@ const FuelQuoteForm = ({ userLogin, setUserLogin }) => {
       setErrorMessages({ name: "date", message: errors.date });
     } else {
       //both inputs are valid
-      //axios post, send down id and numGallons
+      //axios post, send down id and numGallons to pricing module
+      //recieves back ppg & totalPrice
+      const options = {
+        method: "POST",
+        url: "/api/user/quote/pricingmodule",
+        data: {
+          id: userLogin.id,
+          numgallons: numGallons,
+        },
+      };
 
+      axios.request(options).then(
+        (response) => {
+          //console.log(response.data);
+          //pricing module sends back ppg & totalPrice
+          pricePerGall = response.data.ppg;
+          totalPrice = response.data.price;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
       //render the quote,
       setErrorMessages({});
       setSubmit(true);
@@ -82,6 +102,7 @@ const FuelQuoteForm = ({ userLogin, setUserLogin }) => {
     axios.request(options).then(
       (response) => {
         //console.log(response.data);
+        //dont need anything back here because we are just adding to history
       },
       (error) => {
         console.log(error);

@@ -1,5 +1,6 @@
 const { check, validationResult } = require("express-validator");
 const database = require("../database/database.js");
+const client = require("../database/database");
 
 // validation method
 
@@ -44,7 +45,7 @@ const validate = (method) => {
 };
 
 const saveQuote = (req, res, next) => {
-  console.log(req.body);
+  //console.log(req.body);
   id = req.body.id;
   date = req.body.date;
   numGallons = req.body.numGallons;
