@@ -4,7 +4,7 @@ import CustNav from "./CustNav";
 import "./AccountInfoForm.css";
 import States from "./resources/states";
 
-const AccountInfoForm = () => {
+const AccountInfoForm = ({ userLogin, setUserLogin }) => {
   const [nameInput, setNameInput] = useState("");
   const [companyInput, setCompanyInput] = useState("");
   const [address1Input, setAddress1Input] = useState("");
@@ -14,7 +14,8 @@ const AccountInfoForm = () => {
   const [zipCodeInput, setZipCodeInput] = useState("");
   const [errorMessages, setErrorMessages] = useState({});
   //get request to backend to see if its the users first time logging in
-  const firstTime = true;
+  const firstTime = userLogin.firsttime;
+  console.log(userLogin);
 
   const navigate = useNavigate();
 
@@ -32,13 +33,13 @@ const AccountInfoForm = () => {
       setErrorMessages({ name: "state_", message: errors.required });
     } else if (zipCodeInput === "") {
       setErrorMessages({ name: "zip_", message: errors.required });
-    } else if(stateInput === ""){
+    } else if (stateInput === "") {
       setErrorMessages({ name: "state_", message: errors.required });
-    } else if(invalidLengths()) { 
-    
+    } else if (invalidLengths()) {
     } else {
-      //post data right here
+      //POST DATA TO BACKEND RIGHT HERE
       //also set firstTime flag to be false now bc they have successfully registered
+
       setNameInput("");
       setCompanyInput("");
       setAddress1Input("");
@@ -78,28 +79,21 @@ const AccountInfoForm = () => {
     setZipCodeInput(event.target.value);
   };
   const invalidLengths = () => {
-    if(nameInput.length > 50){
-      setErrorMessages({ name: "f_name", message: errors.tooLong })
-    }
-    else if(companyInput.length > 50){
-      setErrorMessages({ name: "company_name", message: errors.tooLong })
-    }
-    else if(address1Input.length > 100){
-      setErrorMessages({ name: "address1", message: errors.tooLong })
-    }
-    else if(address2Input.length > 100){
-      setErrorMessages({ name: "address2", message: errors.tooLong })
-    }
-    else if(cityInput.length > 100){
-      setErrorMessages({ name: "city_", message: errors.tooLong })
-    }
-    else if(zipCodeInput.length > 9){
-      setErrorMessages({ name: "zip_", message: errors.tooLong })
-    }
-    else if(zipCodeInput.length < 5){
-      setErrorMessages({ name: "zip_", message: errors.tooShort })
-    }
-    else{
+    if (nameInput.length > 50) {
+      setErrorMessages({ name: "f_name", message: errors.tooLong });
+    } else if (companyInput.length > 50) {
+      setErrorMessages({ name: "company_name", message: errors.tooLong });
+    } else if (address1Input.length > 100) {
+      setErrorMessages({ name: "address1", message: errors.tooLong });
+    } else if (address2Input.length > 100) {
+      setErrorMessages({ name: "address2", message: errors.tooLong });
+    } else if (cityInput.length > 100) {
+      setErrorMessages({ name: "city_", message: errors.tooLong });
+    } else if (zipCodeInput.length > 9) {
+      setErrorMessages({ name: "zip_", message: errors.tooLong });
+    } else if (zipCodeInput.length < 5) {
+      setErrorMessages({ name: "zip_", message: errors.tooShort });
+    } else {
       return false;
     }
     return true;
@@ -109,44 +103,49 @@ const AccountInfoForm = () => {
     name === errorMessages.name && (
       <div className="error">{errorMessages.message}</div>
     );
-    const errors = {
-      required: "Required",
-      tooLong: "Over character limit",
-      tooShort: "Invalid Zip Code"
-    };
+  const errors = {
+    required: "Required",
+    tooLong: "Over character limit",
+    tooShort: "Invalid Zip Code",
+  };
 
+  const setStates = () => {
+    setErrorMessages({});
+    if (!firstTime) {
+      //get request to API for the user info
 
-    const setStates = () =>{
-      setErrorMessages({});
-      if(!firstTime){
-        //get request to API for the user info
-        //set each state to display whatever is already inputted
-        setNameInput("Matthew Philip");
-        setCompanyInput("USAA");
-        setAddress1Input("14826 Whispy Green Ct");
-        setAddress2Input("");
-        setCityInput("Cypress");
-        //setStateInput("TX"); //not doing this because we need them to re enter state input regardless
-        setZipCodeInput("77433");
-        //so when the form first loads in, it will just default display what is already in the backend
-        //but the form will work exactly the same
-      } 
-      else {
-        setNameInput("");
-        setCompanyInput("");
-        setAddress1Input("");
-        setAddress2Input("");
-        setCityInput("");
-        setStateInput("");
-        setZipCodeInput("");
-      }
+      //set each state to display whatever is already inputted
+      setNameInput("Matthew Philip");
+      setCompanyInput("USAA");
+      setAddress1Input("14826 Whispy Green Ct");
+      setAddress2Input("");
+      setCityInput("Cypress");
+      //setStateInput("TX"); //not doing this because we need them to re enter state input regardless
+      setZipCodeInput("77433");
+      //so when the form first loads in, it will just default display what is already in the backend
+      //but the form will work exactly the same
+    } else {
+      setNameInput("");
+      setCompanyInput("");
+      setAddress1Input("");
+      setAddress2Input("");
+      setCityInput("");
+      setStateInput("");
+      setZipCodeInput("");
     }
+  };
 
-    
   const renderForm = () => {
     return (
       <div className="display-container">
-        {firstTime? <section><h2>Complete Registration</h2><h1>Account Information</h1></section> :  <h1>Edit Account Information</h1>}
+        {firstTime ? (
+          <section>
+            <h2>Complete Registration</h2>
+            <h1>Account Information</h1>
+          </section>
+        ) : (
+          <h1>Edit Account Information</h1>
+        )}
         <form>
           <div className="form-sections">
             <section className="input-sections">
@@ -224,11 +223,14 @@ const AccountInfoForm = () => {
               ></input>
               {renderErrorMessage("zip_")}
             </section>
-            <section className = "input-sections">
+            <section className="input-sections">
               <label className="Box" for="State">
                 State:{" "}
               </label>
-              <States setStateInput = {setStateInput} className="input-selections" />
+              <States
+                setStateInput={setStateInput}
+                className="input-selections"
+              />
               {renderErrorMessage("state_")}
             </section>
           </div>
@@ -241,9 +243,11 @@ const AccountInfoForm = () => {
   };
 
   //this checks if its the first time we have ever logged in to know how to render the page
-  useEffect(() => { setStates() }, [])
+  useEffect(() => {
+    setStates();
+  }, []);
 
-  return (    
+  return (
     <div className="Form">
       <div className="navbar">
         <CustNav />

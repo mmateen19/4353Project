@@ -21,7 +21,7 @@ app.use((err, req, res, next) => {
 const Login = require("./routes/Login");
 const { database } = require("./database/database.js");
 const quote = require("./routes/FuelQuote");
-
+const accountInfo = require("./routes/ClientManagment.js");
 
 app.use(
   cors({
@@ -48,49 +48,42 @@ app.get("/api/users", (req, res) => {
   a;
 });
 
-app.get("/quote", (req, res) => res.json("this is to test the quote page"));
-app.get("/quote/user", (req, res) => {res.json(database);});
-app.get("/quote/user/save", (req, res) => {res.json(database);});
-app.get("/quote/user/history", (req, res) => {res.json(database);});
-
-app.post("/api/users", Login.registerUser);
-app.post("/api/users/authentication", Login.logUserIn);
+app.post("/api/user", Login.registerUser);
+app.post("/api/user/authentication", Login.logUserIn);
 
 app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
   console.log(req.userId);
   res.sendStatus(200);
 });
 
-app.post("/quote/user", quote.validate('getQuote'), quote.getQuote);
-app.post("/quote/user/save", quote.validate('saveQuote'), quote.saveQuote);
-app.post("/quote/user/history", quote.getHistory);
+app.post("/api/user/quote/get", quote.validate("getQuote"), quote.getQuote); //i dont understand what this is here for?
+app.post("/api/user/quote/save", quote.validate("saveQuote"), quote.saveQuote);
+app.get("/api/user/quote/history", quote.getHistory);
 
-
-
-
+app.post("/api/user/accountInfo", accountInfo.updateInfo);
+app.post("/api/user/accountInfo", accountInfo.retrieveInfo);
 
 //Old Code:
 
 //Function to authenticate token
-// function authenticateToken(req, res, next) 
+// function authenticateToken(req, res, next)
 // {
 //   const token = req.headers['x-access-token']
-
 
 //   if (token == null) return res.sendStatus(401)
 
 //   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decode) => {
-//     if (err) 
+//     if (err)
 //     {
 //       res.json({auth: false, message: "Failed to authenticate"});
 //     }
-//     else 
+//     else
 //     {
 //       req.userId = decode.id;
 //       next();
 
 //     }
-//   });       
+//   });
 
 // }
 
@@ -132,10 +125,10 @@ app.post("/quote/user/history", quote.getHistory);
 
 //       //Auth
 //       const id = userData.id
-      
+
 //       const token = jwt.sign({id}, process.env.ACCESS_TOKEN_SECRET);
 
-//       userData.token = token; 
+//       userData.token = token;
 
 //       res.json({auth: true, token: token, userData: userData})
 //     }
@@ -145,5 +138,5 @@ app.post("/quote/user/history", quote.getHistory);
 //   } else {
 //     res.json({auth: false, message: "Not Found User!"})
 //   }
-  
+
 // });
