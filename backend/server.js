@@ -23,7 +23,6 @@ const { database } = require("./database/database.js");
 const quote = require("./routes/FuelQuote");
 const accountInfo = require("./routes/ClientManagment.js");
 const PricingModule = require("./routes/PricingModule.js");
-const history = require("./routes/History.js");
 
 app.use(
   cors({
@@ -66,6 +65,3 @@ app.post("/api/user/quote/pricingmodule", PricingModule.calculate);
 
 app.post("/api/user/accountInfo/edit", accountInfo.updateInfo);
 app.post("/api/user/accountInfo/get", accountInfo.retrieveInfo);
-
-
-

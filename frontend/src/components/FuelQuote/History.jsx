@@ -64,25 +64,46 @@ const History = ({userLogin, setUserLogin}) => {
       }
       )
   
-  console.log(history)
+  //console.log(history)
   const Datarows = history;
 
-  return(
+  const renderHistory = () => {
+    return (
+      <div style={{ height: 400, width: '50%' }}>
+      <DataGrid
+        throttleRowsMs={10000}
+        rows={Datarows}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        getRowId={(row) => row.date} 
+      />
+    </div>)
+    }
 
-    <div style={{ height: 400, width: '100%' }}>
-    <DataGrid
-      throttleRowsMs={10000}
-      rows={Datarows}
-      columns={columns}
-      pageSize={5}
-      rowsPerPageOptions={[5]}
-      getRowId={(row) => row.date} 
+  return (
+      <div className = "App">
+        <div className="navbar">
+          <CustNav />
+        </div>
+      <div style={{ height: 400, width: '100%' }}>
+          <div className="display-container">
+          <div style={{ height: 400, width: '100%' }}>
+      <DataGrid
+        throttleRowsMs={10000}
+        rows={Datarows}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        getRowId={(row) => row.date} 
+      />
+    </div>
+          </div>
+        </div>
+      </div>
       
-    />
-
-  </div>
-
-
+  )
+};
 
       // <TableContainer component={Paper} className={classes.table}>
       //     <Table aria-label="collapsible table">
@@ -118,7 +139,6 @@ const History = ({userLogin, setUserLogin}) => {
       //           </TableBody>
       //       </Table>
       //   </TableContainer>
-  )
-  };
+  
 export default History;
 
