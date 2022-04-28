@@ -1,57 +1,100 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import CustNav from "../NavBar/CustNav";
 import "./History.css"
+import axios from "axios";
+import { makeStyles } from '@material-ui/core/styles';
+import TableContainer from '@material-ui/core/TableContainer';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+import TableBody from '@material-ui/core/TableBody';
 
 
+  const useRowStyles = makeStyles({
+    root: {
+      '& > *': {
+        borderBottom: 'unset',
+      },
+    },
+    table: {
+      width: "100%",
+    },
+  });
 
 
+export default function History(){
+    const classes = useRowStyles();
+    const [history, setHistory] = useState([])
 
-const History = () => {
-    const renderForm2 = () =>
+    const columns =[
+        { label: "Gallons", key: "gallons", align: "right" },
+        { label: "Date & Time", key: "date", align: "right" },
+        { label: "Price Per Gallon ($)", key: "quote", align: "right" },
+        { label: "Total ($)", key: "total", align: "right" },
+  ];
 
-    {   
-    return(
-        <div className = "display-container">
-            <h2 >Previous Fuel Quotes:</h2>
-            <h3>University of Houston</h3>
-            <h5>4800 Calhoun Rd, Houston, TX 77004</h5>
+  const date = (t) =>{
+        let d = new Date(parseInt(t));
+        return d.toLocaleDateString();
+   };
 
-            <table>
-                <tr>
-                    <th></th>
-                    <th>08/10/20</th>
-                    <th>10/05/21</th>
-                    <th>02/20/22</th>
-
-                </tr>
-            
-               <tr>
-                   <th>Gallons</th>
-                   <td>15,000</td>
-                   <td>30,000</td>
-                   <td>40,000</td>
-                </tr>
-                <tr>
-                   <th>Price:</th>
-                   <td>$7,500</td>
-                   <td>$15,000</td>
-                   <td>$20,000</td>
-                </tr>                   
-            </table>
-
-        </div>
-        );
-
+   const getHistory = () => {
+    
+    const options ={
+      method: "POST",
+      url: "/api/user/fuelhistory",
+      data:{id: localStorage.getItem("userid")}
     };
-    return (
-        <div className = "App">
-            <div className="navbar">
-                <CustNav />
-            </div>
-            <div>{renderForm2()}</div>
 
-        </div>
-    );
-};
+    axios.request(options).then((response)=>{
+      console.log(response.data.history);
+    }, (error)=>{
+      console.log(error);
+    }
+    )};
 
-export default History;
+  useEffect(()=>{
+      getHistory()
+  }, []);
+
+  return(
+      <TableContainer component={Paper} className={classes.table}>
+          <Table aria-label="collapsible table">
+              <TableHead>
+                  <TableRow>
+                      {columns.map((column)=>(
+                          <TableCell key={column.key} align={column.align}>
+                              {column.label}
+                          </TableCell>
+                      ))}
+                  </TableRow>
+              </TableHead>
+               <TableBody>
+                {history.map((row, index) => (
+                    <TableRow key={index}>
+                        <TableCell align="right">
+                            {row.gallons}
+                        </TableCell>
+                        <TableCell align="right">
+                            {row.address}
+                        </TableCell>
+                        <TableCell align="right">
+                            {date(row.date)}
+                        </TableCell>
+                        <TableCell align="right">
+                            {row.price}
+                        </TableCell>
+                        <TableCell align="right">
+                            {parseFloat(row.total).toFixed(2)}
+                        </TableCell>
+                    </TableRow>
+                ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+  )
+  };
+
+
