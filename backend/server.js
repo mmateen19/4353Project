@@ -53,10 +53,12 @@ app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
   res.sendStatus(200);
 });
 
-//app.post("/api/user/quote/get", quote.validate("getQuote"), quote.getQuote); //i dont understand what this is here for?
-app.post("/api/user/quote/save", quote.saveQuote);
-app.get("/api/user/quote/history", quote.getHistory);
-app.post("/api/user/quote/pricingmodule", PricingModule.calculate);
-
 app.post("/api/user/accountInfo/edit", accountInfo.updateInfo);
 app.post("/api/user/accountInfo/get", accountInfo.retrieveInfo);
+
+//app.post("/api/user/quote/get", quote.validate("getQuote"), quote.getQuote); //i dont understand what this is here for?
+app.get("/api/user/quote/history", quote.getHistory);
+
+app.post("/api/user/quote/save", quote.saveQuote);
+app.post("/api/user/quote/pricingmodule", PricingModule.calculate);
+
