@@ -7,6 +7,24 @@ const bcrypt = require("bcrypt");
 
 dotenv.config();
 
+const home = (req, res) => {
+  id = req.body.id;
+
+  client.query(
+    "SELECT fullname FROM clientinfo WHERE id = $1",
+    [id],
+    (err, dbres) => {
+      if (err) {
+        res.json({ exists: false, message: "Could not Query DB" });
+      } else if (dbres.rowCount > 0) {
+        res.json({ exists: true, info: dbres.rows[0] });
+      } else {
+        res.json({ exists: false, message: "Not Found User!" });
+      }
+    }
+  );
+};
+
 //this method needs to post the info from the frontend to the DB
 const updateInfo = (req, res) => {
   console.log(req.body);
@@ -65,4 +83,5 @@ const retrieveInfo = (req, res) => {
 module.exports = {
   updateInfo,
   retrieveInfo,
+  home,
 };

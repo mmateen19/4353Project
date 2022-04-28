@@ -53,6 +53,7 @@ app.get("/api/AuthUser", Login.authenticateToken, (req, res) => {
   res.sendStatus(200);
 });
 
+app.post("/api/user/home", accountInfo.home);
 app.post("/api/user/accountInfo/edit", accountInfo.updateInfo);
 app.post("/api/user/accountInfo/get", accountInfo.retrieveInfo);
 

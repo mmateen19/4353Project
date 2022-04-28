@@ -23,7 +23,10 @@ const Routing = () => {
           element={<Login userLogin={userLogin} setUserLogin={setUserLogin} />}
         />
         <Route path="register" element={<Register />} />
-        <Route path="home" element={<Home />} />
+        <Route
+          path="home"
+          element={<Home userLogin={userLogin} setUserLogin={setUserLogin} />}
+        />
         <Route
           path="home/accountinfo"
           element={
