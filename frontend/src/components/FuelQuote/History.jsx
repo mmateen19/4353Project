@@ -69,7 +69,7 @@ const History = ({userLogin, setUserLogin}) => {
 
   const renderHistory = () => {
     return (
-      <div style={{ height: 400, width: '50%' }}>
+      <div style={{ height: 400, width: '10%' }}>
       <DataGrid
         throttleRowsMs={10000}
         rows={Datarows}
