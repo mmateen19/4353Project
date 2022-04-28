@@ -12,7 +12,7 @@ const calculate = (req, res) => {
   let gallonsreqfactor = 0;
   const companyprofitfactor = .1;
 
-  console.log(queries(id, callback));
+  //console.log(queries(id, callback));
 
   if(numgallons > 1000){
     gallonsreqfactor = .02;
