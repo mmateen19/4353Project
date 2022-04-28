@@ -14,17 +14,6 @@ import axios from "axios";
 import { DataGrid } from '@mui/x-data-grid';
 
 
-  // const useRowStyles = makeStyles({
-  //   root: {
-  //     '& > *': {
-  //       borderBottom: 'unset',
-  //     },
-  //   },
-  //   table: {
-  //     width: "100%",
-  //   },
-  // });
-
 
 const History = ({userLogin, setUserLogin}) => {
     //const classes = useRowStyles();
@@ -66,20 +55,6 @@ const History = ({userLogin, setUserLogin}) => {
   
   //console.log(history)
   const Datarows = history;
-
-  const renderHistory = () => {
-    return (
-      <div style={{ height: 400, width: '10%' }}>
-      <DataGrid
-        throttleRowsMs={10000}
-        rows={Datarows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
-        getRowId={(row) => row.date} 
-      />
-    </div>)
-    }
 
   return (
       <div className = "App">
