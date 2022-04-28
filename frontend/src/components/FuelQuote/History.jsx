@@ -2,37 +2,39 @@ import React, { useState, useEffect } from 'react';
 import CustNav from "../NavBar/CustNav";
 import "./History.css"
 import axios from "axios";
-import { makeStyles } from '@material-ui/core/styles';
-import TableContainer from '@material-ui/core/TableContainer';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import TableBody from '@material-ui/core/TableBody';
+//import { makeStyles } from '@material-ui/core/styles';
+// import TableContainer from '@material-ui/core/TableContainer';
+// import Paper from '@material-ui/core/Paper';
+// import Table from '@material-ui/core/Table';
+// import TableHead from '@material-ui/core/TableHead';
+// import TableRow from '@material-ui/core/TableRow';
+// import TableCell from '@material-ui/core/TableCell';
+// import TableBody from '@material-ui/core/TableBody';
+
+import { DataGrid } from '@mui/x-data-grid';
 
 
-  const useRowStyles = makeStyles({
-    root: {
-      '& > *': {
-        borderBottom: 'unset',
-      },
-    },
-    table: {
-      width: "100%",
-    },
-  });
+  // const useRowStyles = makeStyles({
+  //   root: {
+  //     '& > *': {
+  //       borderBottom: 'unset',
+  //     },
+  //   },
+  //   table: {
+  //     width: "100%",
+  //   },
+  // });
 
 
-export default function History(){
-    const classes = useRowStyles();
-    const [history, setHistory] = useState([])
+const History = ({userLogin, setUserLogin}) => {
+    //const classes = useRowStyles();
+    const [history, setHistory] = useState({});
 
     const columns =[
-        { label: "Gallons", key: "gallons", align: "right" },
-        { label: "Date & Time", key: "date", align: "right" },
-        { label: "Price Per Gallon ($)", key: "quote", align: "right" },
-        { label: "Total ($)", key: "total", align: "right" },
+        { field: 'gallons', headerName: "Gallons", type: 'number',  width: 70  },
+        { field: "date", headerName: "Date & Time", width: 130  },
+        { field: "price", headerName: "Price Per Gallon ($)", type: 'number', width: 130  },
+        { field: "quote", headerName: "Total ($)", type: 'number', width: 130  },
   ];
 
   const date = (t) =>{
@@ -40,61 +42,83 @@ export default function History(){
         return d.toLocaleDateString();
    };
 
-   const getHistory = () => {
-    
-    const options ={
-      method: "POST",
-      url: "/api/user/fuelhistory",
-      data:{id: localStorage.getItem("userid")}
-    };
+  
+    //console.log(userLogin)
+      const options ={
+        method: "POST",
+        url: "/api/user/fuelhistory",
+        data:{id: userLogin.id}
+      };
 
-    axios.request(options).then((response)=>{
-      console.log(response.data.history);
-    }, (error)=>{
-      console.log(error);
-    }
-    )};
+      axios.request(options).then((response)=>{
 
-  useEffect(()=>{
-      getHistory()
-  }, []);
+        if (response.data.history)
+        {
+          //console.log(response.data.result)
+          //Datarows = response.data.result;
+          setHistory(response.data.result);
+
+        }
+      }, (error)=>{   
+        console.log(error);
+      }
+      )
+  
+  console.log(history)
+  const Datarows = history;
 
   return(
-      <TableContainer component={Paper} className={classes.table}>
-          <Table aria-label="collapsible table">
-              <TableHead>
-                  <TableRow>
-                      {columns.map((column)=>(
-                          <TableCell key={column.key} align={column.align}>
-                              {column.label}
-                          </TableCell>
-                      ))}
-                  </TableRow>
-              </TableHead>
-               <TableBody>
-                {history.map((row, index) => (
-                    <TableRow key={index}>
-                        <TableCell align="right">
-                            {row.gallons}
-                        </TableCell>
-                        <TableCell align="right">
-                            {row.address}
-                        </TableCell>
-                        <TableCell align="right">
-                            {date(row.date)}
-                        </TableCell>
-                        <TableCell align="right">
-                            {row.price}
-                        </TableCell>
-                        <TableCell align="right">
-                            {parseFloat(row.total).toFixed(2)}
-                        </TableCell>
-                    </TableRow>
-                ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+
+    <div style={{ height: 400, width: '100%' }}>
+    <DataGrid
+      throttleRowsMs={10000}
+      rows={Datarows}
+      columns={columns}
+      pageSize={5}
+      rowsPerPageOptions={[5]}
+      getRowId={(row) => row.date} 
+      
+    />
+
+  </div>
+
+
+
+      // <TableContainer component={Paper} className={classes.table}>
+      //     <Table aria-label="collapsible table">
+      //         <TableHead>
+      //             <TableRow>
+      //                 {columns.map((column)=>(
+      //                     <TableCell key={column.key} align={column.align}>
+      //                         {column.label}
+      //                     </TableCell>
+      //                 ))}
+      //             </TableRow>
+      //         </TableHead>
+      //          <TableBody>
+      //           {history.map((row, index) => (
+      //               <TableRow key={index}>
+      //                   <TableCell align="right">
+      //                       {row.gallons}
+      //                   </TableCell>
+      //                   <TableCell align="right">
+      //                       {row.address}
+      //                   </TableCell>
+      //                   <TableCell align="right">
+      //                       {date(row.date)}
+      //                   </TableCell>
+      //                   <TableCell align="right">
+      //                       {row.price}
+      //                   </TableCell>
+      //                   <TableCell align="right">
+      //                       {parseFloat(row.total).toFixed(2)}
+      //                   </TableCell>
+      //               </TableRow>
+      //           ))}
+      //           </TableBody>
+      //       </Table>
+      //   </TableContainer>
   )
   };
-
+export default History;
 
