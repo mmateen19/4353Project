@@ -22,6 +22,9 @@ const Register = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     //throws error if they try to submit empty string
+    console.log(usernameInput);
+    console.log(passwordInput);
+    console.log(reEnterPasswordInput);
     if (usernameInput === "") {
       setErrorMessages({ name: "uname", message: errors.uname });
     } else if (passwordInput === "") {
@@ -38,7 +41,7 @@ const Register = () => {
 
         
       axios.request(options).then((response) => {
-        //console.log(response.data);
+        console.log(response.data);
         if (response.data.reg === false) { //means username already exists
           setErrorMessages({ name: "unameexists", message: errors.unameexists });
         }

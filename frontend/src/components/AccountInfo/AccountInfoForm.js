@@ -16,7 +16,7 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
   const [errorMessages, setErrorMessages] = useState({});
 
   const firstTime = userLogin.firsttime;
-  console.log(userLogin);
+  //console.log(userLogin);
 
   const navigate = useNavigate();
 
@@ -39,6 +39,7 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
     } else if (invalidLengths()) {
     } else {
       //POST DATA TO BACKEND RIGHT HERE
+      setUserLogin({...userLogin, firsttime: false});
       const options = {
         method: "POST",
         url: "/api/user/accountInfo/edit",
@@ -140,7 +141,7 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
         method: "POST",
         url: "/api/user/accountInfo/get",
         data: {
-          username: userLogin.username,
+          id: userLogin.id,
         },
       };
 
@@ -148,7 +149,7 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
         (response) => {
           console.log(response.data);
           //set each state to display whatever is already inputted
-          setNameInput(response.data.info.fullName);
+          setNameInput(response.data.info.fullname);
           setCompanyInput(response.data.info.company);
           setAddress1Input(response.data.info.address1);
           setAddress2Input(response.data.info.address2);

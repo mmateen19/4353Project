@@ -1,5 +1,6 @@
 const { check, validationResult } = require("express-validator");
 const database = require("../database/database.js");
+const client = require("../database/database");
 
 // validation method
 
@@ -44,21 +45,24 @@ const validate = (method) => {
 };
 
 const saveQuote = (req, res, next) => {
-  console.log(req.body);
+  //console.log(req.body);
   id = req.body.id;
   date = req.body.date;
   numGallons = req.body.numGallons;
   ppg = req.body.ppg;
   totalPrice = req.body.totalPrice;
 
-  //TODO with ahmed. need id to insert for that user?
-  client.query("INSERT INTO FuelQuotes() VALUES ()", [], (err, dbres) => {
-    if (err) {
-      console.log(err.stack);
-    } else {
-      res.json(dbres.rows);
+  client.query(
+    "INSERT INTO fuelquotes(id, gallons, quote, price, date) VALUES ($1, $2, $3, $4, $5)",
+    [id, numGallons, totalPrice, ppg, date],
+    (err, dbres) => {
+      if (err) {
+        console.log(err.stack);
+      } else {
+        res.json(dbres.rows);
+      }
     }
-  });
+  );
 };
 
 const getQuote = async (req, res) => {
