@@ -9,11 +9,10 @@ const FuelQuoteForm = ({ userLogin, setUserLogin }) => {
   const [numGallons, setNumGallons] = useState(0);
   const [date, setDate] = useState("");
   const [isSubmit, setSubmit] = useState(false);
+  const [pricePerGall, setPricePerGall] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
 
-  //TODO: GET Estimate Price Per Gal & Total from Pricing module
-  let pricePerGall = 1.5;
-  let totalPrice = pricePerGall * numGallons;
 
   const renderErrorMessage = (name) =>
     name === errorMessages.name && (
@@ -71,8 +70,8 @@ const FuelQuoteForm = ({ userLogin, setUserLogin }) => {
         (response) => {
           //console.log(response.data);
           //pricing module sends back ppg & totalPrice
-          pricePerGall = response.data.ppg;
-          totalPrice = response.data.price;
+          setPricePerGall(response.data.ppg);
+          setTotalPrice(response.data.price);
         },
         (error) => {
           console.log(error);
