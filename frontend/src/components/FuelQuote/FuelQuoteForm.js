@@ -13,7 +13,6 @@ const FuelQuoteForm = ({ userLogin, setUserLogin }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
 
-
   const renderErrorMessage = (name) =>
     name === errorMessages.name && (
       <div className="error">{errorMessages.message}</div>
@@ -44,7 +43,7 @@ const FuelQuoteForm = ({ userLogin, setUserLogin }) => {
     );
   };
 
-  const handleGetQuote = (event) => {
+  const handleGetQuote = async (event) => {
     event.preventDefault();
     //if gallons is not a valid integer
     if (!validGallons(numGallons)) {
@@ -79,6 +78,7 @@ const FuelQuoteForm = ({ userLogin, setUserLogin }) => {
       );
       //render the quote,
       setErrorMessages({});
+      await new Promise((r) => setTimeout(r, 500));
       setSubmit(true);
     }
   };
@@ -112,7 +112,6 @@ const FuelQuoteForm = ({ userLogin, setUserLogin }) => {
     setNumGallons(0);
     setDate("");
     setSubmit(false);
-
     navigate("/home/history");
   };
 
