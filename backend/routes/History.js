@@ -5,9 +5,12 @@ dotenv.config();
 
 const getHistory = (req, res) => {
     id = req.body.id; 
+    console.log(id);
+    console.log("Ahmed")
+
 
     client.query(
-        "SELECT * FROM users WHERE id = $1",
+        "SELECT gallons, quote, price, date FROM fuelquotes WHERE id = $1",
         [id],
         (err, dbres) => {
             if (err){
