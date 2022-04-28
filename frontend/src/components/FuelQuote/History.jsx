@@ -41,20 +41,19 @@ export default function History(){
    };
 
    const getHistory = () => {
-    axios
-      .post(process.env.REACT_APP_SERVER_URL + "fuel-history", {
-        userid: localStorage.getItem("userid"),
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.error) {
-          console.log(res.data.error);
-        } else{
-            setHistory(res.data);
-        }
-      })
-      .catch((err) => console.log(err));
-  };
+    
+    const options ={
+      method: "POST",
+      url: "/api/user/fuelhistory",
+      data:{id: localStorage.getItem("userid")}
+    };
+
+    axios.request(options).then((response)=>{
+      console.log(response.data.history);
+    }, (error)=>{
+      console.log(error);
+    }
+    )};
 
   useEffect(()=>{
       getHistory()
