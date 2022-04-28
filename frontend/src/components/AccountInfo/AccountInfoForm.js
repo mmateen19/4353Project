@@ -39,6 +39,7 @@ const AccountInfoForm = ({ userLogin, setUserLogin }) => {
     } else if (invalidLengths()) {
     } else {
       //POST DATA TO BACKEND RIGHT HERE
+      setUserLogin({...userLogin, firsttime: false});
       const options = {
         method: "POST",
         url: "/api/user/accountInfo/edit",
