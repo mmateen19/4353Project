@@ -183,7 +183,7 @@ describe("task api", () => {
     it("should not retreive account info", (done) => {
       const user = {
         id: 99999,
-      }
+      };
 
       chai
         .request("http://localhost:4000")
@@ -202,11 +202,25 @@ describe("task api", () => {
   //It should save a quote to history
   describe("POST /api/user/quote/save", () => {
     it("should save quote", (done) => {
+      
+      const user = {
+        id: 67,
+        date: "5/6/2023",
+        numGallons: 100,
+        ppg: 1.73,
+        totalPrice: 172.50,
+      };
+
       chai
         .request("http://localhost:4000")
-        .post("/api/user/authentication ")
-      done();
+        .post("/api/user/quote/save")
+        .send(user)
+        .end((err, res) => {
+          expect(res.body.status).to.equals(true);
+          done();
+        })
     });
+
   });
 
 });

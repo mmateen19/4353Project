@@ -17,7 +17,7 @@ const saveQuote = (req, res, next) => {
       if (err) {
         console.log(err.stack);
       } else {
-        res.json(dbres.rows);
+        res.json({status: true, rows:dbres.rows});
       }
     }
   );
