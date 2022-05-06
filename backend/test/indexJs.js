@@ -8,6 +8,9 @@ var expect = chai.expect;
 chai.use(chaiHttp);
 
 describe("task api", () => {
+
+
+  //Connecting to the Server!
   describe("GET /api", () => {
     it("should connect to server", (done) => {
       chai
@@ -21,6 +24,8 @@ describe("task api", () => {
     });
   });
 
+
+  //Registering a User
   describe("POST /api/user", () => {
     it("should register user", (done) => {
       chai
@@ -33,6 +38,8 @@ describe("task api", () => {
     });
   });
 
+
+  //Logging a user in
   describe("POST /api/user/authentication", () => {
     it("should login user", (done) => {
       const user = {
@@ -81,7 +88,7 @@ describe("task api", () => {
     
   });
 
-  //NOT working
+  //Retreive first time login status
   describe("POST /api/user/home", () => {
     it("should send user to home page", (done) => {
       chai
@@ -106,6 +113,8 @@ describe("task api", () => {
     });
   });
 
+
+  //Edit the account info and update it
   describe("POST /api/user/accountInfo/edit", () => {
     it("should update client info", (done) => {
       const user = {
@@ -152,18 +161,45 @@ describe("task api", () => {
     });
   });
 
+
+  //It should retrieve the account info
   describe("POST /api/user/accountInfo/get", () => {
-    it("should update account info", (done) => {
+    it("should retreive account info", (done) => {
+      const user = {
+        id: 67,
+      }
+
       chai
         .request("http://localhost:4000")
         .post("/api/user/accountInfo/get ")
+        .send(user)
         .end((err, res)=>{
-
+          expect(res.body.auth).to.equals(true);
+          done();
         })
-      done();
     });
+
+
+    it("should not retreive account info", (done) => {
+      const user = {
+        id: 99999,
+      }
+
+      chai
+        .request("http://localhost:4000")
+        .post("/api/user/accountInfo/get ")
+        .send(user)
+        .end((err, res)=>{
+          expect(res.body.auth).to.equals(false);
+          done();
+        })
+    });
+
+
   });
 
+
+  //It should save a quote to history
   describe("POST /api/user/quote/save", () => {
     it("should save quote", (done) => {
       chai
