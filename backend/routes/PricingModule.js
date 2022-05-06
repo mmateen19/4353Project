@@ -27,7 +27,7 @@ const calculate = async (req, res) => {
       if (err) {
         console.log("Could not query DB!");
       } else {
-        console.log(dbres.rows[0].state === "TX");
+        //console.log(dbres.rows[0].state === "TX");
         if (dbres.rows[0].state === "TX") {
           locationfactor = 0.02;
         } else {
@@ -49,12 +49,12 @@ const calculate = async (req, res) => {
 
   await new Promise((r) => setTimeout(r, 800));
 
-  console.log("locationfactor = " + locationfactor);
-  console.log("ratehistoryfactor = " + ratehistoryfactor);
-  console.log("gallonnsreqfactor = " + gallonsreqfactor);
-  console.log(
-    locationfactor - ratehistoryfactor + gallonsreqfactor + companyprofitfactor
-  );
+  // console.log("locationfactor = " + locationfactor);
+  // console.log("ratehistoryfactor = " + ratehistoryfactor);
+  // console.log("gallonnsreqfactor = " + gallonsreqfactor);
+  // console.log(
+  //   locationfactor - ratehistoryfactor + gallonsreqfactor + companyprofitfactor
+  // );
 
   const margin =
     (locationfactor -
@@ -62,13 +62,17 @@ const calculate = async (req, res) => {
       gallonsreqfactor +
       companyprofitfactor) *
     1.5;
-  console.log("margin = " + margin);
+  //console.log("margin = " + margin);
 
   const estpricepergall = margin + 1.5;
   const totalPrice = numgallons * estpricepergall;
+  
 
+  
   //sends back up the ppg and the totalPrice after calculating it
-  res.json({ price: totalPrice, ppg: estpricepergall });
+  console.log(totalPrice + " " + estpricepergall)
+  res.json({ status: true, price: totalPrice, ppg: estpricepergall });
+
 };
 
 module.exports = {
