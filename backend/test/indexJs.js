@@ -7,257 +7,63 @@ var expect = chai.expect;
 chai.use(chaiHttp);
 
 describe("task api", () => {
-  /**
-   *  log in
-   *
-   *
-   * although we have this test set up,
-   * it won't be function properly until the database it set up
-   * if we run the tests now, they will display inaccurate results
-   * so instead we are choosing to wait until we can run them properly
-   *
-   * reference code below
-   */
-  //---------------------------------------------------------------------------------------------------------------
-  /**
-   * updating profile
-   */
-  describe("POST /user/api", () => {
-    it("it should update profile", (done) => {
-      const user = {
-        username: "a",
-        password: "a",
-        fullName: "a",
-        company: "a",
-        address1: "a",
-        address2: "a",
-        city: "a",
-        zipcode: "a",
-        state: "a",
-      };
+  describe("GET /api", () => {
+    it("should connect to backend", (done) => {
       chai
-        .request("http://localhost:4000") // right now, we can't use server so we're using the address instead
-        .post("/api/user")
-        .send(user)
+        .request("http://localhost:4000")
+        .get("/api")
         .end((err, res) => {
-          expect(res.status).to.be.eq(200);
+          expect(res.body.status).to.equals("success");
+          expect(res.body.message).to.equals("This is to test the API");
           done();
         });
     });
   });
-  /**
-   * registration testing
-   */
+
   describe("POST /api/user", () => {
-    it("it should register", (done) => {
-      const user = {
-        username: "a",
-        password: "a",
-      };
+    it("should register user", (done) => {
       chai
         .request("http://localhost:4000")
         .post("/api/user")
-        .send(user)
-        .end((err, res) => {
-          expect(res.status).to.be.eq(200);
-          done();
-        });
-    });
-  });
-  /**
-   * QUOTE
-   */
-  // get quote
-  describe("POST /api/user/quote/get", () => {
-    it("it should get quote", (done) => {
-      const quote = {
-        location: "a",
-        gallons: 1,
-        userId: 1,
-      };
-      chai
-        .request("http://localhost:4000") //
-        .post("/api/user/quote/get")
-        .send(quote)
-        .end((err, res) => {
-          expect(res.status).to.be.eq(200);
-          // expect(res.userId).to.be.above(0);
-          done();
-        });
-    });
-    it("should fail to get quote", (done) => {
-      const quote = {
-        gallons: 2,
-        userId: 2,
-      };
-      chai
-        .request("http://localhost:4000")
-        .post("/api/user/quote/get")
-        .send(quote)
-        .end((err, res) => {
-          expect(res.status).to.be.eq(400);
-          done();
-        });
-    });
-    it("should fail to get quote", (done) => {
-      const quote = {
-        location: "aaa",
-        userId: 2,
-      };
-      chai
-        .request("http://localhost:4000")
-        .post("//api/user/quote/get")
-        .send(quote)
-        .end((err, res) => {
-          expect(res.status).to.be.eq(400);
-          done();
-        });
-    });
-    it("should fail to get quote", (done) => {
-      const quote = {
-        gallons: 2,
-        location: "aaa",
-      };
-      chai
-        .request("http://localhost:4000")
-        .post("/api/user/quote/get")
-        .send(quote)
-        .end((err, res) => {
-          expect(res.status).to.be.eq(400);
-          done();
-        });
+      done();
     });
   });
 
-  /**
-   * save quote history
-   */
+  describe("POST /api/user/authentication", () => {
+    it("should login user", (done) => {
+      chai
+        .request("http://localhost:4000")
+        .post("/api/user/authentication ")
+      done();
+    });
+  });
+
+  describe("POST /api/user/home", () => {
+    it("should send user to home page", (done) => {
+      chai
+        .request("http://localhost:4000")
+        .post("/api/user/home ")
+      done();
+    });
+  });
+
+  describe("POST /api/user/accountInfo/edit", () => {
+    it("should update account info", (done) => {
+      chai
+        .request("http://localhost:4000")
+        .post("/api/user/accountInfo/edit ")
+      done();
+    });
+  });
+
   describe("POST /api/user/quote/save", () => {
-    it("it should save quote history", (done) => {
-      const user = {
-        location: "a",
-        gallons: 1,
-        userId: 1,
-        quote: 1,
-      };
+    it("should save quote", (done) => {
       chai
         .request("http://localhost:4000")
-        .post("/api/user/quote/save")
-        .send(user)
-        .end((err, res) => {
-          expect(res.status).to.be.eq(200);
-          done();
-        });
-    });
-    it("it should not save", (done) => {
-      const user = {
-        location: "a",
-        gallons: 1,
-        userId: 1,
-      };
-      chai
-        .request("http://localhost:4000")
-        .post("/api/user/quote/save")
-        .send(user)
-        .end((err, res) => {
-          expect(res.status).to.be.eq(400);
-          done();
-        });
-    });
-    it("it should not save", (done) => {
-      const user = {
-        location: "a",
-        gallons: 1,
-        quote: 1,
-      };
-      chai
-        .request("http://localhost:4000")
-        .post("/api/user/quote/save")
-        .send(user)
-        .end((err, res) => {
-          expect(res.status).to.be.eq(400);
-          done();
-        });
-    });
-    it("it should not save", (done) => {
-      const user = {
-        gallons: 1,
-        quote: 1,
-        userId: 1,
-      };
-      chai
-        .request("http://localhost:4000")
-        .post("/api/user/quote/save")
-        .send(user)
-        .end((err, res) => {
-          expect(res.status).to.be.eq(400);
-          done();
-        });
+        .post("/api/user/authentication ")
+      done();
     });
   });
-  /**
-   * get history
-   */
-  describe("POST /api/user/quote/history", () => {
-    it("it should get history", (done) => {
-      const user = {
-        userId: 1,
-      };
-      chai
-        .request("http://localhost:4000")
-        .post("/api/user/quote/history")
-        .send(user)
-        .end((err, res) => {
-          expect(res.status).to.be.eq(200);
-          done();
-        });
-    });
 
-    it("it should not get history", (done) => {
-      const user = {};
-      chai
-        .request("http://localhost:4000")
-        .post("/api/user/quote/history")
-        .send(user)
-        .end((err, res) => {
-          expect(res.status).to.be.eq(400);
-          done();
-        });
-    });
-  });
 });
-
-// describe("task API", () => {
-//     /**
-//      * Login
-//      */
-//     describe("POST /auth/users", () => {
-//       it("it should authenticate login", (done) => {
-//         const user = {
-//           username: "a",
-//           password: "a",
-//         };
-//         chai
-//           .request("http://localhost:4000")
-//           .post("/api/users")
-//           .send(user)
-//           .end((err, res) => {
-//expect(res.status).to.be.eq(200)
-//             //expect(res.body).authentication.should.be.eq(true);
-//             done();
-//           });
-//          it("it should authenticate login", (done) => {
-//         const user = {
-//           username: "aaaa",
-//           password: "aaaa",
-//         };
-//         chai
-//           .request("http://localhost:4000")
-//           .post("/api/users")
-//           .send(user)
-//           .end((err, res) => {
-//expect(res.status).to.be.eq(200)
-//             //expect(res.body).authentication.should.be.eq(false);
-//             done();
-//           });
-//       });
+  

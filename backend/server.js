@@ -43,7 +43,10 @@ app.use(
 
 app.listen(port, () => console.log("Server started on port 4000"));
 
-app.get("/api", (req, res) => res.json("This is to test the API"));
+app.get("/api", (req, res) => {
+  res.json({status: "success", message: "This is to test the API"});
+  return;
+});
 
 app.post("/api/user", Login.registerUser);
 app.post("/api/user/authentication", Login.logUserIn);
