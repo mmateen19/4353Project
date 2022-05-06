@@ -27,22 +27,22 @@ describe("task api", () => {
 
   //Registering a User
   describe("POST /api/user", () => {
-    it("should register user", (done) => {
-      const user = {
-        username: "z",
-        password: "z",
-        firstTime: "TRUE",
-      };
+    // it("should register user", (done) => {
+    //   const user = {
+    //     username: "z",
+    //     password: "z",
+    //     firstTime: "TRUE",
+    //   };
       
-      chai
-        .request("http://localhost:4000")
-        .post("/api/user")
-        .send(user)
-        .end((err, res)=>{
-          expect(res.body.reg).to.equals(true);
-          done();
-        });
-    });
+    //   chai
+    //     .request("http://localhost:4000")
+    //     .post("/api/user")
+    //     .send(user)
+    //     .end((err, res)=>{
+    //       expect(res.body.reg).to.equals(true);
+    //       done();
+    //     });
+    // });
 
     it("should not register user", (done)=>{
       const user ={
@@ -263,11 +263,32 @@ describe("task api", () => {
 
   describe("POST /api/user/fuelhistory", () => {
     it("should get history", (done) => {
+      const user = {
+        id: 67,
+      };
       chai
         .request("http://localhost:4000")
         .post("/api/user/fuelhistory")
-      done();
+        .send(user)
+        .end((err, res)=>{
+          expect(res.body.history).to.equals(true);
+          done();
+        });
     });
+
+    it("should not get history", (done) => {
+      const user = {
+        id: 9999, 
+      };
+      chai
+      .request("http://localhost:4000")
+      .post("/api/user/fuelhistory")
+      .send(user)
+      .end((err, res)=>{
+        expect(res.body.history).to.equals(false);
+        done();
+      })
+    })
   });
 
   describe("POST /api/user/quote/pricingmodule", () => {
