@@ -17,7 +17,7 @@ const home = (req, res) => {
       if (err) {
         res.json({ exists: false, message: "Could not Query DB" });
       } else if (dbres.rowCount > 0) {
-        res.json({ exists: true, info: dbres.rows[0] });
+        res.json({ exists: true, info: dbres.rows[0]});
       } else {
         res.json({ exists: false, message: "Not Found User!" });
       }

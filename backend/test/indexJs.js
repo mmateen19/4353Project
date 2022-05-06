@@ -1,5 +1,6 @@
 const chai = require("chai");
 const chaiHttp = require("chai-http");
+const { rows } = require("pg/lib/defaults");
 const server = require("../server.js");
 var expect = chai.expect;
 
@@ -8,7 +9,7 @@ chai.use(chaiHttp);
 
 describe("task api", () => {
   describe("GET /api", () => {
-    it("should connect to backend", (done) => {
+    it("should connect to server", (done) => {
       chai
         .request("http://localhost:4000")
         .get("/api")
@@ -25,7 +26,10 @@ describe("task api", () => {
       chai
         .request("http://localhost:4000")
         .post("/api/user")
-      done();
+        .end((err, res)=>{
+          expect(res.body.reg).to.equals(true);
+          done();
+        });
     });
   });
 
@@ -77,12 +81,28 @@ describe("task api", () => {
     
   });
 
+  //NOT working
   describe("POST /api/user/home", () => {
     it("should send user to home page", (done) => {
       chai
         .request("http://localhost:4000")
-        .post("/api/user/home ")
-      done();
+        .post("/api/user/home")
+        .send({id: 67})
+        .end((err, res)=>{
+          expect(res.body.exists).to.equals(true);
+          done();
+        });
+    });
+
+    it("should not send user to home page", (done) => {
+      chai
+        .request("http://localhost:4000")
+        .post("/api/user/home")
+        .send({id: 999})
+        .end((err, res)=>{
+          expect(res.body.exists).to.equals(false);
+          done();
+        });
     });
   });
 
@@ -129,6 +149,18 @@ describe("task api", () => {
           expect(res.body.status).to.equals(false);
           done();
         });
+    });
+  });
+
+  describe("POST /api/user/accountInfo/get", () => {
+    it("should update account info", (done) => {
+      chai
+        .request("http://localhost:4000")
+        .post("/api/user/accountInfo/get ")
+        .end((err, res)=>{
+
+        })
+      done();
     });
   });
 
