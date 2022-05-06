@@ -28,11 +28,50 @@ describe("task api", () => {
   //Registering a User
   describe("POST /api/user", () => {
     it("should register user", (done) => {
+      const user = {
+        username: "z",
+        password: "z",
+        firstTime: "TRUE",
+      };
+      
       chai
         .request("http://localhost:4000")
         .post("/api/user")
+        .send(user)
         .end((err, res)=>{
           expect(res.body.reg).to.equals(true);
+          done();
+        });
+    });
+
+    it("should not register user", (done)=>{
+      const user ={
+        username: "",
+        password: "z",
+        firstTime: "TRUE",
+      };
+      chai 
+        .request("http://localhost:4000")
+        .post("/api/user")
+        .send(user)
+        .end((err, res) => {
+          expect(res.body.reg).to.equals(false);
+          done();
+        });
+    });
+
+    it("should not register user", (done)=>{
+      const user = {
+        username: "z",
+        password: "",
+        firstTime: "TRUE",
+      };
+      chai
+        .request("http://localhost:4000")
+        .post("/api/user")
+        .send(user)
+        .end((err, res)=>{
+          expect(res.body.reg).to.equals(false);
           done();
         });
     });
@@ -198,13 +237,30 @@ describe("task api", () => {
 
   });
 
-
   //It should save a quote to history
   describe("POST /api/user/quote/save", () => {
     it("should save quote", (done) => {
       chai
         .request("http://localhost:4000")
         .post("/api/user/authentication ")
+      done();
+    });
+  });
+
+  describe("POST /api/user/fuelhistory", () => {
+    it("should get history", (done) => {
+      chai
+        .request("http://localhost:4000")
+        .post("/api/user/fuelhistory")
+      done();
+    });
+  });
+
+  describe("POST /api/user/quote/pricingmodule", () => {
+    it("should calculate quote", (done) => {
+      chai
+        .request("http://localhost:4000")
+        .post("/api/user/quote/pricingmodule ")
       done();
     });
   });
