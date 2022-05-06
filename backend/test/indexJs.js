@@ -265,11 +265,32 @@ describe("task api", () => {
   //It should get the fuel quote history
   describe("POST /api/user/fuelhistory", () => {
     it("should get history", (done) => {
+      const user = {
+        id: 67,
+      };
       chai
         .request("http://localhost:4000")
         .post("/api/user/fuelhistory")
-      done();
+        .send(user)
+        .end((err, res)=>{
+          expect(res.body.history).to.equals(true);
+          done();
+        });
     });
+
+    it("should not get history", (done) => {
+      const user = {
+        id: 9999, 
+      };
+      chai
+      .request("http://localhost:4000")
+      .post("/api/user/fuelhistory")
+      .send(user)
+      .end((err, res)=>{
+        expect(res.body.history).to.equals(false);
+        done();
+      })
+    })
   });
 
 
