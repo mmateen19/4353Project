@@ -45,7 +45,7 @@ const updateInfo = (req, res) => {
     [firstTime, id],
     (err, dbres) => {
       if (err) {
-        console.log(err.stack);
+        return res.json({status: false, rows: dbres.rows});
       } else {
         //res.json(dbres.rows);
       }
@@ -57,9 +57,14 @@ const updateInfo = (req, res) => {
     [fullName, company, address1, address2, city, zipcode, state, id],
     (err, dbres) => {
       if (err) {
-        console.log(err.stack);
+        return res.json({status: false, rows: dbres.rows});
       } else {
-        res.json(dbres.rows);
+        if (dbres.rowCount > 0) {
+          res.json({status: true, rows: dbres.rows});
+        }
+        else{
+          res.json({status: false, rows: dbres.rows});
+        }
       }
     }
   );
